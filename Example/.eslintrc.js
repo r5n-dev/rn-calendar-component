@@ -1,6 +1,7 @@
 module.exports = {
   extends: 'satya164',
   settings: {
+    'import/core-modules': ['rn-calendar'],
     react: {
       version: 'detect',
     },

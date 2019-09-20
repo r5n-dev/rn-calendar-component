@@ -17,7 +17,8 @@
     "lint": "eslint --ext '.js,.ts,.tsx' .",
     "prepare": "bob build",
     "test": "jest",
-    "typescript": "tsc --noEmit"
+    "typescript": "tsc --noEmit",
+    "example": "yarn --cwd Example"
   },
   "files": [
     "src",
@@ -26,6 +27,8 @@
   "devDependencies": {
     "@commitlint/config-conventional": "8.2.0",
     "@react-native-community/bob": "0.7.0",
+    "@types/react": "16.9.2",
+    "@types/react-native": "0.60.15",
     "codecov": "3.6.1",
     "commitlint": "8.2.0",
     "del-cli": "3.0.0",
@@ -34,7 +37,13 @@
     "husky": "3.0.5",
     "jest": "24.9.0",
     "prettier": "1.18.2",
+    "react": "16.8.6",
+    "react-native": "0.60.5",
     "typescript": "3.6.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
   },
   "husky": {
     "hooks": {
