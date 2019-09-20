@@ -20,5 +20,6 @@
     "strict": true,
     "target": "esnext"
   },
+  "include": ["src/*"],
   "exclude": ["android", "__tests__", "ios", "build", "node_modules"]
 }
