@@ -17,6 +17,7 @@
     "lint": "eslint --ext '.js,.ts,.tsx' .",
     "prepare": "bob build",
     "test": "jest",
+    "test:watch": "jest --watch",
     "typescript": "tsc --noEmit",
     "example": "yarn --cwd Example"
   },
@@ -29,6 +30,7 @@
     "@react-native-community/bob": "0.7.0",
     "@types/react": "16.9.11",
     "@types/react-native": "0.60.22",
+    "babel-jest":"24.9.0",
     "commitlint": "8.2.0",
     "del-cli": "3.0.0",
     "eslint": "6.6.0",
@@ -39,6 +41,15 @@
     "react": "16.9.0",
     "react-native": "0.61.4",
     "typescript": "3.7.2"
+  },
+  "jest": {
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native)"
+    ],
+    "testPathIgnorePatterns": [
+      "node_modules"
+    ]
   },
   "peerDependencies": {
     "react": "*",
