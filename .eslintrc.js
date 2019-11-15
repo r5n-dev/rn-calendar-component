@@ -22,5 +22,12 @@ module.exports = {
       },
     },
   },
-  env: { browser: true, node: true },
+  env: {
+    browser: true,
+    node: true,
+  },
+  rules: {
+    'no-undef': 'off',
+    'prettier/prettier': ['error'],
+  },
 };

@@ -1,1 +1,3 @@
-export * from './Example';
+export * from './Calendar';
+
+export { default as Locales } from './Locales';

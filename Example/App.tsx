@@ -1,42 +1,27 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
-import React from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
-  StyleSheet,
-  ScrollView,
+  Button,
   StatusBar,
 } from 'react-native';
-// @ts-ignore
-import { Example } from 'rn-calendar'
+import { Calendar } from 'rn-calendar'
 
 
 const App = () => {
-  const usingHermes = typeof HermesInternal === 'object' && HermesInternal !== null;
+  const [firstDay, setFirstDay] = useState<0 | 1>(0)
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
-        <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
-          <Example />
-        </ScrollView>
+        <Calendar calendarHeight={380} firstDay={firstDay} startISODate="2014-01-01" endISODate="2019-12-31" />
+
+        <Button title="Switch first day" onPress={() => setFirstDay(firstDay => firstDay ? 0 : 1)} />
+        <Button title="Change Locale" onPress={() => setFirstDay(firstDay => firstDay ? 0 : 1)} />
       </SafeAreaView>
     </>
   );
 };
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: `#fff`,
-  }
-});
 
 export default App;

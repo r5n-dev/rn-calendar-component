@@ -6,8 +6,8 @@ export default ({
   startISODate,
   endISODate,
 }: {
-  startISODate: string,
-  endISODate: string,
+  startISODate: string;
+  endISODate: string;
 }): Array<CalendarDate> => {
   const startDate = new Date(startISODate);
   const endDate = new Date(endISODate);
@@ -27,6 +27,7 @@ export default ({
       year,
       month,
       day,
+      dayOfWeek: startDate.getDay(),
     };
 
     // Do not add day on first loop

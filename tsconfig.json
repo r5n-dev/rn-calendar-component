@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "rn-calendar": ["./src/index"]
+      "rn-calendar": ["./src"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -24,6 +24,6 @@
     "strict": true,
     "target": "esnext"
   },
-  "include": ["src/*"],
+  "include": ["./src/*", "./Example/**/*", "typings/index.d.ts"],
   "exclude": ["android", "__tests__", "ios", "build", "node_modules"]
 }
