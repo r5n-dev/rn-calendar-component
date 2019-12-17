@@ -3,15 +3,18 @@ import { View, FlatList, ViewabilityConfig } from 'react-native';
 
 import { CalendarDate, Locale, CalendarItem } from './types';
 
-import { generateDates } from './helpers';
+import { generateDates, constants } from './helpers';
 import { DayNames, Day, MonthTitle } from './components';
 import Locales from './Locales';
+import chunk from './helpers/chunk';
 
 type Props = {
   DayComponent?: FixMe;
   DayNamesComponent?: FixMe;
   MonthTitleComponent?: FixMe;
 
+  // key should match pattern `YYYY-MM-DD`
+  markedDates?: { [key: string]: {} };
   calendarHeight?: number;
   currentDay?: string;
   endISODate: string;
@@ -32,7 +35,7 @@ export const Calendar = ({
 
   currentDay = currentDate,
   endISODate,
-  calendarHeight = 350,
+  calendarHeight = 360,
   firstDay = 0,
   locale = 'default',
   onDayPress,
@@ -99,8 +102,23 @@ export const Calendar = ({
   const initialScrollIndex = useMemo(() => {
     const currentMonth = currentDay.split(/-(?=[^-]+$)/)[0];
     const monthIndex = months.findIndex(([month]) => month === currentMonth);
+
     return monthIndex > 0 ? monthIndex : 0;
   }, [currentDay, months]);
+
+  const renderWeek = (week: Array<CalendarDate>) => {
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        {week.map((item, index) => (
+          <DayComponent
+            key={item ? item.dayString : `${index}`}
+            onPress={onDayPress}
+            {...item}
+          />
+        ))}
+      </View>
+    );
+  };
 
   const renderMonth = ({
     item: [month, dates],
@@ -111,27 +129,21 @@ export const Calendar = ({
     const dayCap = dayOfWeek - firstDay;
     const fillCap = dayCap >= 0 ? dayCap : 6;
 
-    const data = [...Array(fillCap).fill({}), ...dates];
+    const weeks = chunk(
+      [...Array(fillCap).fill({}), ...dates],
+      constants.weekLength
+    );
     const [year, monthString] = month.split('-');
 
     return (
-      <View key={month} style={{ height: calendarHeight }}>
+      <View key={month}>
         <MonthTitleComponent
           title={`${locales.monthNames[Number(monthString) - 1]} ${year}`}
         />
 
         <DayNamesComponent dayNames={locales.dayNamesShort} />
 
-        <FlatList
-          listKey={month}
-          data={data}
-          numColumns={7}
-          scrollEnabled={false}
-          keyExtractor={({ dayString }) => dayString}
-          renderItem={({ item }) => (
-            <DayComponent onPress={onDayPress} {...item} />
-          )}
-        />
+        {weeks.map(renderWeek)}
       </View>
     );
   };
