@@ -8,7 +8,7 @@ import { DayNames, Day } from './components';
 import Locales from './Locales';
 
 type Props = {
-  DayComponent: FixMe;
+  DayComponent?: FixMe;
   calendarHeight?: number;
   currentDay?: string;
   endISODate: string;
@@ -18,17 +18,16 @@ type Props = {
   startISODate: string;
 };
 
-const NOOP = () => {};
 const currentDate = new Date().toISOString().split('T')[0];
 
 export const Calendar = ({
-  DayComponent,
+  DayComponent = Day,
   currentDay = currentDate,
   endISODate,
   calendarHeight = 320,
   firstDay = 0,
   locale = 'default',
-  onDayPress = NOOP,
+  onDayPress,
   startISODate,
   ...flatListProps
 }: Props) => {
@@ -48,7 +47,9 @@ export const Calendar = ({
 
     if (firstDay) {
       selectedLocale.dayNames.push(selectedLocale.dayNames.shift() || '');
-      selectedLocale.dayNamesShort.push(selectedLocale.dayNamesShort.shift() || '');
+      selectedLocale.dayNamesShort.push(
+        selectedLocale.dayNamesShort.shift() || ''
+      );
     }
 
     return selectedLocale;
@@ -66,12 +67,15 @@ export const Calendar = ({
   const months = useMemo(
     () =>
       Object.entries<Array<CalendarDate>>(
-        dates.reduce((acc: { [key: string]: Array<CalendarDate> }, date: CalendarDate) => {
-          const monthKey = `${date.year}-${date.month}`;
-          const month = acc[monthKey] || [];
-          acc[monthKey] = [...month, date];
-          return acc;
-        }, {})
+        dates.reduce(
+          (acc: { [key: string]: Array<CalendarDate> }, date: CalendarDate) => {
+            const monthKey = `${date.year}-${date.month}`;
+            const month = acc[monthKey] || [];
+            acc[monthKey] = [...month, date];
+            return acc;
+          },
+          {}
+        )
       ),
     [dates]
   );
@@ -82,7 +86,11 @@ export const Calendar = ({
     return monthIndex > 0 ? monthIndex : 0;
   }, [currentDay, months]);
 
-  const renderMonth = ({ item: [month, dates] }: { item: [string, Array<CalendarDate>] }) => {
+  const renderMonth = ({
+    item: [month, dates],
+  }: {
+    item: [string, Array<CalendarDate>];
+  }) => {
     const { dayOfWeek } = dates[0];
     const fillCap = dayOfWeek - firstDay;
     const data = [...Array(fillCap > 0 ? fillCap : 0).fill({}), ...dates];
@@ -101,7 +109,9 @@ export const Calendar = ({
           numColumns={7}
           scrollEnabled={false}
           keyExtractor={({ dayString }) => dayString}
-          renderItem={({ item }) => <DayComponent onPress={onDayPress} {...item} />}
+          renderItem={({ item }) => (
+            <DayComponent onPress={onDayPress} {...item} />
+          )}
         />
       </View>
     );
@@ -122,10 +132,6 @@ export const Calendar = ({
       {...flatListProps}
     />
   );
-};
-
-Calendar.defaultProps = {
-  DayComponent: Day,
 };
 
 const styles = StyleSheet.create({

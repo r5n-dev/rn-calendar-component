@@ -1,0 +1,45 @@
+{
+  "extends": ["satya164"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/core-modules": ["rn-calendar"],
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".android.js",
+          ".android.ts",
+          ".android.tsx",
+          ".ios.js",
+          ".ios.ts",
+          ".ios.tsx",
+          ".js",
+          ".native.js",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "parser": "typescript",
+        "printWidth": 80,
+        "semi": true,
+        "singleQuote": true,
+        "tabWidth": 2,
+        "trailingComma": "es5",
+        "useTabs": false
+      }
+    ]
+  }
+}

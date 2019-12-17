@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "rn-calendar": ["./src"]
+      "rn-calendar": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -13,7 +13,6 @@
     "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
     "noStrictGenericChecks": false,
@@ -23,7 +22,5 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext"
-  },
-  "include": ["./src/*", "./Example/**/*", "typings/index.d.ts"],
-  "exclude": ["android", "__tests__", "ios", "build", "node_modules"]
+  }
 }

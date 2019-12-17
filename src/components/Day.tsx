@@ -1,5 +1,5 @@
-import React from 'react';
-import { Dimensions, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import React, { useCallback } from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { CalendarDate } from '../types';
 
@@ -8,11 +8,12 @@ type Props = CalendarDate & {
 };
 
 const Day = ({ day, month, year, dayString, onPress }: Props) => {
+  const handleDayPress = useCallback(() => {
+    onPress && onPress({ day, month, year, dayString });
+  }, [day, dayString, month, onPress, year]);
+
   return (
-    <TouchableOpacity
-      onPress={() => onPress({ day, month, year, dayString })}
-      style={styles.container}
-    >
+    <TouchableOpacity onPress={handleDayPress} style={styles.container}>
       <Text style={styles.dayText}>{day}</Text>
     </TouchableOpacity>
   );

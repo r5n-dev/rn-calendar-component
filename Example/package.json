@@ -1,47 +1,29 @@
 {
-  "name": "Example",
-  "version": "0.0.1",
-  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator='iPhone 11'",
-    "start": "react-native start",
-    "test": "jest",
-    "postinstall": "patch-package && jetify && cd ios && pod install"
-  },
-  "workspaces": {
-    "nohoist": [
-      "*",
-      "*/**"
-    ]
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
   },
   "dependencies": {
-    "react": "16.9.0",
-    "react-native": "0.61.5"
+    "expo": "~36.0.0",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-screens": "2.0.0-alpha.12",
+    "react-native-web": "~0.11.7"
   },
   "devDependencies": {
-    "@babel/core": "7.7.4",
-    "@babel/runtime": "7.7.4",
-    "@types/jest": "24.0.23",
-    "@types/react-native": "0.60.23",
-    "@types/react-test-renderer": "16.9.1",
-    "babel-jest": "24.9.0",
-    "jest": "24.9.0",
-    "jetifier": "1.6.4",
-    "metro-react-native-babel-preset": "0.57.0",
-    "patch-package": "6.2.0",
-    "react-test-renderer": "16.9.0",
-    "typescript": "3.7.2"
+    "@types/react": "~16.9.0",
+    "@types/react-native": "~0.60.23",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-preset-expo": "~8.0.0",
+    "typescript": "~3.7.3"
   },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
-  }
+  "resolutions": {
+    "@babel/runtime": "7.3.1"
+  },
+  "private": true
 }
