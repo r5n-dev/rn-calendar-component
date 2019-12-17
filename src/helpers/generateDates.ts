@@ -1,6 +1,6 @@
 import { CalendarDate } from '../types';
 
-const DAY_IN_MS = 1000 * 60 * 60 * 24;
+import constants from './constants';
 
 export default ({
   startISODate,
@@ -11,7 +11,8 @@ export default ({
 }): Array<CalendarDate> => {
   const startDate = new Date(startISODate);
   const endDate = new Date(endISODate);
-  const diffInDays = (endDate.getTime() - startDate.getTime()) / DAY_IN_MS;
+  const diffInDays =
+    (endDate.getTime() - startDate.getTime()) / constants.dayInMs;
   const dates = [];
   let addition = 0;
 
@@ -31,7 +32,7 @@ export default ({
     };
 
     // Do not add day on first loop
-    addition = DAY_IN_MS;
+    addition = constants.dayInMs;
   }
   return dates;
 };

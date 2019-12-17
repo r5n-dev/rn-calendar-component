@@ -1,14 +1,17 @@
 import React, { useRef, useCallback, useMemo } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { View, FlatList, ViewabilityConfig } from 'react-native';
 
 import { CalendarDate, Locale, CalendarItem } from './types';
 
 import { generateDates } from './helpers';
-import { DayNames, Day } from './components';
+import { DayNames, Day, MonthTitle } from './components';
 import Locales from './Locales';
 
 type Props = {
   DayComponent?: FixMe;
+  DayNamesComponent?: FixMe;
+  MonthTitleComponent?: FixMe;
+
   calendarHeight?: number;
   currentDay?: string;
   endISODate: string;
@@ -16,19 +19,28 @@ type Props = {
   locale?: string;
   onDayPress?: (date: CalendarDate) => void;
   startISODate: string;
+  style?: FixMe;
+  viewabilityConfig?: ViewabilityConfig;
 };
 
 const currentDate = new Date().toISOString().split('T')[0];
 
 export const Calendar = ({
   DayComponent = Day,
+  DayNamesComponent = DayNames,
+  MonthTitleComponent = MonthTitle,
+
   currentDay = currentDate,
   endISODate,
-  calendarHeight = 320,
+  calendarHeight = 350,
   firstDay = 0,
   locale = 'default',
   onDayPress,
   startISODate,
+  style,
+  viewabilityConfig = {
+    itemVisiblePercentThreshold: 1,
+  },
   ...flatListProps
 }: Props) => {
   const flatListRef = useRef<FlatList<CalendarItem>>();
@@ -103,11 +115,12 @@ export const Calendar = ({
     const [year, monthString] = month.split('-');
 
     return (
-      <View key={month}>
-        <Text style={styles.monthName}>
-          {`${locales.monthNames[Number(monthString) - 1]} ${year}`}
-        </Text>
-        <DayNames dayNames={locales.dayNamesShort} />
+      <View key={month} style={{ height: calendarHeight }}>
+        <MonthTitleComponent
+          title={`${locales.monthNames[Number(monthString) - 1]} ${year}`}
+        />
+
+        <DayNamesComponent dayNames={locales.dayNamesShort} />
 
         <FlatList
           listKey={month}
@@ -126,23 +139,17 @@ export const Calendar = ({
   return (
     <FlatList
       data={months}
-      initialNumToRender={1}
-      keyExtractor={([month]) => month}
-      initialScrollIndex={initialScrollIndex}
       getItemLayout={getItemLayout}
-      maxToRenderPerBatch={1}
+      initialNumToRender={1}
+      initialScrollIndex={initialScrollIndex}
+      keyExtractor={([month]) => month}
+      renderItem={renderMonth}
+      style={[{ maxHeight: calendarHeight }, style]}
+      viewabilityConfig={viewabilityConfig}
+      windowSize={3}
       // @ts-ignore
       ref={flatListRef}
-      renderItem={renderMonth}
-      style={[styles.container, { maxHeight: calendarHeight }]}
       {...flatListProps}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {},
-  monthName: {
-    alignSelf: 'center',
-  },
-});

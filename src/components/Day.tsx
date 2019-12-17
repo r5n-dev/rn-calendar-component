@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { CalendarDate } from '../types';
+import { constants } from '../helpers';
 
 type Props = CalendarDate & {
   onPress: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   container: {
-    height: 48,
+    height: constants.touchableSize,
     width: width / 7,
     alignItems: 'center',
     justifyContent: 'center',
