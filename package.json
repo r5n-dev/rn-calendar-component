@@ -13,10 +13,9 @@
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
   "scripts": {
-    "clean": "del lib",
     "lint": "eslint --ext '.js,.ts,.tsx' .",
     "prepare": "bob build",
-    "test": "jest",
+    "test": "jest --coverage --runInBand",
     "test:watch": "jest --watch",
     "typescript": "tsc --noEmit",
     "example": "yarn --cwd Example"
@@ -28,11 +27,10 @@
   "devDependencies": {
     "@commitlint/config-conventional": "8.2.0",
     "@react-native-community/bob": "0.7.0",
-    "@types/react": "16.9.13",
-    "@types/react-native": "0.60.23",
+    "@types/react": "16.9.16",
+    "@types/react-native": "0.60.25",
     "babel-jest": "24.9.0",
     "commitlint": "8.2.0",
-    "del-cli": "3.0.0",
     "eslint": "6.7.2",
     "eslint-config-satya164": "3.1.2",
     "husky": "3.1.0",

@@ -40,7 +40,7 @@ type Props = {
 
 const todayDate = new Date().toISOString().split('T')[0];
 
-export const Calendar = ({
+const Calendar = ({
   DayComponent = Day,
   DayNamesComponent = DayNames,
   MonthTitleComponent = MonthTitle,
@@ -178,3 +178,5 @@ export const Calendar = ({
     />
   );
 };
+
+export default Calendar;
