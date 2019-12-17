@@ -1,7 +1,19 @@
-import React, { useRef, useCallback, useMemo } from 'react';
+import React, {
+  useRef,
+  useCallback,
+  useMemo,
+  NamedExoticComponent,
+} from 'react';
 import { View, FlatList, ViewabilityConfig } from 'react-native';
 
-import { CalendarDate, Locale, CalendarItem } from './types';
+import {
+  CalendarDate,
+  Locale,
+  CalendarItem,
+  DayComponentProps,
+  DayNamesComponentProps,
+  MonthTitleComponentProps,
+} from './types';
 
 import { generateDates, constants } from './helpers';
 import { DayNames, Day, MonthTitle } from './components';
@@ -9,9 +21,9 @@ import Locales from './Locales';
 import chunk from './helpers/chunk';
 
 type Props = {
-  DayComponent?: FixMe;
-  DayNamesComponent?: FixMe;
-  MonthTitleComponent?: FixMe;
+  DayComponent?: NamedExoticComponent<DayComponentProps>;
+  DayNamesComponent?: NamedExoticComponent<DayNamesComponentProps>;
+  MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;
 
   // key should match pattern `YYYY-MM-DD`
   markedDates?: { [key: string]: {} };
@@ -20,20 +32,20 @@ type Props = {
   endISODate: string;
   firstDay?: 0 | 1;
   locale?: string;
-  onDayPress?: (date: CalendarDate) => void;
+  onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
   startISODate: string;
   style?: FixMe;
   viewabilityConfig?: ViewabilityConfig;
 };
 
-const currentDate = new Date().toISOString().split('T')[0];
+const todayDate = new Date().toISOString().split('T')[0];
 
 export const Calendar = ({
   DayComponent = Day,
   DayNamesComponent = DayNames,
   MonthTitleComponent = MonthTitle,
 
-  currentDay = currentDate,
+  currentDay = todayDate,
   endISODate,
   calendarHeight = 360,
   firstDay = 0,
@@ -111,6 +123,7 @@ export const Calendar = ({
       <View style={{ flexDirection: 'row' }}>
         {week.map((item, index) => (
           <DayComponent
+            today={item.dayString === todayDate}
             key={item ? item.dayString : `${index}`}
             onPress={onDayPress}
             {...item}

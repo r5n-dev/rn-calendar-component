@@ -18,3 +18,16 @@ export type Locales = {
 };
 
 export type CalendarItem = [string, CalendarDate];
+
+export type DayComponentProps = CalendarDate & {
+  onPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
+  today: boolean;
+};
+
+export type DayNamesComponentProps = {
+  dayNames: Array<string>;
+};
+
+export type MonthTitleComponentProps = {
+  title: string;
+};

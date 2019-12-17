@@ -1,11 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-type Props = {
-  dayNames: Array<string>;
-};
+import { DayNamesComponentProps } from '../types';
 
-const DayNames = ({ dayNames }: Props) => (
+const DayNames = ({ dayNames }: DayNamesComponentProps) => (
   <View style={styles.container}>
     {dayNames.map(dayName => (
       <View style={styles.dayNameContainer} key={dayName}>
@@ -15,7 +13,7 @@ const DayNames = ({ dayNames }: Props) => (
   </View>
 );
 
-export default React.memo<Props>(DayNames);
+export default React.memo<DayNamesComponentProps>(DayNames);
 
 const styles = StyleSheet.create({
   container: {

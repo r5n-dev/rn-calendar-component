@@ -58,8 +58,8 @@ const App = () => {
         <Calendar
           locale={locale}
           firstDay={firstDay}
-          startISODate="2014-01-01"
-          endISODate="2019-12-31"
+          startISODate="2018-01-01"
+          endISODate="2020-12-31"
         />
 
         <Button

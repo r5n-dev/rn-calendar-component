@@ -1,19 +1,15 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-type Props = {
-  title: string;
-};
+import { MonthTitleComponentProps } from '../types';
 
-const MonthTitle = ({ title }: Props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  );
-};
+const MonthTitle = ({ title }: MonthTitleComponentProps) => (
+  <View style={styles.container}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+);
 
-export default MonthTitle;
+export default React.memo<MonthTitleComponentProps>(MonthTitle);
 
 const styles = StyleSheet.create({
   container: {
