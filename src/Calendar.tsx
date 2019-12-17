@@ -43,13 +43,17 @@ export const Calendar = ({
   );
 
   const locales: Locale = useMemo(() => {
-    const selectedLocale = { ...Locales[locale] };
+    let selectedLocale = { ...Locales[locale] };
 
     if (firstDay) {
-      selectedLocale.dayNames.push(selectedLocale.dayNames.shift() || '');
-      selectedLocale.dayNamesShort.push(
-        selectedLocale.dayNamesShort.shift() || ''
-      );
+      const [dayName, ...restDayNames] = selectedLocale.dayNames;
+      const [dayNameShort, ...restDayNamesShort] = selectedLocale.dayNamesShort;
+
+      selectedLocale = {
+        ...selectedLocale,
+        dayNames: [...restDayNames, dayName],
+        dayNamesShort: [...restDayNamesShort, dayNameShort],
+      };
     }
 
     return selectedLocale;
@@ -92,8 +96,10 @@ export const Calendar = ({
     item: [string, Array<CalendarDate>];
   }) => {
     const { dayOfWeek } = dates[0];
-    const fillCap = dayOfWeek - firstDay;
-    const data = [...Array(fillCap > 0 ? fillCap : 0).fill({}), ...dates];
+    const dayCap = dayOfWeek - firstDay;
+    const fillCap = dayCap >= 0 ? dayCap : 6;
+
+    const data = [...Array(fillCap).fill({}), ...dates];
     const [year, monthString] = month.split('-');
 
     return (
