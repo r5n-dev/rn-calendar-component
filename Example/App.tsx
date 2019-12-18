@@ -58,6 +58,7 @@ Locales.pl = {
 };
 
 const todayDate = new Date().toISOString().split('T')[0];
+const currentMonth = todayDate.split(/-(?=[^-]+$)/)[0];
 const singleDay = {
   [todayDate]: { selected: true },
 };
@@ -65,7 +66,17 @@ const singleDayWithDifferentColors = {
   [todayDate]: { selected: true, backgroundColor: 'red', color: 'white' },
 };
 
-const options = { singleDay, singleDayWithDifferentColors };
+const week = {
+  [`${currentMonth}-01`]: { selected: true },
+  [`${currentMonth}-02`]: { selected: true },
+  [`${currentMonth}-03`]: { selected: true },
+  [`${currentMonth}-04`]: { selected: true },
+  [`${currentMonth}-05`]: { selected: true },
+  [`${currentMonth}-06`]: { selected: true },
+  [`${currentMonth}-07`]: { selected: true },
+};
+
+const options = { singleDay, singleDayWithDifferentColors, week };
 
 const App = () => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -75,7 +86,7 @@ const App = () => {
   const [firstDay, setFirstDay] = useState<0 | 1>(0);
   const [locale, setLocale] = useState<'en' | 'pl'>('en');
 
-  const handleDayPress = day => {
+  const handleDayPress = (day: { dayString: string }) => {
     console.log(day);
     setMarkedDates({ [day.dayString]: { selected: true } });
   };
