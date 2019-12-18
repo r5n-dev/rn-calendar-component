@@ -19,6 +19,9 @@ const Day = ({
   onPress,
   color = 'black',
   backgroundColor = 'turquoise',
+  inSeries,
+  startingDay,
+  endingDay,
 }: DayComponentProps) => {
   const handleDayPress = useCallback(() => {
     onPress && onPress({ day, month, year, dayString });
@@ -35,9 +38,17 @@ const Day = ({
       accessibilityRole="button"
       accessibilityLabel={day}
       onPress={handleDayPress}
-      style={styles.container}
+      style={[styles.container]}
     >
-      <View style={[styles.dayContainer, selected && { backgroundColor }]}>
+      <View
+        style={[
+          styles.dayContainer,
+          selected && { backgroundColor },
+          inSeries && styles.inSeriesRadius,
+          startingDay && styles.startingRadius,
+          endingDay && styles.endingRadius,
+        ]}
+      >
         <Text style={[styles.dayText, { color }]}>{day}</Text>
       </View>
     </TouchableOpacity>
@@ -54,8 +65,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: 20,
   },
+  startingRadius: {
+    borderBottomLeftRadius: constants.touchableSize / 2,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: constants.touchableSize / 2,
+    borderTopRightRadius: 0,
+  },
+  endingRadius: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: constants.touchableSize / 2,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: constants.touchableSize / 2,
+  },
+  inSeriesRadius: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
   dayContainer: {
-    borderRadius: constants.touchableSize / 2,
+    borderBottomLeftRadius: constants.touchableSize / 2,
+    borderBottomRightRadius: constants.touchableSize / 2,
+    borderTopLeftRadius: constants.touchableSize / 2,
+    borderTopRightRadius: constants.touchableSize / 2,
     padding: 10,
   },
   container: {
