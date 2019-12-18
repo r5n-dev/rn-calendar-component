@@ -28,6 +28,7 @@
     "jest": true
   },
   "rules": {
+    "jest/consistent-test-it": ["error", { "fn": "test" }],
     "prettier/prettier": [
       "error",
       {

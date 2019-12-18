@@ -22,6 +22,9 @@ export type MarkedDate = {
   color?: string;
   backgroundColor?: string;
   selected?: boolean;
+  endingDay?: boolean;
+  startingDay?: boolean;
+  inSeries?: boolean;
 };
 
 export type MarkedDates = {

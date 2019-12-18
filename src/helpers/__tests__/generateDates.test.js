@@ -2,7 +2,7 @@ import generateDates from '../generateDates';
 
 describe('generateDates', () => {
   describe('when ISO string is provided', () => {
-    it('should return date range between 2 dates', () => {
+    test('should return date range between 2 dates', () => {
       const firstExpectedDates = [
         {
           day: '01',
@@ -87,7 +87,7 @@ describe('generateDates', () => {
   });
 
   describe('when invalid dates are provided', () => {
-    it('should return empty array', () => {
+    test('should return empty array', () => {
       expect(generateDates({})).toEqual([]);
       expect(generateDates({ startISODate: '', endISODate: '' })).toEqual([]);
       expect(
