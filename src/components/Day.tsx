@@ -1,20 +1,32 @@
 import React, { useCallback } from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 
 import { DayComponentProps } from '../types';
 import { constants } from '../helpers';
 
 const Day = ({
   day,
-  today,
+  selected,
   month,
   year,
   dayString,
   onPress,
+  color = 'black',
+  backgroundColor = 'turquoise',
 }: DayComponentProps) => {
   const handleDayPress = useCallback(() => {
     onPress && onPress({ day, month, year, dayString });
   }, [day, dayString, month, onPress, year]);
+
+  if (!day) {
+    return <View style={styles.container} />;
+  }
 
   return (
     <TouchableOpacity
@@ -23,9 +35,11 @@ const Day = ({
       accessibilityRole="button"
       accessibilityLabel={day}
       onPress={handleDayPress}
-      style={[styles.container, today && styles.today]}
+      style={styles.container}
     >
-      <Text style={styles.dayText}>{day}</Text>
+      <View style={[styles.dayContainer, selected && { backgroundColor }]}>
+        <Text style={[styles.dayText, { color }]}>{day}</Text>
+      </View>
     </TouchableOpacity>
   );
 };
@@ -36,16 +50,17 @@ const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   dayText: {
+    textAlign: 'center',
     fontSize: 16,
+    width: 20,
   },
-  today: {
-    backgroundColor: 'turquoise',
-    borderRadius: constants.touchableSize,
+  dayContainer: {
+    borderRadius: constants.touchableSize / 2,
+    padding: 10,
   },
   container: {
     height: constants.touchableSize,
-    width: constants.touchableSize,
-    marginHorizontal: (width / 7 - constants.touchableSize) / 2,
+    width: width / 7,
     alignItems: 'center',
     justifyContent: 'center',
   },

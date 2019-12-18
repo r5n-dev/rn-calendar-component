@@ -18,11 +18,20 @@ export type Locales = {
 };
 
 export type CalendarItem = [string, CalendarDate];
-
-export type DayComponentProps = CalendarDate & {
-  onPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
-  today: boolean;
+export type MarkedDate = {
+  color?: string;
+  backgroundColor?: string;
+  selected?: boolean;
 };
+
+export type MarkedDates = {
+  [key: string]: MarkedDate;
+};
+
+export type DayComponentProps = CalendarDate &
+  MarkedDate & {
+    onPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
+  };
 
 export type DayNamesComponentProps = {
   dayNames: Array<string>;

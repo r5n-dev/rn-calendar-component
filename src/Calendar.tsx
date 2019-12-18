@@ -10,15 +10,15 @@ import {
   CalendarDate,
   Locale,
   CalendarItem,
+  MarkedDates,
   DayComponentProps,
   DayNamesComponentProps,
   MonthTitleComponentProps,
 } from './types';
 
-import { generateDates, constants } from './helpers';
+import { generateDates, constants, chunk, markedDatesForWeek } from './helpers';
 import { DayNames, Day, MonthTitle } from './components';
 import Locales from './Locales';
-import chunk from './helpers/chunk';
 
 type Props = {
   DayComponent?: NamedExoticComponent<DayComponentProps>;
@@ -26,7 +26,7 @@ type Props = {
   MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;
 
   // key should match pattern `YYYY-MM-DD`
-  markedDates?: { [key: string]: {} };
+  markedDates?: MarkedDates;
   calendarHeight?: number;
   currentDay?: string;
   endISODate: string;
@@ -45,11 +45,12 @@ const Calendar = ({
   DayNamesComponent = DayNames,
   MonthTitleComponent = MonthTitle,
 
+  calendarHeight = 360,
   currentDay = todayDate,
   endISODate,
-  calendarHeight = 360,
   firstDay = 0,
   locale = 'default',
+  markedDates,
   onDayPress,
   startISODate,
   style,
@@ -119,14 +120,18 @@ const Calendar = ({
   }, [currentDay, months]);
 
   const renderWeek = (week: Array<CalendarDate>) => {
+    const weekKey = week.find(({ dayString }) => dayString) as CalendarDate;
+
+    const weekMarkedDatesProps = markedDatesForWeek(week, markedDates);
+
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View key={weekKey.dayString} style={{ flexDirection: 'row' }}>
         {week.map((item, index) => (
           <DayComponent
-            today={item.dayString === todayDate}
-            key={item ? item.dayString : `${index}`}
+            key={item.dayString ? item.dayString : `${index}`}
             onPress={onDayPress}
             {...item}
+            {...(weekMarkedDatesProps[item.dayString] || {})}
           />
         ))}
       </View>
