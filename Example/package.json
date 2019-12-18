@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/react-native-action-sheet": "3.4.1",
     "expo": "~36.0.0",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
