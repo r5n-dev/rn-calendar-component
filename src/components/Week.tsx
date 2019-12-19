@@ -1,20 +1,25 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import { WeekComponentProps } from '../types';
+import { constants } from '../helpers';
+import { WeekComponentProps } from '../componentTypes';
 
 const Week = ({
   DayComponent,
-  onDayPress,
+  dayTheme,
   markedDates,
+  onDayPress,
+  theme,
   week,
 }: WeekComponentProps) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, theme?.container]}>
       {week.map((item, index) => (
         <DayComponent
           key={item.dayString ? item.dayString : `${index}`}
           onPress={onDayPress}
+          theme={dayTheme}
+          today={constants.todayDate === item.dayString}
           {...item}
           {...(markedDates && markedDates[item.dayString])}
         />

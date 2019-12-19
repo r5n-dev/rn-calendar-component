@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-import { MonthTitleComponentProps } from '../types';
+import { MonthTitleComponentProps } from '../componentTypes';
 
-const MonthTitle = ({ title }: MonthTitleComponentProps) => {
+const MonthTitle = ({ title, theme }: MonthTitleComponentProps) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+    <View style={[styles.container, theme?.container]}>
+      <Text style={[styles.title, theme?.text]}>{title}</Text>
     </View>
   );
 };

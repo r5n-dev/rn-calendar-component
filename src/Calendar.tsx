@@ -1,21 +1,8 @@
-import React, {
-  useRef,
-  useCallback,
-  useMemo,
-  NamedExoticComponent,
-} from 'react';
-import { View, FlatList, ViewabilityConfig } from 'react-native';
+import React, { useRef, useCallback, useMemo } from 'react';
+import { View, FlatList } from 'react-native';
 
-import {
-  CalendarDate,
-  Locale,
-  CalendarItem,
-  MarkedDates,
-  DayComponentProps,
-  DayNamesComponentProps,
-  MonthTitleComponentProps,
-  WeekComponentProps,
-} from './types';
+import { CalendarDate, Locale, CalendarItem } from './types';
+import { CalendarProps } from './componentTypes';
 
 import {
   chunk,
@@ -26,26 +13,6 @@ import {
 } from './helpers';
 import { DayNames, Day, MonthTitle, Week } from './components';
 import Locales from './Locales';
-
-type Props = {
-  DayComponent?: NamedExoticComponent<DayComponentProps>;
-  DayNamesComponent?: NamedExoticComponent<DayNamesComponentProps>;
-  MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;
-  WeekComponent?: NamedExoticComponent<WeekComponentProps>;
-
-  // key should match pattern `YYYY-MM-DD`
-  calendarHeight?: number;
-  currentDay?: string;
-  endISODate: string;
-  firstDay?: 0 | 1;
-  hideExtraDays?: boolean;
-  locale?: string;
-  markedDates?: MarkedDates;
-  onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
-  startISODate: string;
-  style?: FixMe;
-  viewabilityConfig?: ViewabilityConfig;
-};
 
 const Calendar = ({
   DayComponent = Day,
@@ -63,11 +30,12 @@ const Calendar = ({
   onDayPress,
   startISODate,
   style,
+  theme,
   viewabilityConfig = {
     itemVisiblePercentThreshold: 1,
   },
   ...flatListProps
-}: Props) => {
+}: CalendarProps) => {
   const flatListRef = useRef<FlatList<CalendarItem>>();
 
   const getItemLayout = useCallback(
@@ -138,9 +106,11 @@ const Calendar = ({
     return (
       <WeekComponent
         DayComponent={DayComponent}
+        dayTheme={theme?.day}
         key={firstWeekDay.dayString}
         markedDates={weekMarkedDatesProps}
         onDayPress={onDayPress}
+        theme={theme?.week}
         week={week}
       />
     );
@@ -167,10 +137,14 @@ const Calendar = ({
     return (
       <View key={month}>
         <MonthTitleComponent
+          theme={theme?.monthTitle}
           title={`${locales.monthNames[Number(monthString) - 1]} ${year}`}
         />
 
-        <DayNamesComponent dayNames={locales.dayNamesShort} />
+        <DayNamesComponent
+          dayNames={locales.dayNamesShort}
+          theme={theme?.dayNames}
+        />
 
         {weeks.map(renderWeek)}
       </View>
@@ -187,7 +161,7 @@ const Calendar = ({
       // @ts-ignore
       ref={flatListRef}
       renderItem={renderMonth}
-      style={[{ maxHeight: calendarHeight }, style]}
+      style={[style, { maxHeight: calendarHeight }]}
       viewabilityConfig={viewabilityConfig}
       windowSize={11}
       {...flatListProps}

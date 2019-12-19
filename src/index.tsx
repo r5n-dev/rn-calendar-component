@@ -2,8 +2,10 @@ export { default as Calendar } from './Calendar';
 export { default as Locales } from './Locales';
 
 export {
-  DayComponentProps,
-  DayNamesComponentProps,
-  MonthTitleComponentProps,
   Locale,
+  MarkedDate,
+  CalendarDate,
+  CalendarItem,
+  CalendarTheme,
 } from './types';
+export * from './componentTypes';

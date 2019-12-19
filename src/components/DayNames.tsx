@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { DayNamesComponentProps } from '../types';
+import { DayNamesComponentProps } from '../componentTypes';
 
-const DayNames = ({ dayNames }: DayNamesComponentProps) => {
+const DayNames = ({ dayNames, theme }: DayNamesComponentProps) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, theme?.container]}>
       {dayNames.map(dayName => (
         <View key={dayName} style={styles.dayNameContainer}>
-          <Text>{dayName}</Text>
+          <Text style={theme?.text}>{dayName}</Text>
         </View>
       ))}
     </View>

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { DayComponentProps } from '../types';
+import { DayComponentProps } from '../componentTypes';
 import { constants } from '../helpers';
 
 const Day = ({
@@ -22,6 +22,8 @@ const Day = ({
   onPress,
   selected,
   startingDay,
+  theme,
+  today,
   year,
 }: DayComponentProps) => {
   const handleDayPress = useCallback(() => {
@@ -45,19 +47,30 @@ const Day = ({
       accessible
       activeOpacity={0.4}
       onPress={handleDayPress}
-      style={[styles.container]}
+      style={styles.container}
     >
       <View
         style={[
           styles.dayContainer,
-          selected && { backgroundColor },
           inSeries && styles.inSeriesRadius,
           startingDay && styles.startingRadius,
           endingDay && styles.endingRadius,
+
+          theme?.container,
+          today && theme?.todayContainer,
+          selected && (theme?.selectedContainer || { backgroundColor }),
+          extraDay && theme?.extraDayContainer,
         ]}
       >
         <Text
-          style={[styles.dayText, { color }, extraDay && styles.extraDayText]}
+          style={[
+            styles.dayText,
+            { color },
+            today && (theme?.todayText || styles.todayText),
+            extraDay && (theme?.extraDayText || styles.extraDayText),
+            selected && theme?.selectedText,
+            theme?.text,
+          ]}
         >
           {day}
         </Text>
@@ -106,6 +119,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     width: 20,
+  },
+  todayText: {
+    fontWeight: '700',
+    color: 'dodgerblue',
   },
   startingRadius: {
     borderBottomLeftRadius: constants.touchableSize / 2,

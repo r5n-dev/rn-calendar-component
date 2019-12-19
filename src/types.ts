@@ -1,4 +1,4 @@
-import { NamedExoticComponent } from 'react';
+import { ViewStyle, TextStyle } from 'react-native';
 
 export type CalendarDate = {
   dayString: string;
@@ -7,6 +7,8 @@ export type CalendarDate = {
   day: string;
   dayOfWeek: number;
 };
+
+export type CalendarItem = [string, CalendarDate];
 
 export type Locale = {
   monthNames: Array<string>;
@@ -19,7 +21,6 @@ export type Locales = {
   [key: string]: Locale;
 };
 
-export type CalendarItem = [string, CalendarDate];
 export type MarkedDate = {
   color?: string;
   backgroundColor?: string;
@@ -33,23 +34,26 @@ export type MarkedDates = {
   [key: string]: MarkedDate;
 };
 
-export type DayComponentProps = CalendarDate &
-  MarkedDate & {
-    extraDay?: boolean;
-    onPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
+export type CalendarTheme = {
+  day?: {
+    container?: ViewStyle;
+    extraDayContainer?: ViewStyle;
+    extraDayText?: TextStyle;
+    selectedContainer?: ViewStyle;
+    selectedText?: TextStyle;
+    text?: TextStyle;
+    todayContainer: ViewStyle;
+    todayText?: TextStyle;
   };
-
-export type WeekComponentProps = {
-  week: Array<CalendarDate>;
-  onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
-  markedDates: MarkedDates | null;
-  DayComponent: NamedExoticComponent<DayComponentProps>;
-};
-
-export type DayNamesComponentProps = {
-  dayNames: Array<string>;
-};
-
-export type MonthTitleComponentProps = {
-  title: string;
+  dayNames?: {
+    container?: ViewStyle;
+    text?: TextStyle;
+  };
+  monthTitle?: {
+    container?: ViewStyle;
+    text: TextStyle;
+  };
+  week?: {
+    container?: ViewStyle;
+  };
 };
