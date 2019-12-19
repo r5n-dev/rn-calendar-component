@@ -1,5 +1,14 @@
 import { CalendarDate } from '../types';
 
+type FillDatesParams = {
+  hideExtraDays: boolean;
+  firstDay: number;
+  monthIndex: number;
+  months: Array<[string, Array<CalendarDate>]>;
+  dates: Array<CalendarDate>;
+};
+
+const cachedMonths: { [key: string]: Array<CalendarDate> } = {};
 const maxDayIndex = 6;
 
 const fillDates = ({
@@ -8,13 +17,7 @@ const fillDates = ({
   months,
   monthIndex,
   firstDay,
-}: {
-  hideExtraDays: boolean;
-  firstDay: number;
-  monthIndex: number;
-  months: Array<[string, Array<CalendarDate>]>;
-  dates: Array<CalendarDate>;
-}): Array<CalendarDate> => {
+}: FillDatesParams): Array<CalendarDate> => {
   const [, previousMonthDates] = months[monthIndex - 1] || [];
   const [, nextMonthDates] = months[monthIndex + 1] || [];
 
@@ -47,4 +50,27 @@ const fillDates = ({
   }
 };
 
-export default fillDates;
+export default ({
+  hideExtraDays,
+  dates,
+  months,
+  monthIndex,
+  firstDay,
+}: FillDatesParams) => {
+  const cachedMonth =
+    cachedMonths[`${monthIndex}-${firstDay}-${hideExtraDays}`];
+
+  if (cachedMonth) {
+    return cachedMonth;
+  } else {
+    const monthDates = fillDates({
+      dates,
+      months,
+      monthIndex,
+      firstDay,
+      hideExtraDays,
+    });
+    cachedMonths[`${monthIndex}-${firstDay}-${hideExtraDays}`] = monthDates;
+    return monthDates;
+  }
+};
