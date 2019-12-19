@@ -13,6 +13,7 @@ import {
   useActionSheet,
 } from '@expo/react-native-action-sheet';
 
+// @ts-ignore
 import { Calendar, Locales } from 'rn-calendar';
 
 Locales.en = Locales.default;
@@ -86,9 +87,20 @@ const App = () => {
   const [firstDay, setFirstDay] = useState<0 | 1>(0);
   const [locale, setLocale] = useState<'en' | 'pl'>('en');
 
+  const resetCalendar = () => {
+    setLoaded(false);
+    setMarkedDates(singleDay);
+    setTimeout(() => {
+      setLoaded(true);
+    }, 1000);
+  };
+
   const handleDayPress = (day: { dayString: string }) => {
     console.log(day);
-    setMarkedDates({ [day.dayString]: { selected: true } });
+    setMarkedDates(markedDates => ({
+      ...markedDates,
+      [day.dayString]: { selected: true },
+    }));
   };
 
   return (
@@ -97,32 +109,31 @@ const App = () => {
       <SafeAreaView style={styles.container}>
         {loaded && (
           <Calendar
-            onDayPress={handleDayPress}
-            locale={locale}
-            firstDay={firstDay}
-            startISODate="2018-01-01"
             endISODate="2020-12-31"
+            firstDay={firstDay}
+            locale={locale}
             markedDates={markedDates}
+            onDayPress={handleDayPress}
+            startISODate="2018-01-01"
           />
         )}
 
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
-            style={styles.button}
             onPress={() => setFirstDay(firstDay => (firstDay ? 0 : 1))}
+            style={styles.button}
           >
             <Text style={styles.buttonText}>Switch first day</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.button}
             onPress={() => setLocale(locale => (locale === 'en' ? 'pl' : 'en'))}
+            style={styles.button}
           >
             <Text style={styles.buttonText}>Change locale</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.button}
             onPress={() =>
               showActionSheetWithOptions(
                 {
@@ -140,20 +151,13 @@ const App = () => {
                 }
               )
             }
+            style={styles.button}
           >
             <Text style={styles.buttonText}>Change markedDates</Text>
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            setLoaded(false);
-            setTimeout(() => {
-              setLoaded(true);
-            }, 1000);
-          }}
-        >
+        <TouchableOpacity onPress={resetCalendar} style={styles.button}>
           <Text style={styles.buttonText}>Reset calendar</Text>
         </TouchableOpacity>
       </SafeAreaView>
