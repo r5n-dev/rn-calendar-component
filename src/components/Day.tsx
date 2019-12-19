@@ -11,21 +11,32 @@ import { DayComponentProps } from '../types';
 import { constants } from '../helpers';
 
 const Day = ({
-  day,
-  selected,
-  month,
-  year,
-  dayString,
-  onPress,
-  color = 'black',
   backgroundColor = 'turquoise',
-  inSeries,
-  startingDay,
+  color = 'black',
+  day,
+  dayString,
   endingDay,
+  extraDay,
+  inSeries,
+  month,
+  onPress,
+  selected,
+  startingDay,
+  year,
 }: DayComponentProps) => {
   const handleDayPress = useCallback(() => {
     onPress && onPress({ day, month, year, dayString });
   }, [day, dayString, month, onPress, year]);
+
+  if (!day) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.dayContainer}>
+          <Text style={styles.dayText} />
+        </View>
+      </View>
+    );
+  }
 
   return (
     <TouchableOpacity
@@ -45,7 +56,11 @@ const Day = ({
           endingDay && styles.endingRadius,
         ]}
       >
-        <Text style={[styles.dayText, { color }]}>{day}</Text>
+        <Text
+          style={[styles.dayText, { color }, extraDay && styles.extraDayText]}
+        >
+          {day}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -103,6 +118,9 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: constants.touchableSize / 2,
     borderTopLeftRadius: 0,
     borderTopRightRadius: constants.touchableSize / 2,
+  },
+  extraDayText: {
+    color: 'lightgrey',
   },
   inSeriesRadius: {
     borderBottomLeftRadius: 0,

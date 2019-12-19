@@ -86,6 +86,7 @@ const App = () => {
   const [loaded, setLoaded] = useState<boolean>(true);
   const [firstDay, setFirstDay] = useState<0 | 1>(0);
   const [locale, setLocale] = useState<'en' | 'pl'>('en');
+  const [hideExtraDays, setHideExtraDays] = useState<boolean>(true);
 
   const resetCalendar = () => {
     setLoaded(false);
@@ -106,11 +107,18 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
+      <View style={styles.calendarInfoContainer}>
+        <Text>firstDay: {firstDay}</Text>
+        <Text>locale: {locale}</Text>
+        <Text>hideExtraDays: {`${hideExtraDays}`}</Text>
+        <Text>markedDates: {JSON.stringify(markedDates)}</Text>
+      </View>
       <SafeAreaView style={styles.container}>
         {loaded && (
           <Calendar
             endISODate="2020-12-31"
             firstDay={firstDay}
+            hideExtraDays={hideExtraDays}
             locale={locale}
             markedDates={markedDates}
             onDayPress={handleDayPress}
@@ -155,6 +163,13 @@ const App = () => {
           >
             <Text style={styles.buttonText}>Change markedDates</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => setHideExtraDays(hideExtraDays => !hideExtraDays)}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Show extra dates</Text>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity onPress={resetCalendar} style={styles.button}>
@@ -187,6 +202,9 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+  calendarInfoContainer: {
+    paddingTop: 30,
+  },
   buttonsContainer: {
     justifyContent: 'center',
     alignItems: 'center',

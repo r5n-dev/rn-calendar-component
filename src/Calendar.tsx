@@ -17,7 +17,13 @@ import {
   WeekComponentProps,
 } from './types';
 
-import { generateDates, constants, chunk, markedDatesForWeek } from './helpers';
+import {
+  chunk,
+  constants,
+  fillDates,
+  generateDates,
+  markedDatesForWeek,
+} from './helpers';
 import { DayNames, Day, MonthTitle, Week } from './components';
 import Locales from './Locales';
 
@@ -28,12 +34,13 @@ type Props = {
   WeekComponent?: NamedExoticComponent<WeekComponentProps>;
 
   // key should match pattern `YYYY-MM-DD`
-  markedDates?: MarkedDates;
   calendarHeight?: number;
   currentDay?: string;
   endISODate: string;
   firstDay?: 0 | 1;
+  hideExtraDays?: boolean;
   locale?: string;
+  markedDates?: MarkedDates;
   onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
   startISODate: string;
   style?: FixMe;
@@ -50,6 +57,7 @@ const Calendar = ({
   currentDay = constants.todayDate,
   endISODate,
   firstDay = 0,
+  hideExtraDays = true,
   locale = 'default',
   markedDates,
   onDayPress,
@@ -140,17 +148,20 @@ const Calendar = ({
 
   const renderMonth = ({
     item: [month, dates],
+    index,
   }: {
     item: [string, Array<CalendarDate>];
+    index: number;
   }) => {
-    const { dayOfWeek } = dates[0];
-    const dayCap = dayOfWeek - firstDay;
-    const fillCap = dayCap >= 0 ? dayCap : 6;
+    const monthDates = fillDates({
+      hideExtraDays,
+      firstDay,
+      dates,
+      monthIndex: index,
+      months,
+    });
 
-    const weeks = chunk(
-      [...Array(fillCap).fill({}), ...dates],
-      constants.weekLength
-    );
+    const weeks = chunk(monthDates, constants.weekLength);
     const [year, monthString] = month.split('-');
 
     return (

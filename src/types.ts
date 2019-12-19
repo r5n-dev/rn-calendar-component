@@ -35,6 +35,7 @@ export type MarkedDates = {
 
 export type DayComponentProps = CalendarDate &
   MarkedDate & {
+    extraDay?: boolean;
     onPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
   };
 
