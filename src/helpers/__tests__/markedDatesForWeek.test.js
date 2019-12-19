@@ -140,4 +140,34 @@ describe('markedDatesForWeek', () => {
       );
     });
   });
+
+  describe('when markedDates does not contain provided week dates', () => {
+    const week = [
+      { dayString: '2019-01-01' },
+      { dayString: '2019-01-02' },
+      { dayString: '2019-01-03' },
+      { dayString: '2019-01-04' },
+      { dayString: '2019-01-05' },
+      { dayString: '2019-01-06' },
+      { dayString: '2019-01-07' },
+    ];
+
+    const markedDates = {
+      '2019-01-08': { selected: true },
+    };
+
+    expect(markedDatesForWeek(week, markedDates)).toEqual(null);
+  });
+
+  describe('when markedDates are not provided', () => {
+    test('should return null', () => {
+      expect(markedDatesForWeek([])).toEqual(null);
+    });
+  });
+
+  describe('when markedDates are empty object', () => {
+    test('should return null', () => {
+      expect(markedDatesForWeek([], {})).toEqual(null);
+    });
+  });
 });

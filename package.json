@@ -13,12 +13,13 @@
   "module": "lib/module/index.js",
   "types": "lib/typescript/src/index.d.ts",
   "scripts": {
+    "coverage": "open ./coverage/lcov-report/index.html",
+    "example": "yarn --cwd Example",
     "lint": "eslint --ext '.js,.ts,.tsx' .",
     "prepare": "bob build",
     "test": "jest --coverage --runInBand",
     "test:watch": "jest --watch",
-    "typescript": "tsc --noEmit",
-    "example": "yarn --cwd Example"
+    "typescript": "tsc --noEmit"
   },
   "files": [
     "src",
