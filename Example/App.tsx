@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   StatusBar,
+  ScrollView,
 } from 'react-native';
 import {
   ActionSheetProvider,
@@ -107,12 +108,6 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <View style={styles.calendarInfoContainer}>
-        <Text>firstDay: {firstDay}</Text>
-        <Text>locale: {locale}</Text>
-        <Text>hideExtraDays: {`${hideExtraDays}`}</Text>
-        <Text>markedDates: {JSON.stringify(markedDates)}</Text>
-      </View>
       <SafeAreaView style={styles.container}>
         {loaded && (
           <Calendar
@@ -175,6 +170,13 @@ const App = () => {
         <TouchableOpacity onPress={resetCalendar} style={styles.button}>
           <Text style={styles.buttonText}>Reset calendar</Text>
         </TouchableOpacity>
+
+        <ScrollView style={styles.calendarInfoContainer}>
+          <Text>firstDay: {firstDay}</Text>
+          <Text>locale: {locale}</Text>
+          <Text>hideExtraDays: {`${hideExtraDays}`}</Text>
+          <Text>markedDates: {JSON.stringify(markedDates)}</Text>
+        </ScrollView>
       </SafeAreaView>
     </>
   );
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
   },
   container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   calendarInfoContainer: {
-    paddingTop: 30,
+    maxHeight: 100,
   },
   buttonsContainer: {
     justifyContent: 'center',

@@ -28,6 +28,7 @@
     "jest": true
   },
   "rules": {
+    "no-undef": "off",
     "jest/consistent-test-it": ["error", { "fn": "test" }],
     "react/jsx-sort-props": ["error"],
     "prettier/prettier": [
