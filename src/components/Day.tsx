@@ -33,10 +33,10 @@ const Day = ({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.4}
-      accessible
-      accessibilityRole="button"
       accessibilityLabel={day}
+      accessibilityRole="button"
+      accessible
+      activeOpacity={0.4}
       onPress={handleDayPress}
       style={[styles.container]}
     >
@@ -55,9 +55,40 @@ const Day = ({
   );
 };
 
-export default React.memo<DayComponentProps>(Day);
+const areEqual = (
+  {
+    selected,
+    day,
+    month,
+    year,
+    dayString,
+    color,
+    backgroundColor,
+    inSeries,
+    startingDay,
+    endingDay,
+  }: DayComponentProps,
+  nextProps: DayComponentProps
+): boolean => {
+  return (
+    selected === nextProps.selected &&
+    inSeries === nextProps.inSeries &&
+    startingDay === nextProps.startingDay &&
+    endingDay === nextProps.endingDay &&
+    backgroundColor === nextProps.backgroundColor &&
+    color === nextProps.color &&
+    day === nextProps.day &&
+    dayString === nextProps.dayString &&
+    month === nextProps.month &&
+    year === nextProps.year
+  );
+};
+
+export default React.memo<DayComponentProps>(Day, areEqual);
 
 const { width } = Dimensions.get('window');
+
+const backgroundSpacing = width / 25;
 
 const styles = StyleSheet.create({
   dayText: {
@@ -82,17 +113,21 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
+    padding: 0,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    marginHorizontal: 0,
   },
   dayContainer: {
     borderBottomLeftRadius: constants.touchableSize / 2,
     borderBottomRightRadius: constants.touchableSize / 2,
     borderTopLeftRadius: constants.touchableSize / 2,
     borderTopRightRadius: constants.touchableSize / 2,
-    padding: 10,
+    padding: (backgroundSpacing * 2) / 3,
+    marginHorizontal: 5,
   },
   container: {
     height: constants.touchableSize,
-    width: width / 7,
     alignItems: 'center',
     justifyContent: 'center',
   },

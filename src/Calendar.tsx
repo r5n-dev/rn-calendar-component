@@ -14,16 +14,18 @@ import {
   DayComponentProps,
   DayNamesComponentProps,
   MonthTitleComponentProps,
+  WeekComponentProps,
 } from './types';
 
 import { generateDates, constants, chunk, markedDatesForWeek } from './helpers';
-import { DayNames, Day, MonthTitle } from './components';
+import { DayNames, Day, MonthTitle, Week } from './components';
 import Locales from './Locales';
 
 type Props = {
   DayComponent?: NamedExoticComponent<DayComponentProps>;
   DayNamesComponent?: NamedExoticComponent<DayNamesComponentProps>;
   MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;
+  WeekComponent?: NamedExoticComponent<WeekComponentProps>;
 
   // key should match pattern `YYYY-MM-DD`
   markedDates?: MarkedDates;
@@ -44,6 +46,7 @@ const Calendar = ({
   DayComponent = Day,
   DayNamesComponent = DayNames,
   MonthTitleComponent = MonthTitle,
+  WeekComponent = Week,
 
   calendarHeight = 360,
   currentDay = todayDate,
@@ -120,21 +123,20 @@ const Calendar = ({
   }, [currentDay, months]);
 
   const renderWeek = (week: Array<CalendarDate>) => {
-    const weekKey = week.find(({ dayString }) => dayString) as CalendarDate;
+    const firstWeekDay = week.find(
+      ({ dayString }) => dayString
+    ) as CalendarDate;
 
     const weekMarkedDatesProps = markedDatesForWeek(week, markedDates);
 
     return (
-      <View key={weekKey.dayString} style={{ flexDirection: 'row' }}>
-        {week.map((item, index) => (
-          <DayComponent
-            key={item.dayString ? item.dayString : `${index}`}
-            onPress={onDayPress}
-            {...item}
-            {...(weekMarkedDatesProps[item.dayString] || {})}
-          />
-        ))}
-      </View>
+      <WeekComponent
+        DayComponent={DayComponent}
+        key={firstWeekDay.dayString}
+        markedDates={weekMarkedDatesProps}
+        onDayPress={onDayPress}
+        week={week}
+      />
     );
   };
 
@@ -173,12 +175,12 @@ const Calendar = ({
       initialNumToRender={1}
       initialScrollIndex={initialScrollIndex}
       keyExtractor={([month]) => month}
+      // @ts-ignore
+      ref={flatListRef}
       renderItem={renderMonth}
       style={[{ maxHeight: calendarHeight }, style]}
       viewabilityConfig={viewabilityConfig}
       windowSize={3}
-      // @ts-ignore
-      ref={flatListRef}
       {...flatListProps}
     />
   );

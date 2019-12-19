@@ -1,3 +1,5 @@
+import { NamedExoticComponent } from 'react';
+
 export type CalendarDate = {
   dayString: string;
   year: string;
@@ -35,6 +37,13 @@ export type DayComponentProps = CalendarDate &
   MarkedDate & {
     onPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
   };
+
+export type WeekComponentProps = {
+  week: Array<CalendarDate>;
+  onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
+  markedDates: MarkedDates;
+  DayComponent: NamedExoticComponent<DayComponentProps>;
+};
 
 export type DayNamesComponentProps = {
   dayNames: Array<string>;

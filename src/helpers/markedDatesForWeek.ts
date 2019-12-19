@@ -14,7 +14,9 @@ const withSeriesInfo = ({
 
   const indexes = markedDays
     .map(a => week.findIndex(({ dayString }: CalendarDate) => a === dayString))
-    .filter(i => i >= 0);
+    .filter(i => i >= 0)
+    .sort();
+
   if (!indexes.length) {
     return null;
   }
@@ -27,16 +29,18 @@ const withSeriesInfo = ({
     const current = indexes[index];
     const next = indexes[index + 1];
 
-    if (previous === undefined && next - current === 1) {
-      tmpSerie.push(current);
-    } else if (next === undefined && current - previous === 1) {
-      tmpSerie.push(current);
-    } else if (next - current === 1) {
+    if (
+      (previous === undefined && next - current === 1) ||
+      (next === undefined && current - previous === 1) ||
+      next - current === 1
+    ) {
       tmpSerie.push(current);
     } else if (current - previous === 1) {
       tmpSerie.push(current);
       series.push(tmpSerie);
       tmpSerie = [];
+    } else {
+      series.push([current]);
     }
   }
 
@@ -74,9 +78,9 @@ const withSeriesInfo = ({
 const markedDatesForWeek = (
   week: Array<CalendarDate>,
   markedDates?: MarkedDates
-): MarkedDates => {
+): MarkedDates | null => {
   if (!markedDates) {
-    return {};
+    return null;
   }
 
   const markedDatesWithSeriesInfo = withSeriesInfo({ week, markedDates });
@@ -85,10 +89,10 @@ const markedDatesForWeek = (
     markedDatesWithSeriesInfo &&
     Object.keys(markedDatesWithSeriesInfo).length
   ) {
-    return { ...markedDates, ...markedDatesWithSeriesInfo };
+    return markedDatesWithSeriesInfo;
   }
 
-  return markedDates;
+  return null;
 };
 
 export default markedDatesForWeek;
