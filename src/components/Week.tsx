@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import { WeekComponentProps } from '../types';
 
@@ -10,7 +10,7 @@ const Week = ({
   week,
 }: WeekComponentProps) => {
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={styles.container}>
       {week.map((item, index) => (
         <DayComponent
           key={item.dayString ? item.dayString : `${index}`}
@@ -24,3 +24,9 @@ const Week = ({
 };
 
 export default React.memo<WeekComponentProps>(Week);
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+  },
+});

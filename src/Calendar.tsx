@@ -40,8 +40,6 @@ type Props = {
   viewabilityConfig?: ViewabilityConfig;
 };
 
-const todayDate = new Date().toISOString().split('T')[0];
-
 const Calendar = ({
   DayComponent = Day,
   DayNamesComponent = DayNames,
@@ -49,7 +47,7 @@ const Calendar = ({
   WeekComponent = Week,
 
   calendarHeight = 360,
-  currentDay = todayDate,
+  currentDay = constants.todayDate,
   endISODate,
   firstDay = 0,
   locale = 'default',
@@ -180,7 +178,7 @@ const Calendar = ({
       renderItem={renderMonth}
       style={[{ maxHeight: calendarHeight }, style]}
       viewabilityConfig={viewabilityConfig}
-      windowSize={3}
+      windowSize={11}
       {...flatListProps}
     />
   );

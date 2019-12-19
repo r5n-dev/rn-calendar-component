@@ -3,11 +3,13 @@ import { View, StyleSheet, Text } from 'react-native';
 
 import { MonthTitleComponentProps } from '../types';
 
-const MonthTitle = ({ title }: MonthTitleComponentProps) => (
-  <View style={styles.container}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
-);
+const MonthTitle = ({ title }: MonthTitleComponentProps) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  );
+};
 
 export default React.memo<MonthTitleComponentProps>(MonthTitle);
 

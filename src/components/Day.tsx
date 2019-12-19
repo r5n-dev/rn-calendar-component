@@ -27,10 +27,6 @@ const Day = ({
     onPress && onPress({ day, month, year, dayString });
   }, [day, dayString, month, onPress, year]);
 
-  if (!day) {
-    return <View style={styles.container} />;
-  }
-
   return (
     <TouchableOpacity
       accessibilityLabel={day}
@@ -115,7 +111,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 0,
     padding: 0,
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: backgroundSpacing,
     marginHorizontal: 0,
   },
   dayContainer: {

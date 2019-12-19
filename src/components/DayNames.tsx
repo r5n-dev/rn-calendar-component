@@ -3,15 +3,17 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { DayNamesComponentProps } from '../types';
 
-const DayNames = ({ dayNames }: DayNamesComponentProps) => (
-  <View style={styles.container}>
-    {dayNames.map(dayName => (
-      <View style={styles.dayNameContainer} key={dayName}>
-        <Text>{dayName}</Text>
-      </View>
-    ))}
-  </View>
-);
+const DayNames = ({ dayNames }: DayNamesComponentProps) => {
+  return (
+    <View style={styles.container}>
+      {dayNames.map(dayName => (
+        <View key={dayName} style={styles.dayNameContainer}>
+          <Text>{dayName}</Text>
+        </View>
+      ))}
+    </View>
+  );
+};
 
 export default React.memo<DayNamesComponentProps>(DayNames);
 

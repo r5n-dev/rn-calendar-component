@@ -41,7 +41,7 @@ export type DayComponentProps = CalendarDate &
 export type WeekComponentProps = {
   week: Array<CalendarDate>;
   onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
-  markedDates: MarkedDates;
+  markedDates: MarkedDates | null;
   DayComponent: NamedExoticComponent<DayComponentProps>;
 };
 
