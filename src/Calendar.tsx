@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useMemo } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
 
 import { CalendarDate, Locale, CalendarItem } from './types';
 import { CalendarProps } from './componentTypes';
@@ -161,7 +161,7 @@ const Calendar = ({
       // @ts-ignore
       ref={flatListRef}
       renderItem={renderMonth}
-      style={[style, { maxHeight: calendarHeight }]}
+      style={[styles.container, style, { maxHeight: calendarHeight }]}
       viewabilityConfig={viewabilityConfig}
       windowSize={11}
       {...flatListProps}
@@ -170,3 +170,9 @@ const Calendar = ({
 };
 
 export default Calendar;
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+  },
+});
