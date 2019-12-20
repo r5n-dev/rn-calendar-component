@@ -31,6 +31,10 @@ export type MonthTitleComponentProps = {
 };
 
 export type CalendarProps = {
+  /**
+   * Component that is rendered as single day.
+   * Default is can be seen here ./components/Day.tsx
+   */
   DayComponent?: NamedExoticComponent<DayComponentProps>;
   DayNamesComponent?: NamedExoticComponent<DayNamesComponentProps>;
   MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;

@@ -27,7 +27,7 @@ const Day = ({
   year,
 }: DayComponentProps) => {
   const handleDayPress = useCallback(() => {
-    onPress && onPress({ day, month, year, dayString });
+    onPress?.({ day, month, year, dayString });
   }, [day, dayString, month, onPress, year]);
 
   if (!day) {
@@ -117,8 +117,10 @@ const backgroundSpacing = width / 25;
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    flex: 1,
     height: constants.touchableSize,
     justifyContent: 'center',
+    maxWidth: width / 7,
   },
   dayContainer: {
     borderBottomLeftRadius: constants.touchableSize / 2,

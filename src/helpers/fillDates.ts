@@ -24,17 +24,19 @@ const fillDates = ({
   const firstDate = dates[0];
   const startDayCap = firstDate.dayOfWeek - firstDay;
 
+  const fillCap = startDayCap >= 0 ? startDayCap : maxDayIndex;
+
   if (hideExtraDays) {
-    const fillCap = startDayCap >= 0 ? startDayCap : maxDayIndex;
     return [...Array(fillCap).fill({}), ...dates];
   } else {
     const startFillCap =
       startDayCap >= 0
-        ? previousMonthDates.length - startDayCap
-        : previousMonthDates.length - maxDayIndex;
+        ? previousMonthDates?.length - startDayCap
+        : previousMonthDates?.length - maxDayIndex;
+
     const startFillDates = (previousMonthDates
       ? previousMonthDates.slice(startFillCap)
-      : []
+      : Array(fillCap).fill({})
     ).map(item => ({ ...item, extraDay: true }));
 
     const lastDate = dates[dates.length - 1];
