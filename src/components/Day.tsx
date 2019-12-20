@@ -115,20 +115,23 @@ const { width } = Dimensions.get('window');
 const backgroundSpacing = width / 25;
 
 const styles = StyleSheet.create({
-  dayText: {
-    textAlign: 'center',
-    fontSize: 16,
-    width: 20,
+  container: {
+    alignItems: 'center',
+    height: constants.touchableSize,
+    justifyContent: 'center',
   },
-  todayText: {
-    fontWeight: '700',
-    color: 'dodgerblue',
-  },
-  startingRadius: {
+  dayContainer: {
     borderBottomLeftRadius: constants.touchableSize / 2,
-    borderBottomRightRadius: 0,
+    borderBottomRightRadius: constants.touchableSize / 2,
     borderTopLeftRadius: constants.touchableSize / 2,
-    borderTopRightRadius: 0,
+    borderTopRightRadius: constants.touchableSize / 2,
+    marginHorizontal: 5,
+    padding: (backgroundSpacing * 2) / 3,
+  },
+  dayText: {
+    fontSize: 16,
+    textAlign: 'center',
+    width: 20,
   },
   endingRadius: {
     borderBottomLeftRadius: 0,
@@ -149,17 +152,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: backgroundSpacing,
     marginHorizontal: 0,
   },
-  dayContainer: {
+  startingRadius: {
     borderBottomLeftRadius: constants.touchableSize / 2,
-    borderBottomRightRadius: constants.touchableSize / 2,
+    borderBottomRightRadius: 0,
     borderTopLeftRadius: constants.touchableSize / 2,
-    borderTopRightRadius: constants.touchableSize / 2,
-    padding: (backgroundSpacing * 2) / 3,
-    marginHorizontal: 5,
+    borderTopRightRadius: 0,
   },
-  container: {
-    height: constants.touchableSize,
-    alignItems: 'center',
-    justifyContent: 'center',
+  todayText: {
+    color: 'dodgerblue',
+    fontWeight: '700',
   },
 });

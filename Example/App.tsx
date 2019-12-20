@@ -192,25 +192,25 @@ export default () => (
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10,
     alignItems: 'center',
+    backgroundColor: 'teal',
+    borderRadius: 10,
     justifyContent: 'center',
     margin: 2,
-    borderRadius: 10,
-    backgroundColor: 'teal',
+    padding: 10,
   },
   buttonText: {
-    fontSize: 16,
     color: 'white',
-  },
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  calendarInfoContainer: {
-    maxHeight: 100,
+    fontSize: 16,
   },
   buttonsContainer: {
-    justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'center',
   },
+  calendarInfoContainer: {
+    maxHeight: 100,
+  },
+  container: { alignItems: 'center', flex: 1, justifyContent: 'center' },
 });
