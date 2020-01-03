@@ -1,5 +1,5 @@
-import React, { useRef, useCallback, useMemo } from 'react';
-import { Dimensions, View, FlatList, StyleSheet } from 'react-native';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
+import { View, FlatList, StyleSheet } from 'react-native';
 
 import { CalendarDate, Locale, CalendarItem } from './types';
 import { CalendarProps } from './componentTypes';
@@ -11,7 +11,7 @@ import {
   generateDates,
   markedDatesForWeek,
 } from './helpers';
-import { DayNames, Day, MonthTitle, Week } from './components';
+import { Arrows, DayNames, Day, MonthTitle, Week } from './components';
 import Locales from './Locales';
 
 const Calendar = ({
@@ -24,29 +24,21 @@ const Calendar = ({
   currentDay = constants.todayDate,
   endISODate,
   firstDay = 0,
+  hideArrows = true,
   hideExtraDays = true,
+  horizontal,
   locale = 'en',
   markedDates,
   onDayPress,
+  scrollEnabled = true,
   startISODate,
   style,
   theme,
-  viewabilityConfig = {
-    itemVisiblePercentThreshold: 1,
-  },
-  horizontal,
+  viewabilityConfig = { itemVisiblePercentThreshold: 1 },
   ...flatListProps
 }: CalendarProps) => {
   const flatListRef = useRef<FlatList<CalendarItem>>();
-
-  const getItemLayout = useCallback(
-    (_data: NotWorthIt, index: number) => ({
-      index,
-      length: calendarHeight,
-      offset: calendarHeight * index,
-    }),
-    [calendarHeight]
-  );
+  const [listWidth, setListWidth] = useState(calendarHeight);
 
   const locales: Locale = useMemo(() => {
     let selectedLocale = { ...(Locales[locale] || Locales.defaultLocale) };
@@ -97,6 +89,29 @@ const Calendar = ({
     return monthIndex > 0 ? monthIndex : 0;
   }, [currentDay, months]);
 
+  const getItemLayout = useCallback(
+    (_data: NotWorthIt, index: number) => ({
+      index,
+      length: horizontal ? listWidth : calendarHeight,
+      offset: (horizontal ? listWidth : calendarHeight) * index,
+    }),
+    [calendarHeight, listWidth]
+  );
+
+  const handleArrowPress = useCallback((direction: 'left' | 'right') => {
+    if (direction === 'left') {
+      flatListRef.current?.scrollToIndex({
+        index: 0,
+        animated: scrollEnabled,
+      });
+    } else if (direction === 'right') {
+      flatListRef.current?.scrollToIndex({
+        index: 1,
+        animated: scrollEnabled,
+      });
+    }
+  }, []);
+
   const renderWeek = (week: Array<CalendarDate>) => {
     const firstWeekDay = week.find(
       ({ dayString }) => dayString
@@ -109,6 +124,7 @@ const Calendar = ({
         DayComponent={DayComponent}
         dayTheme={theme?.day}
         key={firstWeekDay.dayString}
+        listWidth={listWidth}
         markedDates={weekMarkedDatesProps}
         onDayPress={onDayPress}
         theme={theme?.week}
@@ -136,7 +152,7 @@ const Calendar = ({
     const [year, monthString] = month.split('-');
 
     return (
-      <View key={month} style={horizontal && styles.horizontalMonth}>
+      <View key={month} style={horizontal && { width: listWidth }}>
         <MonthTitleComponent
           theme={theme?.monthTitle}
           title={`${locales.monthNames[Number(monthString) - 1]} ${year}`}
@@ -153,34 +169,43 @@ const Calendar = ({
   };
 
   return (
-    <FlatList
-      data={months}
-      getItemLayout={getItemLayout}
-      horizontal={horizontal}
-      initialNumToRender={1}
-      initialScrollIndex={initialScrollIndex}
-      keyExtractor={([month]) => month}
-      pagingEnabled={horizontal}
-      // @ts-ignore
-      ref={flatListRef}
-      renderItem={renderMonth}
-      style={[styles.container, style, { maxHeight: calendarHeight }]}
-      viewabilityConfig={viewabilityConfig}
-      windowSize={11}
-      {...flatListProps}
-    />
+    <View
+      onLayout={({
+        nativeEvent: {
+          layout: { width },
+        },
+      }) => {
+        setListWidth(width);
+      }}
+      style={styles.container}
+    >
+      {horizontal && !hideArrows && <Arrows onArrowPress={handleArrowPress} />}
+
+      <FlatList
+        data={months}
+        getItemLayout={getItemLayout}
+        horizontal={horizontal}
+        initialNumToRender={1}
+        initialScrollIndex={initialScrollIndex}
+        keyExtractor={([month]) => month}
+        pagingEnabled={horizontal}
+        // @ts-ignore
+        ref={flatListRef}
+        renderItem={renderMonth}
+        scrollEnabled={scrollEnabled}
+        style={[style, { maxHeight: calendarHeight }]}
+        viewabilityConfig={viewabilityConfig}
+        windowSize={11}
+        {...flatListProps}
+      />
+    </View>
   );
 };
 
 export default Calendar;
 
-const { width } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-  },
-  horizontalMonth: {
-    width,
   },
 });

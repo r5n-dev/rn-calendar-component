@@ -1,11 +1,5 @@
 import React, { useCallback } from 'react';
-import {
-  View,
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { DayComponentProps } from '../../componentTypes';
 import { constants } from '../../helpers';
@@ -21,6 +15,7 @@ const Day = ({
   endingDay,
   extraDay,
   inSeries,
+  listWidth,
   month,
   onPress,
   selected,
@@ -35,8 +30,8 @@ const Day = ({
 
   if (!day) {
     return (
-      <View style={styles.container}>
-        <View style={styles.dayContainer}>
+      <View style={[styles.container, { maxWidth: listWidth / 7 }]}>
+        <View style={[styles.dayContainer, { padding: listWidth / 40 }]}>
           <Text style={styles.dayText} />
         </View>
       </View>
@@ -50,12 +45,13 @@ const Day = ({
       accessible
       activeOpacity={0.4}
       onPress={handleDayPress}
-      style={styles.container}
+      style={[styles.container, { maxWidth: listWidth / 7 }]}
     >
       <View
         style={[
           styles.dayContainer,
-          inSeries && styles.inSeriesRadius,
+          { padding: listWidth / 40 },
+          inSeries && [styles.inSeriesRadius, { width: listWidth / 7 }],
           startingDay && styles.startingRadius,
           endingDay && styles.endingRadius,
 
@@ -117,15 +113,12 @@ const areEqual = (
 
 export default React.memo<DayComponentProps>(Day, areEqual);
 
-const { width } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
     height: constants.touchableSize,
     justifyContent: 'center',
-    maxWidth: width / 7,
   },
   dayContainer: {
     borderBottomLeftRadius: constants.touchableSize / 2,
@@ -133,7 +126,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: constants.touchableSize / 2,
     borderTopRightRadius: constants.touchableSize / 2,
     marginHorizontal: 5,
-    padding: width / 40,
   },
   dayText: {
     fontSize: 16,
@@ -157,7 +149,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 0,
     justifyContent: 'center',
     marginHorizontal: 0,
-    width: width / 7,
   },
   startingRadius: {
     borderBottomLeftRadius: constants.touchableSize / 2,

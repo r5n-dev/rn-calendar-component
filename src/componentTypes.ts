@@ -5,14 +5,16 @@ import { CalendarTheme, CalendarDate, MarkedDate, MarkedDates } from './types';
 
 export type DayComponentProps = CalendarDate &
   MarkedDate & {
-    theme?: CalendarTheme['day'];
     extraDay?: boolean;
-    today: boolean;
+    listWidth: number;
     onPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
+    theme?: CalendarTheme['day'];
+    today: boolean;
   };
 
 export type WeekComponentProps = {
   DayComponent: NamedExoticComponent<DayComponentProps>;
+  listWidth: number;
   dayTheme?: CalendarTheme['day'];
   markedDates: MarkedDates | null;
   onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
@@ -30,12 +32,11 @@ export type MonthTitleComponentProps = {
   title: string;
 };
 
-export type CalendarProps = {
-  DayComponent?: NamedExoticComponent<DayComponentProps>;
-  DayNamesComponent?: NamedExoticComponent<DayNamesComponentProps>;
-  MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;
-  WeekComponent?: NamedExoticComponent<WeekComponentProps>;
+export type ArrowsComponentProps = {
+  onArrowPress: (direction: 'left' | 'right') => void;
+};
 
+export type CalendarProps = {
   /**
    * Starting date for calendar. i.e. 2020-01-01.
    */
@@ -47,14 +48,19 @@ export type CalendarProps = {
   endISODate: string;
 
   /**
-   * Height of calendar view.
-   */
-  calendarHeight?: number;
-
-  /**
    * Day to which calendar is initially scrolled. Default is today.
    */
   currentDay?: string;
+
+  /**
+   * Key string which exists in Locales object.
+   */
+  locale?: string;
+
+  /**
+   * Height of calendar view.
+   */
+  calendarHeight?: number;
 
   /**
    * First day of calendar. 0 means Sunday, 1 means Monday.
@@ -67,19 +73,24 @@ export type CalendarProps = {
   hideExtraDays?: boolean;
 
   /**
-   * Key string which exists in Locales object.
+   * Hides arrows for switching month (only works with `horizontal` prop on true).
    */
-  locale?: string;
-
-  /**
-   * Callback after day is pressed.
-   */
-  onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
+  hideArrows?: boolean;
 
   /**
    * If true, renders calendar horizontally. Additionally, adds `pagingEnabled` to FlatList.
    */
   horizontal?: boolean;
+
+  /**
+   * Defines if Calendar can be scrolled
+   */
+  scrollEnabled?: boolean;
+
+  /**
+   * Callback after day is pressed.
+   */
+  onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
 
   /**
    * Style object passed to main component (FlatList).
@@ -100,4 +111,9 @@ export type CalendarProps = {
    * TODO
    */
   theme?: CalendarTheme;
+
+  DayComponent?: NamedExoticComponent<DayComponentProps>;
+  DayNamesComponent?: NamedExoticComponent<DayNamesComponentProps>;
+  MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;
+  WeekComponent?: NamedExoticComponent<WeekComponentProps>;
 };
