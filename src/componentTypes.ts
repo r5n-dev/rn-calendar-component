@@ -52,7 +52,7 @@ export type CalendarProps = {
   calendarHeight?: number;
 
   /**
-   * Current day highlighted on start. Default is today.
+   * Day to which calendar is initially scrolled. Default is today.
    */
   currentDay?: string;
 
@@ -75,6 +75,11 @@ export type CalendarProps = {
    * Callback after day is pressed.
    */
   onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
+
+  /**
+   * If true, renders calendar vertically. Additionally, adds pagingEnabled to FlatList.
+   */
+  horizontal?: boolean;
 
   /**
    * Style object passed to main component (FlatList).
