@@ -10,6 +10,11 @@ module.exports = {
       version: 'detect',
     },
     'import/core-modules': ['rn-calendar'],
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 
   extends: ['satya164', 'plugin:react-native/all'],

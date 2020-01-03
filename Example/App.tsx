@@ -143,7 +143,7 @@ const App = () => {
                   options: [...Object.keys(options), 'Done'],
                   cancelButtonIndex: Object.keys(options).length,
                 },
-                optionIndex => {
+                (optionIndex: number) => {
                   const optionsKeys = Object.keys(options);
                   const key = optionsKeys[optionIndex];
                   if (key) {
