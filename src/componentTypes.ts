@@ -1,5 +1,5 @@
 import { NamedExoticComponent } from 'react';
-import { ViewabilityConfig } from 'react-native';
+import { ViewabilityConfig, FlatListProps } from 'react-native';
 
 import { CalendarTheme, CalendarDate, MarkedDate, MarkedDates } from './types';
 
@@ -33,7 +33,9 @@ export type MonthTitleComponentProps = {
 };
 
 export type ArrowsComponentProps = {
+  leftArrowDisabled: boolean;
   onArrowPress: (direction: 'left' | 'right') => void;
+  rightArrowDisabled: boolean;
 };
 
 export type CalendarProps = {
@@ -116,4 +118,7 @@ export type CalendarProps = {
   DayNamesComponent?: NamedExoticComponent<DayNamesComponentProps>;
   MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;
   WeekComponent?: NamedExoticComponent<WeekComponentProps>;
+
+  onScrollBeginDrag?: FlatListProps<Inexpressible>['onScrollBeginDrag'];
+  onMomentumScrollEnd?: FlatListProps<Inexpressible>['onMomentumScrollEnd'];
 };

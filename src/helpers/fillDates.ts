@@ -25,9 +25,15 @@ const fillDates = ({
   const startDayCap = firstDate.dayOfWeek - firstDay;
 
   const fillCap = startDayCap >= 0 ? startDayCap : maxDayIndex;
+  const lastDate = dates[dates.length - 1];
+  const endDayCap = maxDayIndex - lastDate.dayOfWeek + firstDay;
 
   if (hideExtraDays) {
-    return [...Array(fillCap).fill({}), ...dates];
+    return [
+      ...Array(fillCap).fill({}),
+      ...dates,
+      ...Array(maxDayIndex - lastDate.dayOfWeek).fill({}),
+    ];
   } else {
     const startFillCap =
       startDayCap >= 0
@@ -38,10 +44,6 @@ const fillDates = ({
       ? previousMonthDates.slice(startFillCap)
       : Array(fillCap).fill({})
     ).map(item => ({ ...item, extraDay: true }));
-
-    const lastDate = dates[dates.length - 1];
-
-    const endDayCap = maxDayIndex - lastDate.dayOfWeek + firstDay;
 
     const endFillDates = (nextMonthDates
       ? nextMonthDates.slice(0, endDayCap)
