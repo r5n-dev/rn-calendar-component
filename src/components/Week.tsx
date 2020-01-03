@@ -21,7 +21,7 @@ const Week = ({
           theme={dayTheme}
           today={constants.todayDate === item.dayString}
           {...item}
-          {...(markedDates && markedDates[item.dayString])}
+          {...markedDates?.[item.dayString]}
         />
       ))}
     </View>
