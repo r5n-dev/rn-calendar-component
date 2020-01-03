@@ -1,5 +1,11 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from 'react-native';
 
 import { CalendarDate, Locale, CalendarItem } from './types';
 import { CalendarProps } from './componentTypes';
@@ -35,11 +41,12 @@ const Calendar = ({
   style,
   theme,
   viewabilityConfig = { itemVisiblePercentThreshold: 1 },
+  onMomentumScrollEnd,
+  onScrollBeginDrag,
   ...flatListProps
 }: CalendarProps) => {
   const flatListRef = useRef<FlatList<CalendarItem>>();
-  const [listWidth, setListWidth] = useState(calendarHeight);
-
+  const scrolling = useRef<boolean>(false);
   const locales: Locale = useMemo(() => {
     let selectedLocale = { ...(Locales[locale] || Locales.defaultLocale) };
 
@@ -89,6 +96,11 @@ const Calendar = ({
     return monthIndex > 0 ? monthIndex : 0;
   }, [currentDay, months]);
 
+  const [listWidth, setListWidth] = useState(calendarHeight);
+  const [currentMonthIndex, setCurrentMonthIndex] = useState(
+    initialScrollIndex
+  );
+
   const getItemLayout = useCallback(
     (_data: NotWorthIt, index: number) => ({
       index,
@@ -98,19 +110,55 @@ const Calendar = ({
     [calendarHeight, listWidth]
   );
 
-  const handleArrowPress = useCallback((direction: 'left' | 'right') => {
-    if (direction === 'left') {
-      flatListRef.current?.scrollToIndex({
-        index: 0,
-        animated: scrollEnabled,
-      });
-    } else if (direction === 'right') {
-      flatListRef.current?.scrollToIndex({
-        index: 1,
-        animated: scrollEnabled,
-      });
-    }
-  }, []);
+  const handleArrowPress = useCallback(
+    (direction: 'left' | 'right') => {
+      if (direction === 'left') {
+        const nextMonthIndex = currentMonthIndex - 1;
+
+        if (nextMonthIndex >= 0) {
+          setCurrentMonthIndex(nextMonthIndex);
+          flatListRef.current?.scrollToOffset({
+            offset: nextMonthIndex * listWidth,
+            animated: scrollEnabled,
+          });
+        }
+      } else if (direction === 'right') {
+        const nextMonthIndex = currentMonthIndex + 1;
+
+        if (nextMonthIndex < months.length) {
+          setCurrentMonthIndex(nextMonthIndex);
+          flatListRef.current?.scrollToOffset({
+            offset: (currentMonthIndex + 1) * listWidth,
+            animated: scrollEnabled,
+          });
+        }
+      }
+    },
+    [listWidth, currentMonthIndex]
+  );
+
+  const handleMomentumScrollEnd = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      onMomentumScrollEnd?.(event);
+
+      scrolling.current = false;
+      const { x } = event.nativeEvent.contentOffset;
+      const nextMonthIndex = Math.floor(x / listWidth);
+      if (scrolling && nextMonthIndex !== currentMonthIndex) {
+        setCurrentMonthIndex(nextMonthIndex);
+      }
+    },
+    [currentMonthIndex, listWidth]
+  );
+
+  const handleScrollBeginDrag = useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      onScrollBeginDrag?.(event);
+
+      scrolling.current = true;
+    },
+    []
+  );
 
   const renderWeek = (week: Array<CalendarDate>) => {
     const firstWeekDay = week.find(
@@ -179,7 +227,13 @@ const Calendar = ({
       }}
       style={styles.container}
     >
-      {horizontal && !hideArrows && <Arrows onArrowPress={handleArrowPress} />}
+      {horizontal && !hideArrows && (
+        <Arrows
+          leftArrowDisabled={currentMonthIndex === 0}
+          onArrowPress={handleArrowPress}
+          rightArrowDisabled={currentMonthIndex === months.length - 1}
+        />
+      )}
 
       <FlatList
         data={months}
@@ -188,6 +242,7 @@ const Calendar = ({
         initialNumToRender={1}
         initialScrollIndex={initialScrollIndex}
         keyExtractor={([month]) => month}
+        onScrollBeginDrag={handleScrollBeginDrag}
         pagingEnabled={horizontal}
         // @ts-ignore
         ref={flatListRef}
@@ -196,6 +251,9 @@ const Calendar = ({
         style={[style, { maxHeight: calendarHeight }]}
         viewabilityConfig={viewabilityConfig}
         windowSize={11}
+        {...(horizontal && {
+          onMomentumScrollEnd: handleMomentumScrollEnd,
+        })}
         {...flatListProps}
       />
     </View>

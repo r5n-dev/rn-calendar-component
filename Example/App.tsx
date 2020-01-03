@@ -113,6 +113,7 @@ const App = () => {
   const [firstDay, setFirstDay] = useState<0 | 1>(0);
   const [locale, setLocale] = useState<'en' | 'pl'>('en');
   const [hideExtraDays, setHideExtraDays] = useState<boolean>(true);
+  const [horizontal, setHorizontal] = useState<boolean>(false);
 
   const resetCalendar = () => {
     setLoaded(false);
@@ -133,17 +134,21 @@ const App = () => {
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        {loaded && (
-          <Calendar
-            endISODate="2020-03-31"
-            firstDay={firstDay}
-            hideExtraDays={hideExtraDays}
-            locale={locale}
-            markedDates={markedDates}
-            onDayPress={handleDayPress}
-            startISODate="2020-01-01"
-          />
-        )}
+        <View style={styles.calendarWrapper}>
+          {loaded && (
+            <Calendar
+              endISODate="2020-03-31"
+              firstDay={firstDay}
+              hideArrows={false}
+              hideExtraDays={hideExtraDays}
+              horizontal={horizontal}
+              locale={locale}
+              markedDates={markedDates}
+              onDayPress={handleDayPress}
+              startISODate="2020-01-01"
+            />
+          )}
+        </View>
 
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
@@ -188,6 +193,13 @@ const App = () => {
             style={styles.button}
           >
             <Text style={styles.buttonText}>Show extra dates</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => setHorizontal(horizontal => !horizontal)}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Toggle direction</Text>
           </TouchableOpacity>
         </View>
 
@@ -236,5 +248,6 @@ const styles = StyleSheet.create({
   calendarInfoContainer: {
     maxHeight: 100,
   },
+  calendarWrapper: { width: 300 },
   container: { alignItems: 'center', flex: 1, justifyContent: 'center' },
 });

@@ -5,19 +5,25 @@ import arrow from '../assets/arrow.png';
 import { constants } from '../helpers';
 import { ArrowsComponentProps } from '../componentTypes';
 
-const Arrows = ({ onArrowPress }: ArrowsComponentProps) => {
+const Arrows = ({
+  onArrowPress,
+  leftArrowDisabled,
+  rightArrowDisabled,
+}: ArrowsComponentProps) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
+        disabled={leftArrowDisabled}
         onPress={() => onArrowPress('left')}
-        style={styles.leftArrow}
+        style={[styles.leftArrow, leftArrowDisabled && styles.disabledArrow]}
       >
         <Image source={arrow} style={styles.arrowIcon} />
       </TouchableOpacity>
 
       <TouchableOpacity
+        disabled={rightArrowDisabled}
         onPress={() => onArrowPress('right')}
-        style={styles.rightArrow}
+        style={[styles.rightArrow, rightArrowDisabled && styles.disabledArrow]}
       >
         <Image source={arrow} style={styles.arrowIcon} />
       </TouchableOpacity>
@@ -35,6 +41,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     zIndex: 1,
+  },
+  disabledArrow: {
+    opacity: 0.5,
   },
   leftArrow: {
     left: constants.touchableSize * 0.8,
