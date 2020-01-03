@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useCallback, useMemo } from 'react';
 import { Dimensions, View, FlatList, StyleSheet } from 'react-native';
 
 import { CalendarDate, Locale, CalendarItem } from './types';
@@ -21,7 +21,7 @@ const Calendar = ({
   WeekComponent = Week,
 
   calendarHeight = 360,
-  // currentDay = constants.todayDate,
+  currentDay = constants.todayDate,
   endISODate,
   firstDay = 0,
   hideExtraDays = true,
@@ -38,6 +38,15 @@ const Calendar = ({
   ...flatListProps
 }: CalendarProps) => {
   const flatListRef = useRef<FlatList<CalendarItem>>();
+
+  const getItemLayout = useCallback(
+    (_data: NotWorthIt, index: number) => ({
+      index,
+      length: calendarHeight,
+      offset: calendarHeight * index,
+    }),
+    [calendarHeight]
+  );
 
   const locales: Locale = useMemo(() => {
     let selectedLocale = { ...(Locales[locale] || Locales.defaultLocale) };
@@ -81,12 +90,12 @@ const Calendar = ({
     [dates]
   );
 
-  // const initialScrollIndex = useMemo(() => {
-  //   const currentMonth = currentDay.split(/-(?=[^-]+$)/)[0];
-  //   const monthIndex = months.findIndex(([month]) => month === currentMonth);
+  const initialScrollIndex = useMemo(() => {
+    const currentMonth = currentDay.split(/-(?=[^-]+$)/)[0];
+    const monthIndex = months.findIndex(([month]) => month === currentMonth);
 
-  //   return monthIndex > 0 ? monthIndex : 0;
-  // }, [currentDay, months]);
+    return monthIndex > 0 ? monthIndex : 0;
+  }, [currentDay, months]);
 
   const renderWeek = (week: Array<CalendarDate>) => {
     const firstWeekDay = week.find(
@@ -146,8 +155,10 @@ const Calendar = ({
   return (
     <FlatList
       data={months}
+      getItemLayout={getItemLayout}
       horizontal={horizontal}
       initialNumToRender={1}
+      initialScrollIndex={initialScrollIndex}
       keyExtractor={([month]) => month}
       pagingEnabled={horizontal}
       // @ts-ignore
