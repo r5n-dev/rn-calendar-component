@@ -5,7 +5,7 @@ import { MonthTitleComponentProps } from '../componentTypes';
 
 const MonthTitle = ({ title, theme }: MonthTitleComponentProps) => {
   return (
-    <View style={[styles.container, theme?.container]}>
+    <View pointerEvents="none" style={[styles.container, theme?.container]}>
       <Text style={[styles.title, theme?.text]}>{title}</Text>
     </View>
   );

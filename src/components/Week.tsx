@@ -7,6 +7,7 @@ import { WeekComponentProps } from '../componentTypes';
 const Week = ({
   DayComponent,
   dayTheme,
+  listWidth,
   markedDates,
   onDayPress,
   theme,
@@ -17,6 +18,7 @@ const Week = ({
       {week.map((item, index) => (
         <DayComponent
           key={item.dayString ? item.dayString : `${index}`}
+          listWidth={listWidth}
           onPress={onDayPress}
           theme={dayTheme}
           today={constants.todayDate === item.dayString}
