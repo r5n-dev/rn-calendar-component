@@ -14,8 +14,6 @@ const Dots = ({ dots, selected }: Props) => {
     return null;
   }
 
-  console.log(dots);
-
   return (
     <View style={styles.container}>
       {Object.keys(dots).map(key => {

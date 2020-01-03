@@ -77,7 +77,7 @@ export type CalendarProps = {
   onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
 
   /**
-   * If true, renders calendar vertically. Additionally, adds pagingEnabled to FlatList.
+   * If true, renders calendar horizontally. Additionally, adds `pagingEnabled` to FlatList.
    */
   horizontal?: boolean;
 

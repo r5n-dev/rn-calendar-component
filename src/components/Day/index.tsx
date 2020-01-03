@@ -43,10 +43,6 @@ const Day = ({
     );
   }
 
-  if (dots) {
-    console.log(dots);
-  }
-
   return (
     <TouchableOpacity
       accessibilityLabel={day}
