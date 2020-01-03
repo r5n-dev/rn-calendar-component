@@ -1,14 +1,16 @@
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Title, Story, Props } from '@storybook/addon-docs/blocks';
 import { Calendar } from '../../src';
 
-<Meta title="Props" component={Calendar} />
-
-# Calendar
-
-<Story name="basic">
-  <Calendar>Label</Calendar>
-</Story>
+<Meta title="Calendar|Props" component={Calendar} />
 
 ## Props
 
-<Props of={Calendar} />
+<Props
+  of={Calendar}
+  exclude={[
+    'DayComponent',
+    'DayNamesComponent',
+    'MonthTitleComponent',
+    'WeekComponent',
+  ]}
+/>

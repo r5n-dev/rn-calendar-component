@@ -112,8 +112,6 @@ export default React.memo<DayComponentProps>(Day, areEqual);
 
 const { width } = Dimensions.get('window');
 
-const backgroundSpacing = width / 25;
-
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: constants.touchableSize / 2,
     borderTopRightRadius: constants.touchableSize / 2,
     marginHorizontal: 5,
-    padding: (backgroundSpacing * 2) / 3,
+    padding: width / 45,
   },
   dayText: {
     fontSize: 16,
@@ -145,14 +143,14 @@ const styles = StyleSheet.create({
     color: 'lightgrey',
   },
   inSeriesRadius: {
+    alignItems: 'center',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    padding: 0,
-    paddingVertical: 10,
-    paddingHorizontal: backgroundSpacing,
+    justifyContent: 'center',
     marginHorizontal: 0,
+    width: width / 7,
   },
   startingRadius: {
     borderBottomLeftRadius: constants.touchableSize / 2,
