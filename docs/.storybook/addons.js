@@ -1,1 +1,2 @@
-import '@storybook/addon-docs';
+import '@storybook/addon-docs/register';
+import '@storybook/addon-options/register';

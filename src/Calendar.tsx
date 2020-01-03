@@ -25,7 +25,7 @@ const Calendar = ({
   endISODate,
   firstDay = 0,
   hideExtraDays = true,
-  locale = 'default',
+  locale = 'en',
   markedDates,
   onDayPress,
   startISODate,
@@ -48,7 +48,7 @@ const Calendar = ({
   );
 
   const locales: Locale = useMemo(() => {
-    let selectedLocale = { ...Locales[locale] };
+    let selectedLocale = { ...(Locales[locale] || Locales.defaultLocale) };
 
     if (firstDay) {
       const [dayName, ...restDayNames] = selectedLocale.dayNames;

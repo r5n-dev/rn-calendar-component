@@ -98,7 +98,6 @@ const App = () => {
   };
 
   const handleDayPress = (day: { dayString: string }) => {
-    console.log(day);
     setMarkedDates(markedDates => ({
       ...markedDates,
       [day.dayString]: { selected: true },

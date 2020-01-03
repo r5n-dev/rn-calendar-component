@@ -8,10 +8,15 @@
 //   firstDay,
 // })
 
+// TODO
+
 describe('fillDates', () => {
   describe('when firstDay is equal 0', () => {
     describe('when hideExtraDays is true', () => {
-      describe('when month starts with sunday', () => {});
+      describe('when month starts with sunday', () => {
+        test.todo('TODO');
+      });
+
       describe('when month starts with monday', () => {});
       describe('when month starts from tuesday to saturday', () => {});
 
