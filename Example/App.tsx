@@ -68,6 +68,24 @@ const singleDayWithDifferentColors = {
   [todayDate]: { selected: true, backgroundColor: 'red', color: 'white' },
 };
 
+const singleDayWithDot = {
+  [todayDate]: { dots: { someKey: { color: 'red' } } },
+};
+
+const singleSelectedDayWithDot = {
+  [todayDate]: {
+    selected: true,
+    dots: { someKey: { selectedColor: 'black' } },
+  },
+};
+
+const singleSelectedDayWithMultipleDots = {
+  [todayDate]: {
+    selected: true,
+    dots: { someKey: { color: 'red' }, anotherKey: { color: 'green' } },
+  },
+};
+
 const week = {
   [`${currentMonth}-01`]: { selected: true },
   [`${currentMonth}-02`]: { selected: true },
@@ -78,7 +96,14 @@ const week = {
   [`${currentMonth}-07`]: { selected: true },
 };
 
-const options = { singleDay, singleDayWithDifferentColors, week };
+const options = {
+  singleDay,
+  singleDayWithDifferentColors,
+  singleDayWithDot,
+  singleSelectedDayWithDot,
+  singleSelectedDayWithMultipleDots,
+  week,
+};
 
 const App = () => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -110,13 +135,13 @@ const App = () => {
       <SafeAreaView style={styles.container}>
         {loaded && (
           <Calendar
-            endISODate="2020-12-31"
+            endISODate="2020-03-31"
             firstDay={firstDay}
             hideExtraDays={hideExtraDays}
             locale={locale}
             markedDates={markedDates}
             onDayPress={handleDayPress}
-            startISODate="2018-01-01"
+            startISODate="2020-01-01"
           />
         )}
 
