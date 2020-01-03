@@ -1,5 +1,6 @@
 export default {
   // Styles
+  dotSize: 6,
   touchableSize: 48,
 
   // Values

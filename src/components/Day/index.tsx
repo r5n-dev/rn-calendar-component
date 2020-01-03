@@ -7,14 +7,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { DayComponentProps } from '../componentTypes';
-import { constants } from '../helpers';
+import { DayComponentProps } from '../../componentTypes';
+import { constants } from '../../helpers';
+
+import Dots from './Dots';
 
 const Day = ({
   backgroundColor = 'turquoise',
   color = 'black',
   day,
   dayString,
+  dots,
   endingDay,
   extraDay,
   inSeries,
@@ -38,6 +41,10 @@ const Day = ({
         </View>
       </View>
     );
+  }
+
+  if (dots) {
+    console.log(dots);
   }
 
   return (
@@ -74,6 +81,8 @@ const Day = ({
         >
           {day}
         </Text>
+
+        <Dots dots={dots} selected={selected} />
       </View>
     </TouchableOpacity>
   );
@@ -81,16 +90,17 @@ const Day = ({
 
 const areEqual = (
   {
-    selected,
-    day,
-    month,
-    year,
-    dayString,
-    color,
     backgroundColor,
-    inSeries,
-    startingDay,
+    color,
+    day,
+    dayString,
+    dots,
     endingDay,
+    inSeries,
+    month,
+    selected,
+    startingDay,
+    year,
   }: DayComponentProps,
   nextProps: DayComponentProps
 ): boolean => {
@@ -104,7 +114,8 @@ const areEqual = (
     day === nextProps.day &&
     dayString === nextProps.dayString &&
     month === nextProps.month &&
-    year === nextProps.year
+    year === nextProps.year &&
+    dots === nextProps.dots
   );
 };
 
@@ -126,7 +137,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: constants.touchableSize / 2,
     borderTopRightRadius: constants.touchableSize / 2,
     marginHorizontal: 5,
-    padding: width / 45,
+    padding: width / 40,
   },
   dayText: {
     fontSize: 16,

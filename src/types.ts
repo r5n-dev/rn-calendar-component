@@ -21,13 +21,21 @@ export type Locales = {
   [key: string]: Locale;
 };
 
+export type Dots = {
+  [key: string]: {
+    color: string;
+    selectedColor?: string;
+  };
+};
+
 export type MarkedDate = {
-  color?: string;
   backgroundColor?: string;
-  selected?: boolean;
+  color?: string;
+  dots?: Dots;
   endingDay?: boolean;
-  startingDay?: boolean;
   inSeries?: boolean;
+  selected?: boolean;
+  startingDay?: boolean;
 };
 
 export type MarkedDates = {
