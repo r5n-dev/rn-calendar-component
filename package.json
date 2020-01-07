@@ -1,5 +1,5 @@
 {
-  "name": "rn-calendar",
+  "name": "@versum/rn-calendar",
   "description": "React-Native Calendar",
   "version": "0.0.1",
   "license": "MIT",
@@ -7,6 +7,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com:versum/rn-calendar.git"
+  },
+  "publishConfig": {
+    "registry":"https://npm.pkg.github.com/"
   },
   "main": "lib/commonjs/index.js",
   "react-native": "src/index.tsx",
