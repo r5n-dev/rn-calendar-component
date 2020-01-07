@@ -119,6 +119,5 @@ export type CalendarProps = {
   MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;
   WeekComponent?: NamedExoticComponent<WeekComponentProps>;
 
-  onScrollBeginDrag?: FlatListProps<Inexpressible>['onScrollBeginDrag'];
   onMomentumScrollEnd?: FlatListProps<Inexpressible>['onMomentumScrollEnd'];
 };

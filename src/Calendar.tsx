@@ -42,11 +42,9 @@ const Calendar = ({
   theme,
   viewabilityConfig = { itemVisiblePercentThreshold: 1 },
   onMomentumScrollEnd,
-  onScrollBeginDrag,
   ...flatListProps
 }: CalendarProps) => {
   const flatListRef = useRef<FlatList<CalendarItem>>();
-  const scrolling = useRef<boolean>(false);
   const locales: Locale = useMemo(() => {
     let selectedLocale = { ...(Locales[locale] || Locales.defaultLocale) };
 
@@ -141,23 +139,13 @@ const Calendar = ({
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
       onMomentumScrollEnd?.(event);
 
-      scrolling.current = false;
       const { x } = event.nativeEvent.contentOffset;
       const nextMonthIndex = Math.floor(x / listWidth);
-      if (scrolling && nextMonthIndex !== currentMonthIndex) {
+      if (nextMonthIndex !== currentMonthIndex) {
         setCurrentMonthIndex(nextMonthIndex);
       }
     },
     [currentMonthIndex, listWidth]
-  );
-
-  const handleScrollBeginDrag = useCallback(
-    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      onScrollBeginDrag?.(event);
-
-      scrolling.current = true;
-    },
-    []
   );
 
   const renderWeek = (week: Array<CalendarDate>) => {
@@ -242,7 +230,6 @@ const Calendar = ({
         initialNumToRender={1}
         initialScrollIndex={initialScrollIndex}
         keyExtractor={([month]) => month}
-        onScrollBeginDrag={handleScrollBeginDrag}
         pagingEnabled={horizontal}
         // @ts-ignore
         ref={flatListRef}
