@@ -8,7 +8,7 @@ import Dots from './Dots';
 
 const Day = ({
   backgroundColor = 'turquoise',
-  color = 'black',
+  color,
   day,
   dayString,
   dots,

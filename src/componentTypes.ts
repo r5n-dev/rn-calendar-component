@@ -38,7 +38,29 @@ export type ArrowsComponentProps = {
   rightArrowDisabled: boolean;
 };
 
-export type CalendarProps = {
+type PickedFlatListProps =
+  | 'initialNumToRender'
+  | 'maxToRenderPerBatch'
+  | 'removeClippedSubviews'
+  | 'updateCellsBatchingPeriod'
+  | 'windowSize'
+  | 'showsHorizontalScrollIndicator'
+  | 'showsVerticalScrollIndicator'
+  | 'snapToAlignment'
+  | 'snapToInterval'
+  | 'snapToOffsets'
+  | 'snapToStart'
+  | 'snapToEnd'
+  | 'onScroll'
+  | 'onScrollBeginDrag'
+  | 'onScrollEndDrag'
+  | 'onMomentumScrollEnd'
+  | 'onMomentumScrollBegin';
+
+export type CalendarProps = Pick<
+  FlatListProps<Inexpressible>,
+  PickedFlatListProps
+> & {
   /**
    * Starting date for calendar. i.e. 2020-01-01.
    */
@@ -118,6 +140,4 @@ export type CalendarProps = {
   DayNamesComponent?: NamedExoticComponent<DayNamesComponentProps>;
   MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;
   WeekComponent?: NamedExoticComponent<WeekComponentProps>;
-
-  onMomentumScrollEnd?: FlatListProps<Inexpressible>['onMomentumScrollEnd'];
 };
