@@ -9,29 +9,27 @@ const Arrows = ({
   onArrowPress,
   leftArrowDisabled,
   rightArrowDisabled,
-}: ArrowsComponentProps) => {
-  return (
-    <View style={styles.container}>
-      <TouchableOpacity
-        disabled={leftArrowDisabled}
-        onPress={() => onArrowPress('left')}
-        style={[styles.leftArrow, leftArrowDisabled && styles.disabledArrow]}
-      >
-        <Image source={arrow} style={styles.arrowIcon} />
-      </TouchableOpacity>
+}: ArrowsComponentProps) => (
+  <View style={styles.container}>
+    <TouchableOpacity
+      disabled={leftArrowDisabled}
+      onPress={() => onArrowPress('left')}
+      style={[styles.leftArrow, leftArrowDisabled && styles.disabledArrow]}
+    >
+      <Image source={arrow} style={styles.arrowIcon} />
+    </TouchableOpacity>
 
-      <TouchableOpacity
-        disabled={rightArrowDisabled}
-        onPress={() => onArrowPress('right')}
-        style={[styles.rightArrow, rightArrowDisabled && styles.disabledArrow]}
-      >
-        <Image source={arrow} style={styles.arrowIcon} />
-      </TouchableOpacity>
-    </View>
-  );
-};
+    <TouchableOpacity
+      disabled={rightArrowDisabled}
+      onPress={() => onArrowPress('right')}
+      style={[styles.rightArrow, rightArrowDisabled && styles.disabledArrow]}
+    >
+      <Image source={arrow} style={styles.arrowIcon} />
+    </TouchableOpacity>
+  </View>
+);
 
-export default Arrows;
+export default React.memo<ArrowsComponentProps>(Arrows);
 
 const styles = StyleSheet.create({
   arrowIcon: {

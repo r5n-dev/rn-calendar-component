@@ -117,6 +117,14 @@ export type CalendarProps = Pick<
   onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
 
   /**
+   * Callback on month arrow press.
+   */
+  onArrowPress?: (params: {
+    direction: string;
+    currentMonthIndex: number;
+  }) => void;
+
+  /**
    * Style object passed to main component (FlatList).
    */
   style?: FixMe;
@@ -136,6 +144,7 @@ export type CalendarProps = Pick<
    */
   theme?: CalendarTheme;
 
+  ArrowsComponent?: NamedExoticComponent<ArrowsComponentProps>;
   DayComponent?: NamedExoticComponent<DayComponentProps>;
   DayNamesComponent?: NamedExoticComponent<DayNamesComponentProps>;
   MonthTitleComponent?: NamedExoticComponent<MonthTitleComponentProps>;

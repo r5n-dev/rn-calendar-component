@@ -21,6 +21,7 @@ import { Arrows, DayNames, Day, MonthTitle, Week } from './components';
 import Locales from './Locales';
 
 const Calendar = ({
+  ArrowsComponent = Arrows,
   DayComponent = Day,
   DayNamesComponent = DayNames,
   MonthTitleComponent = MonthTitle,
@@ -35,13 +36,14 @@ const Calendar = ({
   horizontal,
   locale = 'en',
   markedDates,
+  onArrowPress,
   onDayPress,
+  onMomentumScrollEnd,
   scrollEnabled = true,
   startISODate,
   style,
   theme,
   viewabilityConfig = { itemVisiblePercentThreshold: 1 },
-  onMomentumScrollEnd,
   ...flatListProps
 }: CalendarProps) => {
   const flatListRef = useRef<FlatList<CalendarItem>>();
@@ -110,6 +112,7 @@ const Calendar = ({
 
   const handleArrowPress = useCallback(
     (direction: 'left' | 'right') => {
+      onArrowPress?.({ direction, currentMonthIndex });
       if (direction === 'left') {
         const nextMonthIndex = currentMonthIndex - 1;
 
@@ -216,7 +219,7 @@ const Calendar = ({
       style={styles.container}
     >
       {horizontal && !hideArrows && (
-        <Arrows
+        <ArrowsComponent
           leftArrowDisabled={currentMonthIndex === 0}
           onArrowPress={handleArrowPress}
           rightArrowDisabled={currentMonthIndex === months.length - 1}

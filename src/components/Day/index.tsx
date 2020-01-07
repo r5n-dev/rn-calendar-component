@@ -62,16 +62,15 @@ const Day = ({
         ]}
       >
         <Text
-          style={[
+          style={StyleSheet.flatten([
             styles.dayText,
-
             theme?.text,
+
             today && (theme?.todayText || styles.todayText),
             extraDay && (theme?.extraDayText || styles.extraDayText),
             selected && theme?.selectedText,
-
-            { color },
-          ]}
+            color ? { color } : null,
+          ])}
         >
           {day}
         </Text>
