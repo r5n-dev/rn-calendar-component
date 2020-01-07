@@ -51,7 +51,7 @@ const Day = ({
         style={[
           styles.dayContainer,
           { padding: listWidth / 40 },
-          inSeries && [styles.inSeriesRadius, { maxWidth: listWidth / 7 }],
+          inSeries && [styles.inSeriesRadius, { width: listWidth / 7 }],
           startingDay && styles.startingRadius,
           endingDay && styles.endingRadius,
 
@@ -64,11 +64,13 @@ const Day = ({
         <Text
           style={[
             styles.dayText,
-            { color },
+
+            theme?.text,
             today && (theme?.todayText || styles.todayText),
             extraDay && (theme?.extraDayText || styles.extraDayText),
             selected && theme?.selectedText,
-            theme?.text,
+
+            { color },
           ]}
         >
           {day}

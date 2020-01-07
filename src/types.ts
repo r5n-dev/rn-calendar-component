@@ -50,7 +50,7 @@ export type CalendarTheme = {
     selectedContainer?: ViewStyle;
     selectedText?: TextStyle;
     text?: TextStyle;
-    todayContainer: ViewStyle;
+    todayContainer?: ViewStyle;
     todayText?: TextStyle;
   };
   dayNames?: {

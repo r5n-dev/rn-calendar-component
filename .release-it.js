@@ -1,7 +1,7 @@
 module.exports = {
   safeBump: false,
   git: {
-    commitMessage: ':bookmark: Release ${version}',
+    commitMessage: 'chore(release): :bookmark: Release ${version}',
     requireUpstream: true,
     tagName: 'v${version}',
   },
