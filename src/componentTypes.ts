@@ -122,6 +122,7 @@ export type CalendarProps = Pick<
   onArrowPress?: (params: {
     direction: string;
     currentMonthIndex: number;
+    lastMonthIndex: number;
   }) => void;
 
   /**

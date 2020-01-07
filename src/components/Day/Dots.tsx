@@ -10,18 +10,15 @@ type Props = {
 };
 
 const Dots = ({ dots, selected }: Props) => {
-  if (!dots) {
-    return null;
-  }
-
   return (
     <View style={styles.container}>
-      {Object.keys(dots).map(key => {
-        const { color, selectedColor } = dots[key];
-        const backgroundColor = (selected && selectedColor) || color;
+      {dots &&
+        Object.keys(dots).map(key => {
+          const { color, selectedColor } = dots[key];
+          const backgroundColor = (selected && selectedColor) || color;
 
-        return <View key={key} style={[styles.dot, { backgroundColor }]} />;
-      })}
+          return <View key={key} style={[styles.dot, { backgroundColor }]} />;
+        })}
     </View>
   );
 };

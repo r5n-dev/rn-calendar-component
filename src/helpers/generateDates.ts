@@ -11,6 +11,7 @@ export default ({
 }): Array<CalendarDate> => {
   const startDate = new Date(startISODate);
   const endDate = new Date(endISODate);
+
   const diffInDays =
     (endDate.getTime() - startDate.getTime()) / constants.dayInMs;
   const dates = [];

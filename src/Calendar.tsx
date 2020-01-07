@@ -112,7 +112,12 @@ const Calendar = ({
 
   const handleArrowPress = useCallback(
     (direction: 'left' | 'right') => {
-      onArrowPress?.({ direction, currentMonthIndex });
+      onArrowPress?.({
+        direction,
+        currentMonthIndex,
+        lastMonthIndex: months.length - 1,
+      });
+
       if (direction === 'left') {
         const nextMonthIndex = currentMonthIndex - 1;
 
