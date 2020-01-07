@@ -1,7 +1,7 @@
 {
   "name": "@versum/rn-calendar",
   "description": "React-Native Calendar",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "author": "Damian Sznajder <damsznajder@gmail.com>",
   "repository": {

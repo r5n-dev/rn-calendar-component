@@ -1,3 +1,7 @@
+## <small>0.0.3 (2020-01-07)</small>
+
+* fix: color customization on Day component ([e136d06](https://github.com/versum/rn-calendar/commit/e136d06))
+
 ## <small>0.0.2 (2020-01-07)</small>
 
 * fix: change `maxWidth` to `width` ([e5e05e5](https://github.com/versum/rn-calendar/commit/e5e05e5))
