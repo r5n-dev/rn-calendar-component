@@ -7,6 +7,7 @@ import { ArrowsComponentProps } from '../componentTypes';
 
 const Arrows = ({
   onArrowPress,
+  listWidth,
   leftArrowDisabled,
   rightArrowDisabled,
 }: ArrowsComponentProps) => (
@@ -22,7 +23,11 @@ const Arrows = ({
     <TouchableOpacity
       disabled={rightArrowDisabled}
       onPress={() => onArrowPress('right')}
-      style={[styles.rightArrow, rightArrowDisabled && styles.disabledArrow]}
+      style={[
+        styles.rightArrow,
+        { left: listWidth - constants.touchableSize * 1.6 },
+        rightArrowDisabled && styles.disabledArrow,
+      ]}
     >
       <Image source={arrow} style={styles.arrowIcon} />
     </TouchableOpacity>
@@ -38,7 +43,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexDirection: 'row',
-    zIndex: 1,
+    position: 'absolute',
   },
   disabledArrow: {
     opacity: 0.5,
@@ -46,14 +51,15 @@ const styles = StyleSheet.create({
   leftArrow: {
     left: constants.touchableSize * 0.8,
     position: 'absolute',
+    zIndex: 1,
   },
   rightArrow: {
     position: 'absolute',
-    right: constants.touchableSize * 0.8,
     transform: [
       {
         rotate: '180deg',
       },
     ],
+    zIndex: 1,
   },
 });

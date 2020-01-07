@@ -223,14 +223,6 @@ const Calendar = ({
       }}
       style={styles.container}
     >
-      {horizontal && !hideArrows && (
-        <ArrowsComponent
-          leftArrowDisabled={currentMonthIndex === 0}
-          onArrowPress={handleArrowPress}
-          rightArrowDisabled={currentMonthIndex === months.length - 1}
-        />
-      )}
-
       <FlatList
         data={months}
         getItemLayout={getItemLayout}
@@ -251,6 +243,15 @@ const Calendar = ({
         })}
         {...flatListProps}
       />
+
+      {horizontal && !hideArrows && (
+        <ArrowsComponent
+          leftArrowDisabled={currentMonthIndex === 0}
+          listWidth={listWidth}
+          onArrowPress={handleArrowPress}
+          rightArrowDisabled={currentMonthIndex === months.length - 1}
+        />
+      )}
     </View>
   );
 };

@@ -34,6 +34,7 @@ export type MonthTitleComponentProps = {
 
 export type ArrowsComponentProps = {
   leftArrowDisabled: boolean;
+  listWidth: number;
   onArrowPress: (direction: 'left' | 'right') => void;
   rightArrowDisabled: boolean;
 };
