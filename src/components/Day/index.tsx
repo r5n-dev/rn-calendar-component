@@ -50,8 +50,8 @@ const Day = ({
       <View
         style={[
           styles.dayContainer,
-          { padding: listWidth / 40 },
-          inSeries && [styles.inSeriesRadius, { width: listWidth / 7 }],
+          { padding: listWidth / 40, width: listWidth / 7 },
+          inSeries && styles.inSeriesRadius,
           startingDay && styles.startingRadius,
           endingDay && styles.endingRadius,
 
@@ -90,6 +90,7 @@ const areEqual = (
     dots,
     endingDay,
     inSeries,
+    listWidth,
     month,
     selected,
     startingDay,
@@ -108,7 +109,8 @@ const areEqual = (
     dayString === nextProps.dayString &&
     month === nextProps.month &&
     year === nextProps.year &&
-    dots === nextProps.dots
+    dots === nextProps.dots &&
+    listWidth === nextProps.listWidth
   );
 };
 
@@ -130,6 +132,7 @@ const styles = StyleSheet.create({
   },
   dayText: {
     fontSize: 16,
+    minWidth: 20,
     textAlign: 'center',
   },
   endingRadius: {
