@@ -1,4 +1,5 @@
-# rn-calendar
+# @versum/rn-calendar
+
 
 ## Docs
 
@@ -6,10 +7,17 @@ TODO:
 
 ## Setup
 
+Create or add to your `.npmrc` this line:
 ```
+@versum:registry=https://npm.pkg.github.com/
+```
+
+Then you will be able to install it through `yarn`:
+```bash
 yarn add @versum/rn-calendar
 ```
 
+## Usage
 ```js
 import { Calendar } from '@versum/rn-calendar'
 
@@ -41,6 +49,13 @@ yarn lint && yarn test
 
 ## Publishing
 
+### Change `GITHUB_TOKEN` in .npmrc to valid one with `packages:write` scope.
+After that just use:
+- `yarn release <major | minor | patch | $version>`
+with proper version i.e.
+
 ```
-yarn release <major | minor | patch | $version>
+yarn release 1.0.0
 ```
+
+
