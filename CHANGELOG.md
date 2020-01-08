@@ -1,3 +1,9 @@
+## <small>0.0.7 (2020-01-08)</small>
+
+* fix: android onArrowPress ([8be825c](https://github.com/versum/rn-calendar/commit/8be825c))
+* fix: remove `width` from dayText ([dbfcacc](https://github.com/versum/rn-calendar/commit/dbfcacc))
+* v0.0.6 ([b8b5ff8](https://github.com/versum/rn-calendar/commit/b8b5ff8))
+
 ## <small>0.0.3 (2020-01-07)</small>
 
 * fix: color customization on Day component ([e136d06](https://github.com/versum/rn-calendar/commit/e136d06))

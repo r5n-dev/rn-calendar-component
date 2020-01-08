@@ -45,7 +45,7 @@ const Day = ({
       accessible
       activeOpacity={0.4}
       onPress={handleDayPress}
-      style={[styles.container, { width: listWidth / 7 }]}
+      style={[styles.container, { maxWidth: listWidth / 7 }]}
     >
       <View
         style={[
