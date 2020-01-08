@@ -20,6 +20,10 @@ import {
 import { Arrows, DayNames, Day, MonthTitle, Week } from './components';
 import Locales from './Locales';
 
+const defaultViewabilityConfig = {
+  itemVisiblePercentThreshold: 1,
+};
+
 const Calendar = ({
   ArrowsComponent = Arrows,
   DayComponent = Day,
@@ -43,7 +47,7 @@ const Calendar = ({
   startISODate,
   style,
   theme,
-  viewabilityConfig = { itemVisiblePercentThreshold: 1 },
+  viewabilityConfig,
   ...flatListProps
 }: CalendarProps) => {
   const flatListRef = useRef<FlatList<CalendarItem>>();
@@ -236,7 +240,7 @@ const Calendar = ({
         renderItem={renderMonth}
         scrollEnabled={scrollEnabled}
         style={[style, { maxHeight: calendarHeight }]}
-        viewabilityConfig={viewabilityConfig}
+        viewabilityConfig={viewabilityConfig || defaultViewabilityConfig}
         windowSize={11}
         {...(horizontal && {
           onMomentumScrollEnd: handleMomentumScrollEnd,

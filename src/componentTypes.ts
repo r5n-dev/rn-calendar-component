@@ -93,12 +93,12 @@ export type CalendarProps = Pick<
   firstDay?: 0 | 1;
 
   /**
-   * Hides days from previous / next month in first / last week.
+   * Hides days from previous / next month in first / last week. Default `true`.
    */
   hideExtraDays?: boolean;
 
   /**
-   * Hides arrows for switching month (only works with `horizontal` prop on true).
+   * Hides arrows for switching month (only works with `horizontal` prop on true). Default `true`.
    */
   hideArrows?: boolean;
 
@@ -108,20 +108,30 @@ export type CalendarProps = Pick<
   horizontal?: boolean;
 
   /**
-   * Defines if Calendar can be scrolled
+   * Defines if Calendar can be scrolled. Default `true`.
    */
   scrollEnabled?: boolean;
 
   /**
    * Callback after day is pressed.
+   *
+   * @param {Object} date
+   * @param {number} date.day Day number of month.
+   * @param {number} date.month Month number of year (from 0 to 11).
+   * @param {number} date.year Year.
+   * @param {number} date.dayString Date. (YYYY-MM-DD).
    */
   onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
 
   /**
-   * Callback on month arrow press.
+   * Gets called when the user clicks on the button
+   *
+   * @param {'left' | 'right'} direction Direction in which calendar will move.
+   * @param {number} currentMonthIndex Index of current visible month.
+   * @param {number} lastMonthIndex Index of last month generated.
    */
   onArrowPress?: (params: {
-    direction: string;
+    direction: 'left' | 'right';
     currentMonthIndex: number;
     lastMonthIndex: number;
   }) => void;
@@ -139,10 +149,14 @@ export type CalendarProps = Pick<
 
   /**
    * TODO
+   *
+   * @ignore
    */
   markedDates?: MarkedDates;
   /**
    * TODO
+   *
+   * @ignore
    */
   theme?: CalendarTheme;
 
