@@ -5,21 +5,21 @@ describe('generateDates', () => {
     test('should return date range between 2 dates', () => {
       const firstExpectedDates = [
         {
-          day: '01',
+          day: '1',
           dayOfWeek: 2,
           dayString: '2019-01-01',
           month: '01',
           year: '2019',
         },
         {
-          day: '02',
+          day: '2',
           dayOfWeek: 3,
           dayString: '2019-01-02',
           month: '01',
           year: '2019',
         },
         {
-          day: '03',
+          day: '3',
           dayOfWeek: 4,
           dayString: '2019-01-03',
           month: '01',
@@ -58,21 +58,21 @@ describe('generateDates', () => {
           dayString: '2019-04-01',
           year: '2019',
           month: '04',
-          day: '01',
+          day: '1',
         },
         {
           dayOfWeek: 2,
           dayString: '2019-04-02',
           year: '2019',
           month: '04',
-          day: '02',
+          day: '2',
         },
         {
           dayOfWeek: 3,
           dayString: '2019-04-03',
           year: '2019',
           month: '04',
-          day: '03',
+          day: '3',
         },
       ];
 

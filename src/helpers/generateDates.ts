@@ -22,18 +22,19 @@ export default ({
     startDate.setTime(nextDay);
 
     const dayString = startDate.toISOString().replace(/T.*/, '');
-    const [year, month, day] = dayString.split('-');
+    const [year, month] = dayString.split('-');
 
     dates[index] = {
       dayString,
       year,
       month,
-      day,
+      day: `${startDate.getDate()}`,
       dayOfWeek: startDate.getDay(),
     };
 
     // Do not add day on first loop
     addition = constants.dayInMs;
   }
+
   return dates;
 };
