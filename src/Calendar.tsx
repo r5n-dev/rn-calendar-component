@@ -5,6 +5,7 @@ import {
   StyleSheet,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  LayoutChangeEvent,
 } from 'react-native';
 
 import { CalendarDate, Locale, CalendarItem } from './types';
@@ -23,6 +24,8 @@ import Locales from './Locales';
 const defaultViewabilityConfig = {
   itemVisiblePercentThreshold: 1,
 };
+
+const keyExtractor = ([item, _data]: [string, Array<CalendarDate>]) => item;
 
 const Calendar = ({
   ArrowsComponent = Arrows,
@@ -100,7 +103,7 @@ const Calendar = ({
     return monthIndex > 0 ? monthIndex : 0;
   }, [currentDay, months]);
 
-  const [listWidth, setListWidth] = useState(calendarHeight);
+  const [listWidth, setListWidth] = useState(0);
   const [currentMonthIndex, setCurrentMonthIndex] = useState(
     initialScrollIndex
   );
@@ -112,6 +115,29 @@ const Calendar = ({
       offset: (horizontal ? listWidth : calendarHeight) * index,
     }),
     [calendarHeight, listWidth]
+  );
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      flatListRef.current?.scrollToOffset({
+        offset: index * listWidth,
+        animated: scrollEnabled,
+      });
+    },
+    [listWidth, scrollEnabled]
+  );
+
+  const handleLayoutChange = useCallback(
+    ({
+      nativeEvent: {
+        layout: { width },
+      },
+    }: LayoutChangeEvent) => {
+      if (listWidth !== width) {
+        setListWidth(width);
+      }
+    },
+    [listWidth, scrollToIndex]
   );
 
   const handleArrowPress = useCallback(
@@ -127,20 +153,14 @@ const Calendar = ({
 
         if (nextMonthIndex >= 0) {
           setCurrentMonthIndex(nextMonthIndex);
-          flatListRef.current?.scrollToOffset({
-            offset: nextMonthIndex * listWidth,
-            animated: scrollEnabled,
-          });
+          scrollToIndex(nextMonthIndex);
         }
       } else if (direction === 'right') {
         const nextMonthIndex = currentMonthIndex + 1;
 
         if (nextMonthIndex < months.length) {
           setCurrentMonthIndex(nextMonthIndex);
-          flatListRef.current?.scrollToOffset({
-            offset: (currentMonthIndex + 1) * listWidth,
-            animated: scrollEnabled,
-          });
+          scrollToIndex(nextMonthIndex);
         }
       }
     },
@@ -217,44 +237,39 @@ const Calendar = ({
   };
 
   return (
-    <View
-      onLayout={({
-        nativeEvent: {
-          layout: { width },
-        },
-      }) => {
-        setListWidth(width);
-      }}
-      style={styles.container}
-    >
-      <FlatList
-        data={months}
-        getItemLayout={getItemLayout}
-        horizontal={horizontal}
-        initialNumToRender={1}
-        initialScrollIndex={initialScrollIndex}
-        keyExtractor={([month]) => month}
-        pagingEnabled={horizontal}
-        // @ts-ignore
-        ref={flatListRef}
-        renderItem={renderMonth}
-        scrollEnabled={scrollEnabled}
-        style={[style, { maxHeight: calendarHeight }]}
-        viewabilityConfig={viewabilityConfig || defaultViewabilityConfig}
-        windowSize={11}
-        {...(horizontal && {
-          onMomentumScrollEnd: handleMomentumScrollEnd,
-        })}
-        {...flatListProps}
-      />
+    <View onLayout={handleLayoutChange} style={styles.container}>
+      {!!listWidth && (
+        <>
+          <FlatList
+            data={months}
+            getItemLayout={getItemLayout}
+            horizontal={horizontal}
+            initialNumToRender={1}
+            initialScrollIndex={initialScrollIndex}
+            keyExtractor={keyExtractor}
+            pagingEnabled={horizontal}
+            // @ts-ignore
+            ref={flatListRef}
+            renderItem={renderMonth}
+            scrollEnabled={scrollEnabled}
+            style={[style, { maxHeight: calendarHeight }]}
+            viewabilityConfig={viewabilityConfig || defaultViewabilityConfig}
+            windowSize={11}
+            {...(horizontal && {
+              onMomentumScrollEnd: handleMomentumScrollEnd,
+            })}
+            {...flatListProps}
+          />
 
-      {horizontal && !hideArrows && (
-        <ArrowsComponent
-          leftArrowDisabled={currentMonthIndex === 0}
-          listWidth={listWidth}
-          onArrowPress={handleArrowPress}
-          rightArrowDisabled={currentMonthIndex === months.length - 1}
-        />
+          {horizontal && !hideArrows && (
+            <ArrowsComponent
+              leftArrowDisabled={currentMonthIndex === 0}
+              listWidth={listWidth}
+              onArrowPress={handleArrowPress}
+              rightArrowDisabled={currentMonthIndex === months.length - 1}
+            />
+          )}
+        </>
       )}
     </View>
   );

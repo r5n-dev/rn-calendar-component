@@ -137,6 +137,7 @@ const App = () => {
         <View style={styles.calendarWrapper}>
           {loaded && (
             <Calendar
+              currentDay="2020-02-01"
               endISODate="2020-03-31"
               firstDay={firstDay}
               hideArrows={false}
