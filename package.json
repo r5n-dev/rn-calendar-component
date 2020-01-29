@@ -19,7 +19,7 @@
     "example": "yarn --cwd Example",
     "lint": "eslint --ext '.js,.ts,.tsx' .",
     "prepare": "bob build",
-    "release": "release-it",
+    "release": "release-it --ci",
     "test": "jest --coverage --runInBand",
     "test:watch": "jest --watch",
     "typescript": "tsc --noEmit"

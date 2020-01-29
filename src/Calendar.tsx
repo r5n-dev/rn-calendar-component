@@ -181,9 +181,11 @@ const Calendar = ({
   );
 
   const renderWeek = (week: Array<CalendarDate>) => {
-    const firstWeekDay = week.find(
-      ({ dayString }) => dayString
-    ) as CalendarDate;
+    const firstWeekDay = week.find(({ dayString }) => dayString);
+
+    if (!firstWeekDay) {
+      return null;
+    }
 
     const weekMarkedDatesProps = markedDatesForWeek(week, markedDates);
 
