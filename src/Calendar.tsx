@@ -66,14 +66,6 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
   ) => {
     const flatListRef = useRef<FlatList<CalendarItem>>();
 
-    const handleScrollTo = (monthString: string, animated?: boolean) => {
-      const monthIndex = months.findIndex(([month]) => month === monthString);
-
-      scrollToIndex(monthIndex, animated);
-    };
-
-    useImperativeHandle(ref, () => ({ scrollTo: handleScrollTo }), []);
-
     const locales: Locale = useMemo(() => {
       let selectedLocale = { ...(Locales[locale] || Locales.defaultLocale) };
 
@@ -146,11 +138,11 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     const scrollToIndex = useCallback(
       (index: number, animated?: boolean) => {
         flatListRef.current?.scrollToOffset({
-          offset: index * listWidth,
+          offset: index * (horizontal ? listWidth : calendarHeight),
           animated: animated || scrollEnabled,
         });
       },
-      [listWidth, scrollEnabled]
+      [listWidth, scrollEnabled, horizontal, calendarHeight]
     );
 
     const handleLayoutChange = useCallback(
@@ -205,6 +197,19 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       },
       [currentMonthIndex, listWidth]
     );
+
+    const handleScrollTo = useCallback(
+      (monthString: string, animated?: boolean) => {
+        const monthIndex = months.findIndex(([month]) => month === monthString);
+
+        scrollToIndex(monthIndex, animated);
+      },
+      [months, scrollToIndex]
+    );
+
+    useImperativeHandle(ref, () => ({ scrollTo: handleScrollTo }), [
+      scrollToIndex,
+    ]);
 
     const renderWeek = (week: Array<CalendarDate>) => {
       const firstWeekDay = week.find(({ dayString }) => dayString);
