@@ -10,10 +10,10 @@ module.exports = {
   github: {
     release: true,
     releaseName: 'Release ${version}',
-    draft: true,
+    draft: false,
   },
   npm: {
-    publish: true,
+    publish: false,
   },
   plugins: {
     '@release-it/conventional-changelog': {
