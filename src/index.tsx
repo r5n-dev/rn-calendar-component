@@ -7,5 +7,6 @@ export {
   CalendarDate,
   CalendarItem,
   CalendarTheme,
+  CalendarRef,
 } from './types';
 export * from './componentTypes';

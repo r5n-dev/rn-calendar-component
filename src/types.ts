@@ -10,6 +10,16 @@ export type CalendarDate = {
 
 export type CalendarItem = [string, CalendarDate];
 
+export type CalendarRef = {
+  /**
+   * Scrolling to provided month in `YYYY-MM` format.
+   *
+   * @param {string} monthString Month to which you want scroll. Format `YYYY-MM`.
+   * @param {boolean} animated Defines if scrolling should be animated.
+   */
+  scrollTo: (monthString: string, animated?: boolean) => void;
+};
+
 export type Locale = {
   monthNames: Array<string>;
   monthNamesShort: Array<string>;
