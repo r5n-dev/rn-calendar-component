@@ -2,14 +2,13 @@ module.exports = {
   git: {
     commitMessage: 'chore(release): :bookmark: Release ${version}',
     push: true,
-    requireCleanWorkingDir: false,
-    requireUpstream: true,
+    requireUpstream: false,
     tag: true,
     tagName: 'v${version}',
   },
   github: {
     release: true,
-    releaseName: 'Release ${version}',
+    releaseName: 'rn-calendar@${version}',
     draft: false,
   },
   npm: {
