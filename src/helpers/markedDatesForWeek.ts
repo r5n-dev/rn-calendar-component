@@ -13,8 +13,10 @@ const withSeriesInfo = ({
   }
 
   const indexes = markedDays
-    .map(a => week.findIndex(({ dayString }: CalendarDate) => a === dayString))
-    .filter(i => i >= 0)
+    .map((a) =>
+      week.findIndex(({ dayString }: CalendarDate) => a === dayString)
+    )
+    .filter((i) => i >= 0)
     .sort();
 
   if (!indexes.length) {

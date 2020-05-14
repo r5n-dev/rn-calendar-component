@@ -15,7 +15,7 @@ import {
 } from '@expo/react-native-action-sheet';
 
 // @ts-ignore
-import { Calendar, Locales } from 'rn-calendar';
+import { Calendar, Locales } from '@versum/rn-calendar';
 
 Locales.en = Locales.default;
 Locales.pl = {
@@ -124,7 +124,7 @@ const App = () => {
   };
 
   const handleDayPress = (day: { dayString: string }) => {
-    setMarkedDates(markedDates => ({
+    setMarkedDates((markedDates) => ({
       ...markedDates,
       [day.dayString]: { selected: true },
     }));
@@ -153,14 +153,16 @@ const App = () => {
 
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
-            onPress={() => setFirstDay(firstDay => (firstDay ? 0 : 1))}
+            onPress={() => setFirstDay((firstDay) => (firstDay ? 0 : 1))}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Switch first day</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => setLocale(locale => (locale === 'en' ? 'pl' : 'en'))}
+            onPress={() =>
+              setLocale((locale) => (locale === 'en' ? 'pl' : 'en'))
+            }
             style={styles.button}
           >
             <Text style={styles.buttonText}>Change locale</Text>
@@ -190,14 +192,14 @@ const App = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => setHideExtraDays(hideExtraDays => !hideExtraDays)}
+            onPress={() => setHideExtraDays((hideExtraDays) => !hideExtraDays)}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Show extra dates</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => setHorizontal(horizontal => !horizontal)}
+            onPress={() => setHorizontal((horizontal) => !horizontal)}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Toggle direction</Text>

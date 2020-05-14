@@ -43,12 +43,12 @@ const fillDates = ({
     const startFillDates = (previousMonthDates
       ? previousMonthDates.slice(startFillCap)
       : Array(fillCap).fill({})
-    ).map(item => ({ ...item, extraDay: true }));
+    ).map((item) => ({ ...item, extraDay: true }));
 
     const endFillDates = (nextMonthDates
       ? nextMonthDates.slice(0, endDayCap)
       : []
-    ).map(item => ({ ...item, extraDay: true }));
+    ).map((item) => ({ ...item, extraDay: true }));
 
     return [...startFillDates, ...dates, ...endFillDates];
   }

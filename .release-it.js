@@ -1,14 +1,14 @@
 module.exports = {
   git: {
-    commitMessage: 'chore(release): :bookmark: Release ${version}',
-    push: true,
-    requireUpstream: false,
+    requireUpstream: true,
     tag: true,
-    tagName: 'v${version}',
+    tagName: 'react-native-markdown-input@${version}',
+    commit: true,
+    commitMessage: 'chore(:bookmark:): react-native-markdown-input ${version}',
   },
   github: {
     release: true,
-    releaseName: 'rn-calendar@${version}',
+    releaseName: 'react-native-markdown-input@${version}',
     draft: false,
   },
   npm: {
@@ -17,6 +17,7 @@ module.exports = {
   plugins: {
     '@release-it/conventional-changelog': {
       preset: 'angular',
+      infile: 'CHANGELOG.md',
     },
   },
 };

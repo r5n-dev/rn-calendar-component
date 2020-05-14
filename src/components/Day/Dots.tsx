@@ -13,7 +13,7 @@ const Dots = ({ dots, selected }: Props) => {
   return (
     <View style={styles.container}>
       {dots &&
-        Object.keys(dots).map(key => {
+        Object.keys(dots).map((key) => {
           const { color, selectedColor } = dots[key];
           const backgroundColor = (selected && selectedColor) || color;
 

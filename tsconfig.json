@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "rn-calendar": ["./src/index"]
+      "@versum/rn-calendar": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -24,5 +24,10 @@
     "strict": true,
     "target": "esnext"
   },
-  "exclude": ["example/**/*", "__tests__/**/*", "node_modules/**/*"]
+  "exclude": [
+    "example/**/*",
+    "src/components/__tests__/*",
+    "src/helpers/__tests__/*",
+    "node_modules/**/*"
+  ]
 }

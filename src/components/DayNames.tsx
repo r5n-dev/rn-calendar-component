@@ -6,7 +6,7 @@ import { DayNamesComponentProps } from '../componentTypes';
 const DayNames = ({ dayNames, theme }: DayNamesComponentProps) => {
   return (
     <View style={[styles.container, theme?.container]}>
-      {dayNames.map(dayName => (
+      {dayNames.map((dayName) => (
         <View key={dayName} style={styles.dayNameContainer}>
           <Text style={theme?.text}>{dayName}</Text>
         </View>

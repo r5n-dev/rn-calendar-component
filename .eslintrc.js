@@ -9,7 +9,7 @@ module.exports = {
     react: {
       version: 'detect',
     },
-    'import/core-modules': ['rn-calendar'],
+    'import/core-modules': ['@versum/rn-calendar'],
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
