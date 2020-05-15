@@ -3,13 +3,13 @@ module.exports = {
     requireUpstream: false,
     requireCleanWorkingDir: false,
     tag: true,
-    tagName: 'react-native-markdown-input@${version}',
+    tagName: 'rn-calendar@${version}',
     commit: true,
-    commitMessage: 'chore(:bookmark:): react-native-markdown-input ${version}',
+    commitMessage: 'chore(:bookmark:): rn-calendar ${version}',
   },
   github: {
     release: true,
-    releaseName: 'react-native-markdown-input@${version}',
+    releaseName: 'rn-calendar@${version}',
     draft: false,
   },
   npm: {

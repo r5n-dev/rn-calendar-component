@@ -30,7 +30,7 @@ const Day = ({
 
   if (!day) {
     return (
-      <View style={[styles.container, { maxWidth: listWidth / 7 }]}>
+      <View style={[styles.container, { width: listWidth / 7 }]}>
         <View style={[styles.dayContainer, { padding: listWidth / 40 }]}>
           <Text style={styles.dayText} />
         </View>
@@ -45,7 +45,7 @@ const Day = ({
       accessible
       activeOpacity={0.4}
       onPress={handleDayPress}
-      style={[styles.container, { maxWidth: listWidth / 7 }]}
+      style={[styles.container, { width: listWidth / 7 }]}
     >
       <View
         style={[

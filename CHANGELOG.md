@@ -1,4 +1,16 @@
-# [0.2.0](https://github.com/versum/rn-calendar/compare/v0.1.3...react-native-markdown-input@0.2.0) (2020-05-15)
+## [0.2.1](https://github.com/versum/rn-calendar/compare/v0.1.3...rn-calendar@0.2.1) (2020-05-15)
+
+
+### Features
+
+* dynamic month heights ([dc0b040](https://github.com/versum/rn-calendar/commit/dc0b040ca97bffc873a25bd59d1d2fa88ad0439b))
+
+
+### Performance Improvements
+
+* optimize offset ([3b8ba51](https://github.com/versum/rn-calendar/commit/3b8ba51b03132cf70149e9c55466778e340e59dd))
+
+# [0.2.0](https://github.com/versum/rn-calendar/compare/v0.1.3...rn-calendar@0.2.0) (2020-05-15)
 
 
 ### Features
@@ -12,7 +24,7 @@
 
 
 
-## [0.1.3](https://github.com/versum/rn-calendar/compare/v0.1.3...react-native-markdown-input@0.2.0) (2020-01-29)
+## [0.1.3](https://github.com/versum/rn-calendar/compare/v0.1.3...rn-calendar@0.2.0) (2020-01-29)
 
 
 ### Bug Fixes
@@ -27,7 +39,7 @@
 
 
 
-# [0.1.0](https://github.com/versum/rn-calendar/compare/v0.1.3...react-native-markdown-input@0.2.0) (2020-01-10)
+# [0.1.0](https://github.com/versum/rn-calendar/compare/v0.1.3...rn-calendar@0.2.0) (2020-01-10)
 
 
 ### Bug Fixes
@@ -44,7 +56,7 @@
 
 
 
-## [0.0.5](https://github.com/versum/rn-calendar/compare/v0.1.3...react-native-markdown-input@0.2.0) (2020-01-07)
+## [0.0.5](https://github.com/versum/rn-calendar/compare/v0.1.3...rn-calendar@0.2.0) (2020-01-07)
 
 
 ### Features
@@ -53,7 +65,7 @@
 
 
 
-## [0.0.4](https://github.com/versum/rn-calendar/compare/v0.1.3...react-native-markdown-input@0.2.0) (2020-01-07)
+## [0.0.4](https://github.com/versum/rn-calendar/compare/v0.1.3...rn-calendar@0.2.0) (2020-01-07)
 
 
 ### Features
@@ -62,7 +74,7 @@
 
 
 
-## [0.0.3](https://github.com/versum/rn-calendar/compare/v0.1.3...react-native-markdown-input@0.2.0) (2020-01-07)
+## [0.0.3](https://github.com/versum/rn-calendar/compare/v0.1.3...rn-calendar@0.2.0) (2020-01-07)
 
 
 ### Bug Fixes
@@ -71,7 +83,7 @@
 
 
 
-## [0.0.2](https://github.com/versum/rn-calendar/compare/v0.1.3...react-native-markdown-input@0.2.0) (2020-01-07)
+## [0.0.2](https://github.com/versum/rn-calendar/compare/v0.1.3...rn-calendar@0.2.0) (2020-01-07)
 
 
 ### Bug Fixes
