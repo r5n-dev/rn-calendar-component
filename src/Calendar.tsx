@@ -24,6 +24,7 @@ import {
   fillDates,
   generateDates,
   markedDatesForWeek,
+  monthsHeight,
 } from './helpers';
 import { Arrows, DayNames, Day, MonthTitle, Week } from './components';
 import Locales from './Locales';
@@ -32,7 +33,7 @@ const defaultViewabilityConfig = {
   itemVisiblePercentThreshold: 1,
 };
 
-const keyExtractor = ([item, _data]: [string, Array<CalendarDate>]) => item;
+const keyExtractor = (item: CalendarItem) => item[0];
 
 const Calendar = forwardRef<CalendarRef, CalendarProps>(
   (
@@ -64,7 +65,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     },
     ref
   ) => {
-    const flatListRef = useRef<FlatList<CalendarItem>>();
+    const flatListRef = useRef<FlatList<CalendarItem>>(null);
 
     const locales: Locale = useMemo(() => {
       let selectedLocale = { ...(Locales[locale] || Locales.defaultLocale) };
@@ -127,18 +128,27 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     );
 
     const getItemLayout = useCallback(
-      (_data: NotWorthIt, index: number) => ({
-        index,
-        length: horizontal ? listWidth : calendarHeight,
-        offset: (horizontal ? listWidth : calendarHeight) * index,
-      }),
-      [calendarHeight, listWidth]
+      (data: Array<CalendarItem>, index: number) => {
+        const monthsLayout = monthsHeight(data);
+        const currentMonthLayout = monthsLayout[index] || { height: 0 };
+        const offset = monthsLayout
+          .slice(0, index)
+          .reduce((acc, { height }) => (acc += height), 0);
+
+        return {
+          index,
+          length: horizontal ? listWidth : currentMonthLayout.height,
+          offset: horizontal ? listWidth * index : offset,
+        };
+      },
+      [calendarHeight, listWidth, horizontal]
     );
 
     const scrollToIndex = useCallback(
       (index: number, animated?: boolean) => {
+        const offset = index * (horizontal ? listWidth : calendarHeight);
         flatListRef.current?.scrollToOffset({
-          offset: index * (horizontal ? listWidth : calendarHeight),
+          offset,
           animated: animated || scrollEnabled,
         });
       },
@@ -155,7 +165,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           setListWidth(width);
         }
       },
-      [listWidth, scrollToIndex]
+      [listWidth]
     );
 
     const handleArrowPress = useCallback(
@@ -275,13 +285,13 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           <>
             <FlatList
               data={months}
+              // @ts-ignore
               getItemLayout={getItemLayout}
               horizontal={horizontal}
               initialNumToRender={1}
               initialScrollIndex={initialScrollIndex}
               keyExtractor={keyExtractor}
               pagingEnabled={horizontal}
-              // @ts-ignore
               ref={flatListRef}
               renderItem={renderMonth}
               scrollEnabled={scrollEnabled}
