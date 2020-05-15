@@ -28,6 +28,7 @@ import {
 } from './helpers';
 import { Arrows, DayNames, Day, MonthTitle, Week } from './components';
 import Locales from './Locales';
+import monthsHeights from './helpers/monthsHeights';
 
 const defaultViewabilityConfig = {
   itemVisiblePercentThreshold: 1,
@@ -130,15 +131,15 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     const getItemLayout = useCallback(
       (data: Array<CalendarItem>, index: number) => {
         const monthsLayout = monthsHeight(data);
-        const currentMonthLayout = monthsLayout[index] || { height: 0 };
-        const offset = monthsLayout
-          .slice(0, index)
-          .reduce((acc, { height }) => (acc += height), 0);
+        const currentMonthLayout = monthsLayout[index] || {
+          height: 0,
+          offset: 0,
+        };
 
         return {
           index,
           length: horizontal ? listWidth : currentMonthLayout.height,
-          offset: horizontal ? listWidth * index : offset,
+          offset: horizontal ? listWidth * index : currentMonthLayout.offset,
         };
       },
       [calendarHeight, listWidth, horizontal]
@@ -146,13 +147,16 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
 
     const scrollToIndex = useCallback(
       (index: number, animated?: boolean) => {
-        const offset = index * (horizontal ? listWidth : calendarHeight);
+        const offset = horizontal
+          ? index * listWidth
+          : monthsHeights(months)[index]?.offset;
+
         flatListRef.current?.scrollToOffset({
           offset,
           animated: animated || scrollEnabled,
         });
       },
-      [listWidth, scrollEnabled, horizontal, calendarHeight]
+      [listWidth, scrollEnabled, horizontal, months]
     );
 
     const handleLayoutChange = useCallback(
