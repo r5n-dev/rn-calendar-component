@@ -1,6 +1,7 @@
 module.exports = {
   git: {
-    requireUpstream: true,
+    requireUpstream: false,
+    requireCleanWorkingDir: false,
     tag: true,
     tagName: 'react-native-markdown-input@${version}',
     commit: true,
