@@ -24,11 +24,10 @@ import {
   fillDates,
   generateDates,
   markedDatesForWeek,
-  monthsHeight,
+  monthsHeights,
 } from './helpers';
 import { Arrows, DayNames, Day, MonthTitle, Week } from './components';
 import Locales from './Locales';
-import monthsHeights from './helpers/monthsHeights';
 
 const defaultViewabilityConfig = {
   itemVisiblePercentThreshold: 1,
@@ -130,7 +129,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
 
     const getItemLayout = useCallback(
       (data: Array<CalendarItem>, index: number) => {
-        const monthsLayout = monthsHeight(data);
+        const monthsLayout = monthsHeights(data);
         const currentMonthLayout = monthsLayout[index] || {
           height: 0,
           offset: 0,
