@@ -8,7 +8,7 @@ export type CalendarDate = {
   dayOfWeek: number;
 };
 
-export type CalendarItem = [string, CalendarDate];
+export type CalendarItem = [string, Array<CalendarDate>];
 
 export type CalendarRef = {
   /**
