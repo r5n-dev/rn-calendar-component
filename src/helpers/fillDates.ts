@@ -32,7 +32,7 @@ const fillDates = ({
     return [
       ...Array(fillCap).fill({}),
       ...dates,
-      ...Array(maxDayIndex - lastDate.dayOfWeek).fill({}),
+      ...Array(maxDayIndex - lastDate.dayOfWeek + 1).fill({}),
     ];
   } else {
     const startFillCap =

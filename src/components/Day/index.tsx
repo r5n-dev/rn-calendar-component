@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { DayComponentProps } from '../../componentTypes';
@@ -28,11 +28,16 @@ const Day = ({
     onPress?.({ day, month, year, dayString });
   }, [day, dayString, month, onPress, year]);
 
+  const width = useMemo(() => listWidth / 7, [listWidth]);
+  const padding = useMemo(() => Math.min(listWidth / 40, 15), [listWidth]);
+
   if (!day) {
     return (
-      <View style={[styles.container, { width: listWidth / 7 }]}>
-        <View style={[styles.dayContainer, { padding: listWidth / 40 }]}>
-          <Text style={styles.dayText} />
+      <View style={[styles.container, { width }]}>
+        <View
+          style={[styles.dayContainer, { padding, width }, theme?.container]}
+        >
+          <Text style={StyleSheet.flatten([styles.dayText, theme?.text])} />
         </View>
       </View>
     );
@@ -45,12 +50,12 @@ const Day = ({
       accessible
       activeOpacity={0.4}
       onPress={handleDayPress}
-      style={[styles.container, { width: listWidth / 7 }]}
+      style={[styles.container, { width }]}
     >
       <View
         style={[
           styles.dayContainer,
-          { padding: listWidth / 40, width: listWidth / 7 },
+          { padding, width },
           inSeries && styles.inSeriesRadius,
           startingDay && styles.startingRadius,
           endingDay && styles.endingRadius,
@@ -97,22 +102,19 @@ const areEqual = (
     year,
   }: DayComponentProps,
   nextProps: DayComponentProps
-): boolean => {
-  return (
-    selected === nextProps.selected &&
-    inSeries === nextProps.inSeries &&
-    startingDay === nextProps.startingDay &&
-    endingDay === nextProps.endingDay &&
-    backgroundColor === nextProps.backgroundColor &&
-    color === nextProps.color &&
-    day === nextProps.day &&
-    dayString === nextProps.dayString &&
-    month === nextProps.month &&
-    year === nextProps.year &&
-    dots === nextProps.dots &&
-    listWidth === nextProps.listWidth
-  );
-};
+): boolean =>
+  selected === nextProps.selected &&
+  inSeries === nextProps.inSeries &&
+  startingDay === nextProps.startingDay &&
+  endingDay === nextProps.endingDay &&
+  backgroundColor === nextProps.backgroundColor &&
+  color === nextProps.color &&
+  day === nextProps.day &&
+  dayString === nextProps.dayString &&
+  month === nextProps.month &&
+  year === nextProps.year &&
+  dots === nextProps.dots &&
+  listWidth === nextProps.listWidth;
 
 export default React.memo<DayComponentProps>(Day, areEqual);
 

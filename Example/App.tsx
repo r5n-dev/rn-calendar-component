@@ -134,22 +134,20 @@ const App = () => {
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <View style={styles.calendarWrapper}>
-          {loaded && (
-            <Calendar
-              currentDay={todayDate}
-              endISODate="2020-12-31"
-              firstDay={firstDay}
-              hideArrows={false}
-              hideExtraDays={hideExtraDays}
-              horizontal={horizontal}
-              locale={locale}
-              markedDates={markedDates}
-              onDayPress={handleDayPress}
-              startISODate="2020-01-01"
-            />
-          )}
-        </View>
+        {loaded && (
+          <Calendar
+            currentDay={todayDate}
+            endISODate="2020-12-31"
+            firstDay={firstDay}
+            hideArrows={false}
+            hideExtraDays={hideExtraDays}
+            horizontal={horizontal}
+            locale={locale}
+            markedDates={markedDates}
+            onDayPress={handleDayPress}
+            startISODate="2020-01-01"
+          />
+        )}
 
         <View style={styles.buttonsContainer}>
           <TouchableOpacity
@@ -251,6 +249,5 @@ const styles = StyleSheet.create({
   calendarInfoContainer: {
     maxHeight: 100,
   },
-  calendarWrapper: { width: 300 },
   container: { alignItems: 'center', flex: 1, justifyContent: 'center' },
 });

@@ -9,19 +9,17 @@ type Props = {
   selected?: boolean;
 };
 
-const Dots = ({ dots, selected }: Props) => {
-  return (
-    <View style={styles.container}>
-      {dots &&
-        Object.keys(dots).map((key) => {
-          const { color, selectedColor } = dots[key];
-          const backgroundColor = (selected && selectedColor) || color;
+const Dots = ({ dots, selected }: Props) => (
+  <View style={styles.container}>
+    {dots &&
+      Object.keys(dots).map((key) => {
+        const { color, selectedColor } = dots[key];
+        const backgroundColor = (selected && selectedColor) || color;
 
-          return <View key={key} style={[styles.dot, { backgroundColor }]} />;
-        })}
-    </View>
-  );
-};
+        return <View key={key} style={[styles.dot, { backgroundColor }]} />;
+      })}
+  </View>
+);
 
 export default React.memo<Props>(Dots);
 
