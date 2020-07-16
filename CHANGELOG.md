@@ -1,3 +1,10 @@
+## [0.2.3](https://github.com/versum/rn-calendar/compare/rn-calendar@0.2.2...rn-calendar@0.2.3) (2020-07-16)
+
+
+### Bug Fixes
+
+* cap paddings on huge screens ([63005af](https://github.com/versum/rn-calendar/commit/63005af248743de79ed9caf8f4e3108a59693448))
+
 ## [0.2.2](https://github.com/versum/rn-calendar/compare/rn-calendar@0.2.0...rn-calendar@0.2.2) (2020-07-09)
 
 
