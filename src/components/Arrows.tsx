@@ -34,7 +34,7 @@ const Arrows = ({
   </View>
 );
 
-export default React.memo<ArrowsComponentProps>(Arrows);
+export default React.memo(Arrows);
 
 const styles = StyleSheet.create({
   arrowIcon: {

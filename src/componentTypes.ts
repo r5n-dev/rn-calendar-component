@@ -1,8 +1,18 @@
 import { NamedExoticComponent } from 'react';
 import { ViewabilityConfig, FlatListProps } from 'react-native';
 
-import { CalendarTheme, CalendarDate, MarkedDate, MarkedDates } from './types';
+import {
+  CalendarTheme,
+  CalendarDate,
+  CalendarItem,
+  MarkedDate,
+  MarkedDates,
+  Locale,
+} from './types';
 
+/**
+ * Day related types
+ */
 export type DayComponentProps = CalendarDate &
   MarkedDate & {
     extraDay?: boolean;
@@ -12,19 +22,44 @@ export type DayComponentProps = CalendarDate &
     today: boolean;
   };
 
+/**
+ * Week related types
+ */
 export type WeekComponentProps = {
-  DayComponent: NamedExoticComponent<DayComponentProps>;
+  Day: NamedExoticComponent<DayComponentProps>;
   listWidth: number;
   dayTheme?: CalendarTheme['day'];
-  markedDates: MarkedDates | null;
+  markedDates?: MarkedDates;
   onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
   theme?: CalendarTheme['week'];
   week: Array<CalendarDate>;
 };
 
+/**
+ * Month related types
+ */
+export type MonthComponentProps = {
+  Day: NamedExoticComponent<DayComponentProps>;
+  DayNames: NamedExoticComponent<DayNamesComponentProps>;
+  MonthTitle: NamedExoticComponent<MonthTitleComponentProps>;
+  Week: NamedExoticComponent<WeekComponentProps>;
+  dates: Array<CalendarDate>;
+  firstDay: BinaryBoolean;
+  hideExtraDays: boolean;
+  horizontal?: boolean;
+  index: number;
+  item: CalendarItem;
+  listWidth: number;
+  locales: Locale;
+  markedDates?: MarkedDates;
+  months: Array<CalendarItem>;
+  onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
+  theme?: CalendarTheme;
+};
+
 export type DayNamesComponentProps = {
-  theme?: CalendarTheme['dayNames'];
   dayNames: Array<string>;
+  theme?: CalendarTheme['dayNames'];
 };
 
 export type MonthTitleComponentProps = {
@@ -90,7 +125,7 @@ export type CalendarProps = Pick<
   /**
    * First day of calendar. 0 means Sunday, 1 means Monday.
    */
-  firstDay?: 0 | 1;
+  firstDay?: BinaryBoolean;
 
   /**
    * Hides days from previous / next month in first / last week. Default `true`.

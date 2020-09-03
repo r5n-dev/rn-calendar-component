@@ -11,7 +11,7 @@ const MonthTitle = ({ title, theme }: MonthTitleComponentProps) => {
   );
 };
 
-export default React.memo<MonthTitleComponentProps>(MonthTitle);
+export default React.memo(MonthTitle);
 
 const styles = StyleSheet.create({
   container: {

@@ -1,4 +1,4 @@
-import { Locales as LocalesType } from './types';
+import { Locale } from './types';
 
 const defaultLocale = {
   monthNames: [
@@ -41,7 +41,7 @@ const defaultLocale = {
   dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 };
 
-const Locales: LocalesType = {
+const Locales: { [languageKey: string]: Locale } = {
   defaultLocale,
   en: defaultLocale,
 };

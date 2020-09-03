@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import { constants } from '../helpers';
+import { constants, markedDatesForWeek } from '../helpers';
 import { WeekComponentProps } from '../componentTypes';
 
 const Week = ({
-  DayComponent,
+  Day,
   dayTheme,
   listWidth,
   markedDates,
@@ -13,24 +13,29 @@ const Week = ({
   theme,
   week,
 }: WeekComponentProps) => {
+  const weekMarkedDates = useMemo(() => markedDatesForWeek(week, markedDates), [
+    week,
+    markedDates,
+  ]);
+
   return (
     <View style={[styles.container, theme?.container]}>
       {week.map((item, index) => (
-        <DayComponent
+        <Day
           key={item.dayString ? item.dayString : `${index}`}
           listWidth={listWidth}
           onPress={onDayPress}
           theme={dayTheme}
           today={constants.todayDate === item.dayString}
           {...item}
-          {...markedDates?.[item.dayString]}
+          {...weekMarkedDates?.[item.dayString]}
         />
       ))}
     </View>
   );
 };
 
-export default React.memo<WeekComponentProps>(Week);
+export default React.memo(Week);
 
 const styles = StyleSheet.create({
   container: {

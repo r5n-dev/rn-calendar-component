@@ -27,10 +27,6 @@ export type Locale = {
   dayNamesShort: Array<string>;
 };
 
-export type Locales = {
-  [key: string]: Locale;
-};
-
 export type Dots = {
   [key: string]: {
     color: string;

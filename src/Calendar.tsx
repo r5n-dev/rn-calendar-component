@@ -18,15 +18,8 @@ import {
 import { CalendarDate, CalendarRef, Locale, CalendarItem } from './types';
 import { CalendarProps } from './componentTypes';
 
-import {
-  chunk,
-  constants,
-  fillDates,
-  generateDates,
-  markedDatesForWeek,
-  monthsHeights,
-} from './helpers';
-import { Arrows, DayNames, Day, MonthTitle, Week } from './components';
+import { constants, generateDates, monthsHeights } from './helpers';
+import { Arrows, DayNames, Day, MonthTitle, Week, Month } from './components';
 import Locales from './Locales';
 
 const defaultViewabilityConfig = {
@@ -224,63 +217,32 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       scrollToIndex,
     ]);
 
-    const renderWeek = (week: Array<CalendarDate>) => {
-      const firstWeekDay = week.find(({ dayString }) => dayString);
-
-      if (!firstWeekDay) {
-        return null;
-      }
-
-      const weekMarkedDatesProps = markedDatesForWeek(week, markedDates);
-
-      return (
-        <WeekComponent
-          DayComponent={DayComponent}
-          dayTheme={theme?.day}
-          key={firstWeekDay.dayString}
-          listWidth={listWidth}
-          markedDates={weekMarkedDatesProps}
-          onDayPress={onDayPress}
-          theme={theme?.week}
-          week={week}
-        />
-      );
-    };
-
     const renderMonth = ({
-      item: [month, dates],
+      item,
       index,
     }: {
       item: [string, Array<CalendarDate>];
       index: number;
-    }) => {
-      const monthDates = fillDates({
-        hideExtraDays,
-        firstDay,
-        dates,
-        monthIndex: index,
-        months,
-      });
-
-      const weeks = chunk(monthDates, constants.weekLength);
-      const [year, monthString] = month.split('-');
-
-      return (
-        <View key={month} style={horizontal && { width: listWidth }}>
-          <MonthTitleComponent
-            theme={theme?.monthTitle}
-            title={`${locales.monthNames[Number(monthString) - 1]} ${year}`}
-          />
-
-          <DayNamesComponent
-            dayNames={locales.dayNamesShort}
-            theme={theme?.dayNames}
-          />
-
-          {weeks.map(renderWeek)}
-        </View>
-      );
-    };
+    }) => (
+      <Month
+        Day={DayComponent}
+        DayNames={DayNamesComponent}
+        MonthTitle={MonthTitleComponent}
+        Week={WeekComponent}
+        dates={dates}
+        firstDay={firstDay}
+        hideExtraDays={hideExtraDays}
+        horizontal={horizontal}
+        index={index}
+        item={item}
+        listWidth={listWidth}
+        locales={locales}
+        markedDates={markedDates}
+        months={months}
+        onDayPress={onDayPress}
+        theme={theme}
+      />
+    );
 
     return (
       <View onLayout={handleLayoutChange} style={styles.container}>
@@ -322,7 +284,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
   }
 );
 
-export default Calendar;
+export default React.memo(Calendar);
 
 const styles = StyleSheet.create({
   container: {

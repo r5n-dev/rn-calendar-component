@@ -15,7 +15,7 @@ const DayNames = ({ dayNames, theme }: DayNamesComponentProps) => {
   );
 };
 
-export default React.memo<DayNamesComponentProps>(DayNames);
+export default React.memo(DayNames);
 
 const styles = StyleSheet.create({
   container: {
