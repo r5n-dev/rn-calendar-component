@@ -46,6 +46,7 @@
     "jest-coverage-badges": "1.1.2",
     "prettier": "2.1.1",
     "react": "16.13.0",
+    "react-dom": "16.13.1",
     "react-native": "0.63.2",
     "react-native-testing-library": "2.1.0",
     "react-native-web": "0.13.9",

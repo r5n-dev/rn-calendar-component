@@ -17,8 +17,7 @@ import {
 
 import { CalendarDate, CalendarRef, Locale, CalendarItem } from './types';
 import { CalendarProps } from './componentTypes';
-
-import { constants, generateDates, monthsHeights } from './helpers';
+import { constants, generateDates, monthsHeights, monthsData } from './helpers';
 import { Arrows, DayNames, Day, MonthTitle, Week, Month } from './components';
 import Locales from './Locales';
 
@@ -89,24 +88,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       [startISODate, endISODate]
     );
 
-    const months = useMemo(
-      () =>
-        Object.entries<Array<CalendarDate>>(
-          dates.reduce(
-            (
-              acc: { [key: string]: Array<CalendarDate> },
-              date: CalendarDate
-            ) => {
-              const monthKey = `${date.year}-${date.month}`;
-              const month = acc[monthKey] || [];
-              acc[monthKey] = [...month, date];
-              return acc;
-            },
-            {}
-          )
-        ),
-      [dates]
-    );
+    const months = useMemo(() => monthsData(dates), [dates]);
 
     const initialScrollIndex = useMemo(() => {
       const currentMonth = currentDay.split(/-(?=[^-]+$)/)[0];
@@ -122,7 +104,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
 
     const getItemLayout = useCallback(
       (data: Array<CalendarItem>, index: number) => {
-        const monthsLayout = monthsHeights(data);
+        const monthsLayout = monthsHeights(data, firstDay);
         const currentMonthLayout = monthsLayout[index] || {
           height: 0,
           offset: 0,
@@ -134,21 +116,21 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           offset: horizontal ? listWidth * index : currentMonthLayout.offset,
         };
       },
-      [calendarHeight, listWidth, horizontal]
+      [calendarHeight, listWidth, horizontal, firstDay]
     );
 
     const scrollToIndex = useCallback(
       (index: number, animated?: boolean) => {
         const offset = horizontal
           ? index * listWidth
-          : monthsHeights(months)[index]?.offset;
+          : monthsHeights(months, firstDay)[index]?.offset;
 
         flatListRef.current?.scrollToOffset({
           offset,
           animated: animated || scrollEnabled,
         });
       },
-      [listWidth, scrollEnabled, horizontal, months]
+      [listWidth, scrollEnabled, horizontal, months, firstDay]
     );
 
     const handleLayoutChange = useCallback(

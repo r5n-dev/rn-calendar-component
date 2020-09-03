@@ -3,5 +3,4 @@ export default {
   typescript: true,
   base: '/rn-calendar/',
   dest: './docs',
-  src: './src',
 };

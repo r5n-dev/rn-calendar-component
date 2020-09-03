@@ -39,8 +39,6 @@ const Month = ({
 
   const [year, monthString] = month.split('-');
 
-  console.log(weeks);
-
   return (
     <View key={month} style={horizontal && { width: listWidth }}>
       <MonthTitle
@@ -50,18 +48,23 @@ const Month = ({
 
       <DayNames dayNames={locales.dayNamesShort} theme={theme?.dayNames} />
 
-      {weeks.map((week) => (
-        <Week
-          Day={Day}
-          dayTheme={theme?.day}
-          key={week.find(({ dayString }) => dayString)?.dayString}
-          listWidth={listWidth}
-          markedDates={markedDates}
-          onDayPress={onDayPress}
-          theme={theme?.week}
-          week={week}
-        />
-      ))}
+      {weeks.map((week) => {
+        const key = week.find(({ dayString }) => dayString)?.dayString;
+        if (!key) return null;
+
+        return (
+          <Week
+            Day={Day}
+            dayTheme={theme?.day}
+            key={key}
+            listWidth={listWidth}
+            markedDates={markedDates}
+            onDayPress={onDayPress}
+            theme={theme?.week}
+            week={week}
+          />
+        );
+      })}
     </View>
   );
 };

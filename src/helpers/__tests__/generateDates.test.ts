@@ -88,6 +88,7 @@ describe('generateDates', () => {
 
   describe('when invalid dates are provided', () => {
     test('should return empty array', () => {
+      // @ts-expect-error
       expect(generateDates({})).toEqual([]);
       expect(generateDates({ startISODate: '', endISODate: '' })).toEqual([]);
       expect(

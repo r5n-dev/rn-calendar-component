@@ -10,29 +10,31 @@ const Arrows = ({
   listWidth,
   leftArrowDisabled,
   rightArrowDisabled,
-}: ArrowsComponentProps) => (
-  <View style={styles.container}>
-    <TouchableOpacity
-      disabled={leftArrowDisabled}
-      onPress={() => onArrowPress('left')}
-      style={[styles.leftArrow, leftArrowDisabled && styles.disabledArrow]}
-    >
-      <Image source={arrow} style={styles.arrowIcon} />
-    </TouchableOpacity>
+}: ArrowsComponentProps) => {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        disabled={leftArrowDisabled}
+        onPress={() => onArrowPress('left')}
+        style={[styles.leftArrow, leftArrowDisabled && styles.disabledArrow]}
+      >
+        <Image source={arrow} style={styles.arrowIcon} />
+      </TouchableOpacity>
 
-    <TouchableOpacity
-      disabled={rightArrowDisabled}
-      onPress={() => onArrowPress('right')}
-      style={[
-        styles.rightArrow,
-        { left: listWidth - constants.touchableSize * 1.6 },
-        rightArrowDisabled && styles.disabledArrow,
-      ]}
-    >
-      <Image source={arrow} style={styles.arrowIcon} />
-    </TouchableOpacity>
-  </View>
-);
+      <TouchableOpacity
+        disabled={rightArrowDisabled}
+        onPress={() => onArrowPress('right')}
+        style={[
+          styles.rightArrow,
+          { left: listWidth - constants.touchableSize * 1.6 },
+          rightArrowDisabled && styles.disabledArrow,
+        ]}
+      >
+        <Image source={arrow} style={styles.arrowIcon} />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default React.memo(Arrows);
 

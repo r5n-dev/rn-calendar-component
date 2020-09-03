@@ -32,7 +32,7 @@ describe('markedDatesForWeek', () => {
         '2019-01-06': { selected: true, inSeries: true },
         '2019-01-07': { selected: true, inSeries: true, endingDay: true },
       };
-
+      // @ts-expect-error
       expect(markedDatesForWeek(week, markedDates)).toEqual(
         expectedMarkedDates
       );
@@ -68,7 +68,7 @@ describe('markedDatesForWeek', () => {
         '2019-01-06': { selected: true, inSeries: true },
         '2019-01-07': { selected: true, inSeries: true, endingDay: true },
       };
-
+      // @ts-expect-error
       expect(markedDatesForWeek(week, markedDates)).toEqual(
         expectedMarkedDates
       );
@@ -100,7 +100,7 @@ describe('markedDatesForWeek', () => {
         '2019-01-05': { selected: true },
         '2019-01-07': { selected: true },
       };
-
+      // @ts-expect-error
       expect(markedDatesForWeek(week, markedDates)).toEqual(
         expectedMarkedDates
       );
@@ -134,7 +134,7 @@ describe('markedDatesForWeek', () => {
         '2019-01-05': { selected: true },
         '2019-01-07': { selected: true },
       };
-
+      // @ts-expect-error
       expect(markedDatesForWeek(week, markedDates)).toEqual(
         expectedMarkedDates
       );
@@ -155,7 +155,7 @@ describe('markedDatesForWeek', () => {
     const markedDates = {
       '2019-01-08': { selected: true },
     };
-
+    // @ts-expect-error
     expect(markedDatesForWeek(week, markedDates)).toEqual(null);
   });
 

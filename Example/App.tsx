@@ -113,7 +113,7 @@ const App = () => {
   const [firstDay, setFirstDay] = useState<0 | 1>(0);
   const [locale, setLocale] = useState<'en' | 'pl'>('en');
   const [hideExtraDays, setHideExtraDays] = useState<boolean>(true);
-  const [horizontal, setHorizontal] = useState<boolean>(true);
+  const [horizontal, setHorizontal] = useState<boolean>(false);
 
   const resetCalendar = () => {
     setLoaded(false);
@@ -145,7 +145,7 @@ const App = () => {
             locale={locale}
             markedDates={markedDates}
             onDayPress={handleDayPress}
-            startISODate="2018-01-01"
+            startISODate="2015-01-01"
           />
         )}
 

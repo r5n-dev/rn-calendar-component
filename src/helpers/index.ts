@@ -4,3 +4,4 @@ export { default as markedDatesForWeek } from './markedDatesForWeek';
 export { default as chunk } from './chunk';
 export { default as fillDates } from './fillDates';
 export { default as monthsHeights } from './monthsHeights';
+export { default as monthsData } from './monthsData';

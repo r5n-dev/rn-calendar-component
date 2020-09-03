@@ -23,6 +23,7 @@ describe('chunk', () => {
 
   describe('when chunkLength is not provided', () => {
     test('should return empty array of arrays', () => {
+      // @ts-expect-error
       expect(chunk([1, 2, 3])).toEqual([[]]);
     });
   });
