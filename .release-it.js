@@ -3,7 +3,7 @@ module.exports = {
     requireUpstream: false,
     requireCleanWorkingDir: false,
     tag: true,
-    tagName: 'rn-calendar@${version}',
+    tagName: '${version}',
     commit: true,
     commitMessage: 'chore(:bookmark:): rn-calendar ${version}',
   },
