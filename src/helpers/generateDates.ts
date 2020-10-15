@@ -22,13 +22,14 @@ export default ({
     startDate.setTime(nextDay);
 
     const dayString = startDate.toISOString().replace(/T.*/, '');
-    const [year, month] = dayString.split('-');
+    const [year, month, day] = dayString.split('-');
 
     dates[index] = {
+      // get rid of `0` prefix
+      day: parseInt(day).toString(),
       dayString,
       year,
       month,
-      day: `${startDate.getDate()}`,
       dayOfWeek: startDate.getDay(),
     };
 
