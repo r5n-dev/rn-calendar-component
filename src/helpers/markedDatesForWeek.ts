@@ -60,10 +60,10 @@ const withSeriesInfo = ({
           acc[dayString] = markedDateInfo;
         } else {
           acc[dayString] = {
-            ...markedDateInfo,
+            inSeries: true,
             ...(index === 0 && { startingDay: true }),
             ...(index === days.length - 1 && { endingDay: true }),
-            inSeries: true,
+            ...markedDateInfo,
           };
         }
 

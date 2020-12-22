@@ -15,7 +15,7 @@ import {
 } from '@expo/react-native-action-sheet';
 
 // @ts-ignore
-import { Calendar, Locales } from '@versum/rn-calendar';
+import { Calendar, Locales } from 'rn-calendar';
 
 Locales.en = Locales.default;
 Locales.pl = {
