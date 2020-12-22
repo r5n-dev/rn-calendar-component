@@ -5,11 +5,11 @@ module.exports = {
     tag: true,
     tagName: '${version}',
     commit: true,
-    commitMessage: 'chore(:bookmark:): rn-calendar ${version}',
+    commitMessage: 'chore(:bookmark:): rn-calendar-component ${version}',
   },
   github: {
     release: true,
-    releaseName: 'rn-calendar@${version}',
+    releaseName: 'rn-calendar-component@${version}',
     draft: false,
   },
   npm: {

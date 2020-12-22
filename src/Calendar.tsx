@@ -103,7 +103,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     );
 
     const getItemLayout = useCallback(
-      (data: Array<CalendarItem>, index: number) => {
+      (data: Array<[string, Array<CalendarDate>]>, index: number) => {
         const monthsLayout = monthsHeights(data, firstDay);
         const currentMonthLayout = monthsLayout[index] || {
           height: 0,
@@ -232,7 +232,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           <>
             <FlatList
               data={months}
-              // @ts-ignore
+              // @ts-expect-error
               getItemLayout={getItemLayout}
               horizontal={horizontal}
               initialNumToRender={1}

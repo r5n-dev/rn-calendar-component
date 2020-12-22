@@ -9,7 +9,7 @@ module.exports = {
     react: {
       version: 'detect',
     },
-    'import/core-modules': ['@versum/rn-calendar'],
+    'import/core-modules': ['rn-calendar-component'],
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -28,6 +28,8 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-native/no-color-literals': 'off',
     'react/jsx-sort-props': ['error'],
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
 
     '@typescript-eslint/array-type': [
       'error',

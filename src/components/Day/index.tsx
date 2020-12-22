@@ -48,7 +48,7 @@ const Day = ({
       accessibilityLabel={day}
       accessibilityRole="button"
       accessible
-      activeOpacity={0.4}
+      activeOpacity={0.6}
       onPress={handleDayPress}
       style={[styles.container, { width }]}
     >
@@ -86,37 +86,7 @@ const Day = ({
   );
 };
 
-const areEqual = (
-  {
-    backgroundColor,
-    color,
-    day,
-    dayString,
-    dots,
-    endingDay,
-    inSeries,
-    listWidth,
-    month,
-    selected,
-    startingDay,
-    year,
-  }: DayComponentProps,
-  nextProps: DayComponentProps
-): boolean =>
-  selected === nextProps.selected &&
-  inSeries === nextProps.inSeries &&
-  startingDay === nextProps.startingDay &&
-  endingDay === nextProps.endingDay &&
-  backgroundColor === nextProps.backgroundColor &&
-  color === nextProps.color &&
-  day === nextProps.day &&
-  dayString === nextProps.dayString &&
-  month === nextProps.month &&
-  year === nextProps.year &&
-  dots === nextProps.dots &&
-  listWidth === nextProps.listWidth;
-
-export default React.memo<DayComponentProps>(Day, areEqual);
+export default React.memo(Day);
 
 const styles = StyleSheet.create({
   container: {

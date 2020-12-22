@@ -27,11 +27,6 @@ jobs:
       - name: Tests
         run: yarn test
 
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./scripts/release.sh ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build Docs
         run: yarn docs:build
 

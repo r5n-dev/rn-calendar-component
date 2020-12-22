@@ -1,4 +1,4 @@
-# @versum/rn-calendar
+# rn-calendar
 
 
 ## Docs
@@ -7,19 +7,13 @@ TODO:
 
 ## Setup
 
-Create or add to your `.npmrc` this line:
-```
-@versum:registry=https://npm.pkg.github.com/
-```
-
-Then you will be able to install it through `yarn`:
 ```bash
-yarn add @versum/rn-calendar
+yarn add rn-calendar-component
 ```
 
 ## Usage
 ```js
-import { Calendar } from '@versum/rn-calendar'
+import { Calendar } from 'rn-calendar-component'
 
 export default () => {
   return <Calendar startISODate="2020-01-01" endISODate="2020-12-31" />

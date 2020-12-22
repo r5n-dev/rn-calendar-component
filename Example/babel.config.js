@@ -7,7 +7,7 @@ module.exports = function (api) {
         'module-resolver',
         {
           alias: {
-            'rn-calendar': '../src/index',
+            'rrn-calendar-component': '../src/index',
           },
         },
       ],
