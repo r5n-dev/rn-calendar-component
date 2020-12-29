@@ -2,3 +2,5 @@ Example/
 docs/
 coverage/
 node_modules/
+README.node_modules
+__tests__/*
