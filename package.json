@@ -1,7 +1,7 @@
 {
   "name": "rn-calendar-component",
   "description": "React-Native Calendar",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "react-native": "src/index.tsx",
