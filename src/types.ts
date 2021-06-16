@@ -42,6 +42,7 @@ export type MarkedDate = {
   inSeries?: boolean;
   selected?: boolean;
   startingDay?: boolean;
+  extraDay?: boolean;
 };
 
 export type MarkedDates = {
@@ -58,6 +59,8 @@ export type CalendarTheme = {
     text?: TextStyle;
     todayContainer?: ViewStyle;
     todayText?: TextStyle;
+    pastDayText?: TextStyle;
+    pastDayContainer?: ViewStyle;
   };
   dayNames?: {
     container?: ViewStyle;
@@ -65,7 +68,7 @@ export type CalendarTheme = {
   };
   monthTitle?: {
     container?: ViewStyle;
-    text: TextStyle;
+    text?: TextStyle;
   };
   week?: {
     container?: ViewStyle;

@@ -1,29 +1,22 @@
 {
+  "name": "rn-calendar-component-example",
+  "displayName": "RnCalendarComponent Example",
   "expo": {
-    "name": "rn-calendar-component Example",
-    "slug": "example",
+    "name": "rn-calendar-component-example",
+    "slug": "rn-calendar-component-example",
+    "description": "Example app for rn-calendar-component",
     "privacy": "public",
+    "version": "1.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
+    "ios": {
+      "supportsTablet": true
     },
     "assetBundlePatterns": [
       "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    }
+    ]
   }
 }

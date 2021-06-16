@@ -15,10 +15,10 @@ import {
  */
 export type DayComponentProps = CalendarDate &
   MarkedDate & {
-    extraDay?: boolean;
     listWidth: number;
     onPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
     theme?: CalendarTheme['day'];
+    pastDay: boolean;
     today: boolean;
   };
 

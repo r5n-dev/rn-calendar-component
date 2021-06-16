@@ -25,6 +25,7 @@ const Week = ({
           key={item.dayString ? item.dayString : `${index}`}
           listWidth={listWidth}
           onPress={onDayPress}
+          pastDay={new Date(item.dayString).getTime() < new Date().getTime()}
           theme={dayTheme}
           today={constants.todayDate === item.dayString}
           {...item}

@@ -22,6 +22,7 @@ const Day = ({
   startingDay,
   theme,
   today,
+  pastDay,
   year,
 }: DayComponentProps) => {
   const handleDayPress = useCallback(() => {
@@ -50,7 +51,7 @@ const Day = ({
       accessible
       activeOpacity={0.6}
       onPress={handleDayPress}
-      style={[styles.container, { width }]}
+      style={[styles.container, { maxWidth: width }]}
     >
       <View
         style={[
@@ -61,6 +62,7 @@ const Day = ({
           endingDay && styles.endingRadius,
 
           theme?.container,
+          pastDay && theme?.pastDayContainer,
           today && theme?.todayContainer,
           selected && (theme?.selectedContainer || { backgroundColor }),
           extraDay && theme?.extraDayContainer,
@@ -71,6 +73,7 @@ const Day = ({
             styles.dayText,
             theme?.text,
 
+            pastDay && (theme?.pastDayText || styles.pastDayText),
             today && (theme?.todayText || styles.todayText),
             extraDay && (theme?.extraDayText || styles.extraDayText),
             selected && theme?.selectedText,
@@ -124,6 +127,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 0,
     justifyContent: 'center',
     marginHorizontal: 0,
+  },
+  pastDayText: {
+    color: 'lightgrey',
   },
   startingRadius: {
     borderBottomLeftRadius: constants.touchableSize / 2,

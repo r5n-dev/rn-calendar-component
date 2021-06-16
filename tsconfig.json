@@ -25,7 +25,6 @@
     "target": "esnext"
   },
   "exclude": [
-    "example/**/*",
     "src/components/__tests__/*",
     "src/helpers/__tests__/*",
     "node_modules/**/*"

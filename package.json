@@ -4,14 +4,18 @@
   "version": "0.4.4",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
-  "react-native": "src/index.tsx",
   "types": "lib/typescript/index.d.ts",
+  "react-native": "src/index.tsx",
   "files": [
-    "lib/",
-    "src/"
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!lib/typescript/example"
   ],
   "scripts": {
-    "bootstrap": "yarn example && yarn",
+    "bootstrap": "yarn example && yarn && husky install",
     "docs:build": "rm -rf .docz/ docs/ lib/ && yarn docz build",
     "docs:dev": "rm -rf .docz/ docs/ && yarn docz dev",
     "example": "yarn --cwd Example",
@@ -23,36 +27,42 @@
     "test:watch": "jest --watch",
     "typescript": "tsc --noEmit"
   },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "react-native-calendar",
+    "rn-calendar-component"
+  ],
   "repository": "https://github.com/dsznajder/rn-calendar",
   "author": "Damian Sznajder <damsznajder@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "7.12.10",
-    "@babel/preset-typescript": "7.12.7",
-    "@commitlint/config-conventional": "11.0.0",
-    "@expo/react-native-action-sheet": "3.8.0",
-    "@react-native-community/bob": "0.17.1",
-    "@release-it/conventional-changelog": "2.0.0",
-    "@types/jest": "26.0.19",
-    "@types/react": "17.0.0",
-    "@types/react-native": "0.63.42",
-    "babel-jest": "26.6.3",
-    "commitlint": "11.0.0",
+    "@babel/core": "7.14.6",
+    "@babel/preset-typescript": "7.14.5",
+    "@commitlint/config-conventional": "12.1.4",
+    "@release-it/conventional-changelog": "3.0.1",
+    "@types/jest": "26.0.23",
+    "@types/react": "17.0.11",
+    "@types/react-native": "0.64.10",
+    "babel-jest": "27.0.2",
+    "commitlint": "12.1.4",
     "docz": "2.3.1",
-    "eslint": "7.16.0",
-    "eslint-config-satya164": "3.1.8",
-    "husky": "4.3.6",
-    "jest": "26.6.3",
+    "eslint": "7.28.0",
+    "eslint-config-satya164": "3.1.10",
+    "husky": "6.0.0",
+    "jest": "27.0.4",
     "jest-coverage-badges": "1.1.2",
-    "prettier": "2.2.1",
-    "react": "16.13.0",
-    "react-dom": "16.13.1",
-    "react-native": "0.63.4",
-    "react-native-testing-library": "2.1.0",
-    "react-native-web": "0.14.10",
-    "react-test-renderer": "16.13.1",
-    "release-it": "14.2.2",
-    "typescript": "4.1.3"
+    "prettier": "2.3.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-native": "0.64.2",
+    "react-native-builder-bob": "0.18.1",
+    "react-native-testing-library": "6.0.0",
+    "react-native-web": "0.16.5",
+    "react-test-renderer": "17.0.2",
+    "release-it": "14.9.0",
+    "typescript": "4.3.2"
   },
   "peerDependencies": {
     "react": "*",
@@ -93,19 +103,22 @@
     "trailingComma": "es5",
     "useTabs": false
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint && yarn typescript",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "@react-native-community/bob": {
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "react-native-builder-bob": {
     "source": "src",
     "output": "lib",
     "targets": [
       "commonjs",
       "module",
-      "typescript"
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
     ]
   }
 }

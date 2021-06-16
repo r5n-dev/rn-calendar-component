@@ -3,17 +3,17 @@ module.exports = {
     requireUpstream: false,
     requireCleanWorkingDir: false,
     tag: true,
-    tagName: '${version}',
+    tagName: 'v${version}',
     commit: true,
     commitMessage: 'chore(:bookmark:): rn-calendar-component ${version}',
   },
   github: {
     release: true,
-    releaseName: 'rn-calendar-component@${version}',
+    releaseName: '${version}',
     draft: false,
   },
   npm: {
-    publish: false,
+    publish: true,
   },
   plugins: {
     '@release-it/conventional-changelog': {
