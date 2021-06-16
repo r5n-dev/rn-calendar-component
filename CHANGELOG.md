@@ -1,3 +1,5 @@
+# [0.5.0](https://github.com/dsznajder/rn-calendar/compare/v0.1.3...v0.5.0) (2021-06-16)
+
 ## [0.4.4](https://github.com/dsznajder/rn-calendar/compare/0.3.1...0.4.4) (2020-12-29)
 
 ## [0.4.3](https://github.com/dsznajder/rn-calendar/compare/0.3.1...0.4.3) (2020-12-29)

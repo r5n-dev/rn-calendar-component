@@ -3,9 +3,9 @@ module.exports = {
     requireUpstream: false,
     requireCleanWorkingDir: false,
     tag: true,
-    tagName: 'v${version}',
+    tagName: '${version}',
     commit: true,
-    commitMessage: 'chore(:bookmark:): rn-calendar-component ${version}',
+    commitMessage: 'chore(:bookmark:): v${version}',
   },
   github: {
     release: true,
