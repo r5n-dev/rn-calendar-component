@@ -1,56 +1,63 @@
 module.exports = {
-  env: {
-    browser: true,
-    node: true,
-    jest: true,
-  },
-
   settings: {
     react: {
       version: 'detect',
     },
     'import/core-modules': ['rn-calendar-component'],
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-    },
   },
 
+  plugins: ['simple-import-sort'],
   extends: ['satya164', 'plugin:react-native/all'],
 
   rules: {
     'babel/no-unused-expressions': 'off',
-    'flowtype/no-types-missing-file-annotation': 'off',
-    'jest/consistent-test-it': ['error', { fn: 'test' }],
-    'no-undef': 'off',
-    'react-hooks/exhaustive-deps': 'off',
-    'react-hooks/rules-of-hooks': 'error',
-    'react-native/no-color-literals': 'off',
-    'react/jsx-sort-props': ['error'],
-    '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/no-use-before-define': 'off',
 
-    '@typescript-eslint/array-type': [
+    'import/extensions': 'off',
+    'import/named': 'off',
+    'import/no-unresolved': 'error',
+    'jest/consistent-test-it': ['error', { fn: 'test' }],
+    'jest/no-truthy-falsy': 'off',
+    'jest/expect-expect': ['error', { assertFunctionNames: ['expect', 'element'] }],
+
+    'simple-import-sort/exports': 'error',
+    'simple-import-sort/imports': [
       'error',
       {
-        default: 'generic',
-        readonly: 'generic',
+        groups: [
+          // Side effect imports.
+          ['^\\u0000'],
+          // Packages.
+          ['^@?\\w'],
+          ['^../'],
+          ['^./'],
+        ],
       },
     ],
     'prettier/prettier': [
       'error',
       {
         bracketSpacing: true,
-        jsxBracketSameLine: false,
-        parser: 'typescript',
-        printWidth: 80,
+        bracketSameLine: false,
+        printWidth: 100,
         semi: true,
         singleQuote: true,
         tabWidth: 2,
-        trailingComma: 'es5',
+        trailingComma: 'all',
         useTabs: false,
       },
     ],
+
+    'react/jsx-sort-props': ['error', { shorthandFirst: true }],
+    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-native/no-raw-text': 'off',
+    'react-native/no-color-literals': 'off',
+    'react/no-unused-prop-types': 'off',
+
+    '@typescript-eslint/array-type': ['error', { default: 'generic', readonly: 'generic' }],
+  },
+  globals: {
+    __DEV__: true,
+    jasmine: true,
   },
 };

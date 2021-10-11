@@ -27,9 +27,9 @@ describe('generateDates', () => {
         },
       ];
 
-      expect(
-        generateDates({ startISODate: '2019-01-01', endISODate: '2019-01-03' })
-      ).toEqual(firstExpectedDates);
+      expect(generateDates({ startISODate: '2019-01-01', endISODate: '2019-01-03' })).toEqual(
+        firstExpectedDates,
+      );
 
       const secondExpectedDates = [
         {
@@ -76,13 +76,13 @@ describe('generateDates', () => {
         },
       ];
 
-      expect(
-        generateDates({ startISODate: '2019-03-29', endISODate: '2019-04-03' })
-      ).toEqual(secondExpectedDates);
+      expect(generateDates({ startISODate: '2019-03-29', endISODate: '2019-04-03' })).toEqual(
+        secondExpectedDates,
+      );
 
-      expect(
-        generateDates({ startISODate: '2019', endISODate: '2019' })
-      ).toEqual([firstExpectedDates[0]]);
+      expect(generateDates({ startISODate: '2019', endISODate: '2019' })).toEqual([
+        firstExpectedDates[0],
+      ]);
     });
   });
 
@@ -91,9 +91,7 @@ describe('generateDates', () => {
       // @ts-expect-error
       expect(generateDates({})).toEqual([]);
       expect(generateDates({ startISODate: '', endISODate: '' })).toEqual([]);
-      expect(
-        generateDates({ startISODate: 'asdf', endISODate: 'ghjk' })
-      ).toEqual([]);
+      expect(generateDates({ startISODate: 'asdf', endISODate: 'ghjk' })).toEqual([]);
     });
   });
 });

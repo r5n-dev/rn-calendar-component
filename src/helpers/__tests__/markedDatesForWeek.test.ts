@@ -33,9 +33,7 @@ describe('markedDatesForWeek', () => {
         '2019-01-07': { selected: true, inSeries: true, endingDay: true },
       };
       // @ts-expect-error
-      expect(markedDatesForWeek(week, markedDates)).toEqual(
-        expectedMarkedDates
-      );
+      expect(markedDatesForWeek(week, markedDates)).toEqual(expectedMarkedDates);
     });
   });
 
@@ -69,9 +67,7 @@ describe('markedDatesForWeek', () => {
         '2019-01-07': { selected: true, inSeries: true, endingDay: true },
       };
       // @ts-expect-error
-      expect(markedDatesForWeek(week, markedDates)).toEqual(
-        expectedMarkedDates
-      );
+      expect(markedDatesForWeek(week, markedDates)).toEqual(expectedMarkedDates);
     });
   });
 
@@ -101,9 +97,7 @@ describe('markedDatesForWeek', () => {
         '2019-01-07': { selected: true },
       };
       // @ts-expect-error
-      expect(markedDatesForWeek(week, markedDates)).toEqual(
-        expectedMarkedDates
-      );
+      expect(markedDatesForWeek(week, markedDates)).toEqual(expectedMarkedDates);
     });
   });
 
@@ -135,9 +129,7 @@ describe('markedDatesForWeek', () => {
         '2019-01-07': { selected: true },
       };
       // @ts-expect-error
-      expect(markedDatesForWeek(week, markedDates)).toEqual(
-        expectedMarkedDates
-      );
+      expect(markedDatesForWeek(week, markedDates)).toEqual(expectedMarkedDates);
     });
   });
 

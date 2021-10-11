@@ -1,4 +1,5 @@
 import { CalendarDate } from '../types';
+
 import constants from './constants';
 
 let cachedMonths: {
@@ -11,12 +12,9 @@ let cachedMonths: {
 
 const monthsHeights = (
   monthsData: Array<[string, Array<CalendarDate>]>,
-  firstDay: BinaryBoolean
+  firstDay: BinaryBoolean,
 ) => {
-  if (
-    cachedMonths.firstDay === firstDay &&
-    monthsData.length === cachedMonths.data.length
-  ) {
+  if (cachedMonths.firstDay === firstDay && monthsData.length === cachedMonths.data.length) {
     return cachedMonths.data;
   }
 
@@ -26,12 +24,9 @@ const monthsHeights = (
     const firstWeekDaysCount = constants.weekLength - firstDay.dayOfWeek;
     const lastWeekDaysCount = lastDay.dayOfWeek + 1;
     const weeksCount =
-      2 +
-      (data.length - firstWeekDaysCount - lastWeekDaysCount) /
-        constants.weekLength;
+      2 + (data.length - firstWeekDaysCount - lastWeekDaysCount) / constants.weekLength;
 
-    const height =
-      weeksCount * constants.touchableSize + constants.monthHeaderHeight;
+    const height = weeksCount * constants.touchableSize + constants.monthHeaderHeight;
     const offset = acc.reduce((acc, { height }) => (acc += height), 0);
     acc.push({ height, offset });
 

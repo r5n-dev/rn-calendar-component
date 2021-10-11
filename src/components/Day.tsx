@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { DayComponentProps } from '../../componentTypes';
-import { constants } from '../../helpers';
+import { DayComponentProps } from '../componentTypes';
+import { constants } from '../helpers';
 
 import Dots from './Dots';
 
@@ -25,6 +25,17 @@ const Day = ({
   pastDay,
   year,
 }: DayComponentProps) => {
+  const textStyle = [
+    styles.dayText,
+    theme?.text,
+
+    today && (theme?.todayText || styles.todayText),
+    pastDay && (theme?.pastDayText || styles.pastDayText),
+    extraDay && (theme?.extraDayText || styles.extraDayText),
+    selected && theme?.selectedText,
+    color ? { color } : undefined,
+  ];
+
   const handleDayPress = useCallback(() => {
     onPress?.({ day, month, year, dayString });
   }, [day, dayString, month, onPress, year]);
@@ -35,9 +46,7 @@ const Day = ({
   if (!day) {
     return (
       <View style={[styles.container, { width }]}>
-        <View
-          style={[styles.dayContainer, { padding, width }, theme?.container]}
-        >
+        <View style={[styles.dayContainer, { padding, width }, theme?.container]}>
           <Text style={StyleSheet.flatten([styles.dayText, theme?.text])} />
         </View>
       </View>
@@ -46,42 +55,29 @@ const Day = ({
 
   return (
     <TouchableOpacity
+      accessible
       accessibilityLabel={day}
       accessibilityRole="button"
-      accessible
       activeOpacity={0.6}
       onPress={handleDayPress}
-      style={[styles.container, { maxWidth: width }]}
+      style={[styles.container, { width }]}
     >
       <View
         style={[
           styles.dayContainer,
-          { padding, width },
+          { padding },
           inSeries && styles.inSeriesRadius,
           startingDay && styles.startingRadius,
           endingDay && styles.endingRadius,
 
           theme?.container,
-          pastDay && theme?.pastDayContainer,
           today && theme?.todayContainer,
+          pastDay && theme?.pastDayContainer,
           selected && (theme?.selectedContainer || { backgroundColor }),
           extraDay && theme?.extraDayContainer,
         ]}
       >
-        <Text
-          style={StyleSheet.flatten([
-            styles.dayText,
-            theme?.text,
-
-            pastDay && (theme?.pastDayText || styles.pastDayText),
-            today && (theme?.todayText || styles.todayText),
-            extraDay && (theme?.extraDayText || styles.extraDayText),
-            selected && theme?.selectedText,
-            color ? { color } : null,
-          ])}
-        >
-          {day}
-        </Text>
+        <Text style={textStyle}>{day}</Text>
 
         <Dots dots={dots} selected={selected} />
       </View>

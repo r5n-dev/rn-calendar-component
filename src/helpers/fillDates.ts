@@ -1,22 +1,23 @@
 import { CalendarDate } from '../types';
 
 type FillDatesParams = {
-  hideExtraDays: boolean;
+  calendarKey: string;
+  dates: Array<CalendarDate>;
   firstDay: number;
+  hideExtraDays: boolean;
   monthIndex: number;
   months: Array<[string, Array<CalendarDate>]>;
-  dates: Array<CalendarDate>;
 };
 
 const cachedMonths: { [key: string]: Array<CalendarDate> } = {};
 const maxDayIndex = 6;
 
 const fillDates = ({
-  hideExtraDays,
   dates,
-  months,
-  monthIndex,
   firstDay,
+  hideExtraDays,
+  monthIndex,
+  months,
 }: FillDatesParams): Array<CalendarDate> => {
   const [, previousMonthDates] = months[monthIndex - 1] || [];
   const [, nextMonthDates] = months[monthIndex + 1] || [];
@@ -40,41 +41,41 @@ const fillDates = ({
         ? previousMonthDates?.length - startDayCap
         : previousMonthDates?.length - maxDayIndex;
 
-    const startFillDates = (previousMonthDates
-      ? previousMonthDates.slice(startFillCap)
-      : Array(fillCap).fill({})
+    const startFillDates = (
+      previousMonthDates ? previousMonthDates.slice(startFillCap) : Array(fillCap).fill({})
     ).map((item) => ({ ...item, extraDay: true }));
 
-    const endFillDates = (nextMonthDates
-      ? nextMonthDates.slice(0, endDayCap)
-      : []
-    ).map((item) => ({ ...item, extraDay: true }));
+    const endFillDates = (nextMonthDates ? nextMonthDates.slice(0, endDayCap) : []).map((item) => ({
+      ...item,
+      extraDay: true,
+    }));
 
     return [...startFillDates, ...dates, ...endFillDates];
   }
 };
 
 export default ({
-  hideExtraDays,
+  calendarKey,
   dates,
-  months,
-  monthIndex,
   firstDay,
+  hideExtraDays,
+  monthIndex,
+  months,
 }: FillDatesParams) => {
-  const cachedMonth =
-    cachedMonths[`${monthIndex}-${firstDay}-${hideExtraDays}`];
+  const cachedMonth = cachedMonths[`${calendarKey}-${monthIndex}-${firstDay}-${hideExtraDays}`];
 
   if (cachedMonth) {
     return cachedMonth;
   } else {
     const monthDates = fillDates({
+      calendarKey,
       dates,
-      months,
-      monthIndex,
       firstDay,
       hideExtraDays,
+      monthIndex,
+      months,
     });
-    cachedMonths[`${monthIndex}-${firstDay}-${hideExtraDays}`] = monthDates;
+    cachedMonths[`${calendarKey}-${monthIndex}-${firstDay}-${hideExtraDays}`] = monthDates;
     return monthDates;
   }
 };

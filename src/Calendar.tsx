@@ -1,25 +1,25 @@
 import React, {
-  useImperativeHandle,
   forwardRef,
-  useState,
-  useRef,
   useCallback,
+  useImperativeHandle,
   useMemo,
+  useRef,
+  useState,
 } from 'react';
 import {
-  View,
   FlatList,
-  StyleSheet,
-  NativeSyntheticEvent,
-  NativeScrollEvent,
   LayoutChangeEvent,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  StyleSheet,
+  View,
 } from 'react-native';
 
-import { CalendarDate, CalendarRef, Locale, CalendarItem } from './types';
+import { Arrows, Day, DayNames, Month, MonthTitle, Week } from './components';
 import { CalendarProps } from './componentTypes';
-import { constants, generateDates, monthsHeights, monthsData } from './helpers';
-import { Arrows, DayNames, Day, MonthTitle, Week, Month } from './components';
+import { constants, generateDates, monthsData, monthsHeights } from './helpers';
 import Locales from './Locales';
+import { CalendarDate, CalendarItem, CalendarRef, Locale } from './types';
 
 const defaultViewabilityConfig = {
   itemVisiblePercentThreshold: 1,
@@ -55,7 +55,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       viewabilityConfig,
       ...flatListProps
     },
-    ref
+    ref,
   ) => {
     const flatListRef = useRef<FlatList<CalendarItem>>(null);
 
@@ -64,10 +64,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
 
       if (firstDay) {
         const [dayName, ...restDayNames] = selectedLocale.dayNames;
-        const [
-          dayNameShort,
-          ...restDayNamesShort
-        ] = selectedLocale.dayNamesShort;
+        const [dayNameShort, ...restDayNamesShort] = selectedLocale.dayNamesShort;
 
         selectedLocale = {
           ...selectedLocale,
@@ -85,7 +82,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           startISODate,
           endISODate,
         }),
-      [startISODate, endISODate]
+      [startISODate, endISODate],
     );
 
     const months = useMemo(() => monthsData(dates), [dates]);
@@ -98,9 +95,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     }, [currentDay, months]);
 
     const [listWidth, setListWidth] = useState(0);
-    const [currentMonthIndex, setCurrentMonthIndex] = useState(
-      initialScrollIndex
-    );
+    const [currentMonthIndex, setCurrentMonthIndex] = useState(initialScrollIndex);
 
     const getItemLayout = useCallback(
       (data: Array<[string, Array<CalendarDate>]>, index: number) => {
@@ -116,7 +111,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           offset: horizontal ? listWidth * index : currentMonthLayout.offset,
         };
       },
-      [calendarHeight, listWidth, horizontal, firstDay]
+      [listWidth, horizontal, firstDay],
     );
 
     const scrollToIndex = useCallback(
@@ -130,7 +125,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           animated: animated || scrollEnabled,
         });
       },
-      [listWidth, scrollEnabled, horizontal, months, firstDay]
+      [listWidth, scrollEnabled, horizontal, months, firstDay],
     );
 
     const handleLayoutChange = useCallback(
@@ -143,7 +138,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           setListWidth(width);
         }
       },
-      [listWidth]
+      [listWidth],
     );
 
     const handleArrowPress = useCallback(
@@ -170,7 +165,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           }
         }
       },
-      [listWidth, currentMonthIndex]
+      [months.length, onArrowPress, scrollToIndex, currentMonthIndex],
     );
 
     const handleMomentumScrollEnd = useCallback(
@@ -183,7 +178,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           setCurrentMonthIndex(nextMonthIndex);
         }
       },
-      [currentMonthIndex, listWidth]
+      [onMomentumScrollEnd, currentMonthIndex, listWidth],
     );
 
     const handleScrollTo = useCallback(
@@ -192,15 +187,13 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
 
         scrollToIndex(monthIndex, animated);
       },
-      [months, scrollToIndex]
+      [months, scrollToIndex],
     );
 
-    useImperativeHandle(ref, () => ({ scrollTo: handleScrollTo }), [
-      scrollToIndex,
-    ]);
+    useImperativeHandle(ref, () => ({ scrollTo: handleScrollTo }), [handleScrollTo]);
 
     const renderMonth = ({
-      item,
+      item: [month, dates],
       index,
     }: {
       item: [string, Array<CalendarDate>];
@@ -211,15 +204,16 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         DayNames={DayNamesComponent}
         MonthTitle={MonthTitleComponent}
         Week={WeekComponent}
+        calendarKey={`${startISODate}-${endISODate}`}
         dates={dates}
         firstDay={firstDay}
         hideExtraDays={hideExtraDays}
         horizontal={horizontal}
         index={index}
-        item={item}
         listWidth={listWidth}
         locales={locales}
         markedDates={markedDates}
+        month={month}
         months={months}
         onDayPress={onDayPress}
         theme={theme}
@@ -263,7 +257,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         )}
       </View>
     );
-  }
+  },
 );
 
 export default React.memo(Calendar);

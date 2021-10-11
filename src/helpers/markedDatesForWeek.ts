@@ -13,9 +13,7 @@ const withSeriesInfo = ({
   }
 
   const indexes = markedDays
-    .map((a) =>
-      week.findIndex(({ dayString }: CalendarDate) => a === dayString)
-    )
+    .map((a) => week.findIndex(({ dayString }: CalendarDate) => a === dayString))
     .filter((i) => i >= 0)
     .sort();
 
@@ -53,24 +51,21 @@ const withSeriesInfo = ({
   // @ts-ignore
   return series.reduce((acc, selectedSerie) => {
     const days = selectedSerie.map((dayIndex: number) => week[dayIndex]);
-    const reducedDays = days.reduce(
-      (acc: MarkedDates, { dayString }, index, serie) => {
-        const markedDateInfo = markedDates[dayString];
-        if (serie.length === 1) {
-          acc[dayString] = markedDateInfo;
-        } else {
-          acc[dayString] = {
-            inSeries: true,
-            ...(index === 0 && { startingDay: true }),
-            ...(index === days.length - 1 && { endingDay: true }),
-            ...markedDateInfo,
-          };
-        }
+    const reducedDays = days.reduce((acc: MarkedDates, { dayString }, index, serie) => {
+      const markedDateInfo = markedDates[dayString];
+      if (serie.length === 1) {
+        acc[dayString] = markedDateInfo;
+      } else {
+        acc[dayString] = {
+          inSeries: true,
+          ...(index === 0 && { startingDay: true }),
+          ...(index === days.length - 1 && { endingDay: true }),
+          ...markedDateInfo,
+        };
+      }
 
-        return acc;
-      },
-      {}
-    );
+      return acc;
+    }, {});
 
     acc = { ...acc, ...reducedDays };
     return acc;
@@ -79,7 +74,7 @@ const withSeriesInfo = ({
 
 const markedDatesForWeek = (
   week: Array<CalendarDate>,
-  markedDates?: MarkedDates
+  markedDates?: MarkedDates,
 ): MarkedDates | null => {
   if (!markedDates) {
     return null;
@@ -87,10 +82,7 @@ const markedDatesForWeek = (
 
   const markedDatesWithSeriesInfo = withSeriesInfo({ week, markedDates });
 
-  if (
-    markedDatesWithSeriesInfo &&
-    Object.keys(markedDatesWithSeriesInfo).length
-  ) {
+  if (markedDatesWithSeriesInfo && Object.keys(markedDatesWithSeriesInfo).length) {
     return markedDatesWithSeriesInfo;
   }
 

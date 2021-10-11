@@ -1,9 +1,9 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Image, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import arrow from '../assets/arrow.png';
-import { constants } from '../helpers';
 import { ArrowsComponentProps } from '../componentTypes';
+import { constants } from '../helpers';
 
 const Arrows = ({
   onArrowPress,

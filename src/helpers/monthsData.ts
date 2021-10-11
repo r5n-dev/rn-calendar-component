@@ -8,7 +8,7 @@ const monthsData = (dates: Array<CalendarDate>) => {
       acc[monthKey] = [...month, date];
       return acc;
     },
-    {}
+    {},
   );
 
   return Object.entries<Array<CalendarDate>>(parsedDates);

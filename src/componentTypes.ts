@@ -1,13 +1,13 @@
 import { NamedExoticComponent } from 'react';
-import { ViewabilityConfig, FlatListProps } from 'react-native';
+import { FlatListProps, ViewabilityConfig } from 'react-native';
 
 import {
-  CalendarTheme,
   CalendarDate,
   CalendarItem,
+  CalendarTheme,
+  Locale,
   MarkedDate,
   MarkedDates,
-  Locale,
 } from './types';
 
 /**
@@ -43,14 +43,15 @@ export type MonthComponentProps = {
   DayNames: NamedExoticComponent<DayNamesComponentProps>;
   MonthTitle: NamedExoticComponent<MonthTitleComponentProps>;
   Week: NamedExoticComponent<WeekComponentProps>;
+  calendarKey: string;
   dates: Array<CalendarDate>;
   firstDay: BinaryBoolean;
   hideExtraDays: boolean;
   horizontal?: boolean;
   index: number;
-  item: CalendarItem;
   listWidth: number;
   locales: Locale;
+  month: string;
   markedDates?: MarkedDates;
   months: Array<CalendarItem>;
   onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
@@ -93,10 +94,7 @@ type PickedFlatListProps =
   | 'onMomentumScrollEnd'
   | 'onMomentumScrollBegin';
 
-export type CalendarProps = Pick<
-  FlatListProps<Inexpressible>,
-  PickedFlatListProps
-> & {
+export type CalendarProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProps> & {
   /**
    * Starting date for calendar. i.e. 2020-01-01.
    */

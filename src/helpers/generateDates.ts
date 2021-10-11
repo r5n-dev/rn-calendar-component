@@ -12,8 +12,7 @@ export default ({
   const startDate = new Date(startISODate);
   const endDate = new Date(endISODate);
 
-  const diffInDays =
-    (endDate.getTime() - startDate.getTime()) / constants.dayInMs;
+  const diffInDays = (endDate.getTime() - startDate.getTime()) / constants.dayInMs;
   const dates = [];
   let addition = 0;
 

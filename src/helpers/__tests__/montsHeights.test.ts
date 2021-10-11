@@ -1,6 +1,6 @@
-import monthsHeights from '../monthsHeights';
 import generateDates from '../generateDates';
 import monthsData from '../monthsData';
+import monthsHeights from '../monthsHeights';
 
 describe('monthsHeights', () => {
   describe('when 2020 data is provided', () => {

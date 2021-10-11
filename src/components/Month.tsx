@@ -1,22 +1,24 @@
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
-import { fillDates, chunk, constants } from '../helpers';
 import { MonthComponentProps } from '../componentTypes';
+import { chunk, constants, fillDates } from '../helpers';
 
 const Month = ({
   Day,
   DayNames,
   MonthTitle,
   Week,
+  calendarKey,
+  dates,
   firstDay,
   hideExtraDays,
   horizontal,
   index,
-  item: [month, dates],
   listWidth,
   locales,
   markedDates,
+  month,
   months,
   onDayPress,
   theme,
@@ -24,18 +26,17 @@ const Month = ({
   const monthDates = useMemo(
     () =>
       fillDates({
+        calendarKey,
         hideExtraDays,
         firstDay,
         dates,
         monthIndex: index,
         months,
       }),
-    [hideExtraDays, firstDay, dates, index, months]
+    [hideExtraDays, calendarKey, firstDay, dates, index, months],
   );
 
-  const weeks = useMemo(() => chunk(monthDates, constants.weekLength), [
-    monthDates,
-  ]);
+  const weeks = useMemo(() => chunk(monthDates, constants.weekLength), [monthDates]);
 
   const [year, monthString] = month.split('-');
 

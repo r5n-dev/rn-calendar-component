@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  StyleSheet,
-  StatusBar,
-  ScrollView,
-} from 'react-native';
+// @ts-nocheck
 import {
   ActionSheetProvider,
   connectActionSheet,
   useActionSheet,
 } from '@expo/react-native-action-sheet';
-
-// @ts-ignore
+import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Calendar, Locales } from 'rn-calendar-component';
 
 Locales.en = Locales.default;
@@ -47,15 +46,7 @@ Locales.pl = {
     'lis',
     'gru',
   ],
-  dayNames: [
-    'Niedziela',
-    'Poniedziałek',
-    'Wtorek',
-    'Środa',
-    'Czwartek',
-    'Piątek',
-    'Sobota',
-  ],
+  dayNames: ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'],
   dayNamesShort: ['ndz', 'pon', 'wt', 'śr', 'czw', 'pt', 'sob'],
 };
 
@@ -158,9 +149,7 @@ const App = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() =>
-              setLocale((locale) => (locale === 'en' ? 'pl' : 'en'))
-            }
+            onPress={() => setLocale((locale) => (locale === 'en' ? 'pl' : 'en'))}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Change locale</Text>

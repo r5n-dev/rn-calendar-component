@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { Dots as DotsType } from '../../types';
-import { constants } from '../../helpers';
+import { constants } from '../helpers';
+import { Dots as DotsType } from '../types';
 
 type Props = {
   dots?: DotsType;

@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { constants, markedDatesForWeek } from '../helpers';
 import { WeekComponentProps } from '../componentTypes';
+import { constants, markedDatesForWeek } from '../helpers';
 
 const Week = ({
   Day,
@@ -13,10 +13,7 @@ const Week = ({
   theme,
   week,
 }: WeekComponentProps) => {
-  const weekMarkedDates = useMemo(() => markedDatesForWeek(week, markedDates), [
-    week,
-    markedDates,
-  ]);
+  const weekMarkedDates = useMemo(() => markedDatesForWeek(week, markedDates), [week, markedDates]);
 
   return (
     <View style={[styles.container, theme?.container]}>
