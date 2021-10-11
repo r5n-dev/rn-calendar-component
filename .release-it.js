@@ -13,7 +13,7 @@ module.exports = {
     draft: false,
   },
   npm: {
-    publish: true,
+    publish: false,
   },
   plugins: {
     '@release-it/conventional-changelog': {
