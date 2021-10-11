@@ -1,0 +1,9 @@
+version: 2
+updates:
+  # Ignore Example:
+  - package-ecosystem: "npm"
+    directory: "/Example"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "*"
