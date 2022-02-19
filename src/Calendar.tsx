@@ -9,7 +9,6 @@ import React, {
 import {
   FlatList,
   FlatListProps,
-  LayoutChangeEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleProp,
@@ -19,13 +18,16 @@ import {
 } from 'react-native';
 
 import { Arrows, Month } from './components';
-import { useCalendar, useCalendarDispatch } from './context/hooks';
 import { monthsHeights } from './helpers';
-import { CalendarDate, CalendarItem, CalendarRef, PickedFlatListProps } from './types';
+import { useCalendarDispatch } from './hooks/useCalendar';
+import type { CalendarDate, CalendarItem, CalendarRef, PickedFlatListProps } from './types';
 
 type CalendarProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProps> & {
   calendarHeight: number;
   currentDay: string;
+  firstDay: BinaryBoolean;
+  horizontal?: boolean;
+  months: [string, CalendarDate[]][];
   showArrows?: boolean;
   style?: StyleProp<ViewStyle>;
 };
@@ -34,16 +36,26 @@ const keyExtractor = (item: CalendarItem) => item[0];
 
 const Calendar = forwardRef<CalendarRef, CalendarProps>(
   (
-    { calendarHeight, currentDay, showArrows, onMomentumScrollEnd, style, ...flatListProps },
+    {
+      calendarHeight,
+      months,
+      firstDay,
+      horizontal,
+      currentDay,
+      showArrows,
+      onMomentumScrollEnd,
+      style,
+      ...flatListProps
+    },
     ref,
   ) => {
+    const listWidth = 100;
     const calendarDispatch = useCalendarDispatch();
-    const { horizontal, firstDay, months, listWidth } = useCalendar();
     const flatListRef = useRef<FlatList<CalendarItem>>(null);
 
     const initialScrollIndex = useMemo(() => {
       const currentMonth = currentDay.split(/-(?=[^-]+$)/)[0];
-      const monthIndex = months.findIndex(([month]) => month === currentMonth);
+      const monthIndex = 0; // months.findIndex(([month]) => month === currentMonth);
 
       return monthIndex > 0 ? monthIndex : 0;
     }, [currentDay, months]);
@@ -51,7 +63,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     const [currentMonthIndex, setCurrentMonthIndex] = useState(initialScrollIndex);
 
     const getItemLayout = useCallback(
-      (data: Array<[string, Array<CalendarDate>]>, index: number) => {
+      (data: [string, CalendarDate[]][], index: number) => {
         const monthsLayout = monthsHeights(data, firstDay);
         const currentMonthLayout = monthsLayout[index] || {
           height: 0,
@@ -78,19 +90,6 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       [firstDay, horizontal, listWidth, months],
     );
 
-    const handleLayoutChange = useCallback(
-      ({
-        nativeEvent: {
-          layout: { width },
-        },
-      }: LayoutChangeEvent) => {
-        if (listWidth !== width) {
-          calendarDispatch({ type: 'setListWidth', payload: width });
-        }
-      },
-      [calendarDispatch, listWidth],
-    );
-
     const handleMomentumScrollEnd = useCallback(
       (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         onMomentumScrollEnd?.(event);
@@ -106,7 +105,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
 
     const handleScrollTo = useCallback(
       (monthString: string, animated?: boolean) => {
-        const monthIndex = months.findIndex(([month]) => month === monthString);
+        const monthIndex = 0; //months.findIndex(([month]) => month === monthString);
 
         scrollToIndex(monthIndex, animated);
       },
@@ -119,12 +118,19 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       item: [month],
       index,
     }: {
-      item: [string, Array<CalendarDate>];
+      item: [string, CalendarDate[]];
       index: number;
     }) => <Month index={index} month={month} />;
 
     return (
-      <View onLayout={handleLayoutChange} style={styles.container}>
+      <View
+        onLayout={({
+          nativeEvent: {
+            layout: { width },
+          },
+        }) => calendarDispatch({ type: 'setListWidth', payload: width })}
+        style={styles.container}
+      >
         {horizontal && showArrows && (
           <Arrows
             currentMonthIndex={currentMonthIndex}

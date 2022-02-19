@@ -1,4 +1,4 @@
-import { CalendarDate } from '../types';
+import type { CalendarDate } from '../types';
 
 import constants from './constants';
 

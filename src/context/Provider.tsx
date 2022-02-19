@@ -1,14 +1,12 @@
 import React, { createContext, memo, ReactNode, useEffect, useReducer } from 'react';
 
-import { CalendarDate, CalendarTheme, LibraryProps, Locale, MarkedDate } from '../types';
+import type { CalendarDate, CalendarTheme, LibraryProps, Locale, MarkedDate } from '../types';
 
 import { calendarReducer } from './reducer';
 import { CalendarActions, CalendarState, initialState } from './types';
 
 export const CalendarContext = createContext<CalendarState | undefined>(undefined);
-export const CalendarUpdaterContext = createContext<React.Dispatch<CalendarActions> | undefined>(
-  undefined,
-);
+export const CalendarUpdaterContext = createContext<React.Dispatch<CalendarActions>>(() => {});
 
 type Props = Pick<
   LibraryProps,
@@ -27,8 +25,8 @@ type Props = Pick<
   children: ReactNode;
   locale: Locale;
   markedDates?: Record<string, MarkedDate>;
-  months: Array<[string, Array<CalendarDate>]>;
-  dates: Array<CalendarDate>;
+  months: [string, CalendarDate[]][];
+  dates: CalendarDate[];
 };
 
 const mergeTheme = (theme?: CalendarTheme) => {

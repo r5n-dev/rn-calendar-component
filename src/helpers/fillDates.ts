@@ -1,7 +1,4 @@
-import { useMemo } from 'react';
-
-import { useCalendar } from '../context/hooks';
-import { CalendarDate } from '../types';
+import type { CalendarDate } from '../types';
 
 type FillDatesParams = {
   dates: Array<CalendarDate>;
@@ -13,7 +10,7 @@ type FillDatesParams = {
 
 const maxDayIndex = 6;
 
-const fillDates = ({
+export const fillDates = ({
   dates,
   firstDay,
   monthIndex,
@@ -53,20 +50,4 @@ const fillDates = ({
       ...Array(maxDayIndex - lastDate.dayOfWeek + 1).fill({}),
     ];
   }
-};
-
-export const useFillDates = (monthIndex: number) => {
-  const { showExtraDays, dates, firstDay, months } = useCalendar();
-
-  return useMemo(
-    () =>
-      fillDates({
-        dates,
-        showExtraDays,
-        firstDay,
-        monthIndex,
-        months,
-      }),
-    [dates, firstDay, monthIndex, months, showExtraDays],
-  );
 };

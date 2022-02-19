@@ -1,9 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-import { useCalendar } from '../context/hooks';
-import { useMarkedDate } from '../hooks/useMarkedDate';
-import { CalendarDate } from '../types';
+import { useDay } from '../hooks/useCalendar';
+import type { CalendarDate } from '../types';
 
 import Dots from './Dots';
 
@@ -13,17 +12,25 @@ export type DayProps = CalendarDate & {
 };
 
 const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
-  const { theme: dayTheme, listWidth, onDayPress } = useCalendar();
-  const { extraDay, selected, color, inSeries, startingDay, endingDay, dots } =
-    useMarkedDate(dayString);
-  const theme = dayTheme?.day;
+  const {
+    theme,
+    listWidth,
+    onDayPress,
+    extraDay,
+    selected,
+    color,
+    inSeries,
+    startingDay,
+    endingDay,
+    dots,
+  } = useDay(dayString);
 
   const textStyle = [
-    theme?.text,
-    today && theme?.todayText,
-    pastDay && theme?.pastDayText,
-    extraDay && theme?.extraDayText,
-    selected && theme?.selectedText,
+    theme?.day?.text,
+    today && theme?.day?.todayText,
+    pastDay && theme?.day?.pastDayText,
+    extraDay && theme?.day?.extraDayText,
+    selected && theme?.day?.selectedText,
     color ? { color } : undefined,
   ];
 
@@ -36,9 +43,9 @@ const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
 
   if (!day) {
     return (
-      <View style={[theme?.container, { width }]}>
-        <View style={[{ padding, width }, theme?.textContainer]}>
-          <Text style={theme?.text} />
+      <View style={[theme?.day?.container, { width }]}>
+        <View style={[{ padding, width }, theme?.day?.textContainer]}>
+          <Text style={theme?.day?.text} />
         </View>
       </View>
     );
@@ -51,21 +58,21 @@ const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
       accessibilityRole="button"
       activeOpacity={0.6}
       onPress={handleDayPress}
-      style={[theme?.container, { width }]}
+      style={[theme?.day?.container, { width }]}
     >
       <View
         style={[
           { padding },
-          inSeries && theme?.inSeriesContainer,
-          startingDay && theme?.startingDayContainer,
-          endingDay && theme?.endingDayContainer,
+          inSeries && theme?.day?.inSeriesContainer,
+          startingDay && theme?.day?.startingDayContainer,
+          endingDay && theme?.day?.endingDayContainer,
 
-          theme?.textContainer,
+          theme?.day?.textContainer,
 
-          today && theme?.todayContainer,
-          pastDay && theme?.pastDayContainer,
-          selected && theme?.selectedContainer,
-          extraDay && theme?.extraDayContainer,
+          today && theme?.day?.todayContainer,
+          pastDay && theme?.day?.pastDayContainer,
+          selected && theme?.day?.selectedContainer,
+          extraDay && theme?.day?.extraDayContainer,
         ]}
       >
         <Text style={textStyle}>{day}</Text>

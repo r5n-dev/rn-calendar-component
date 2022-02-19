@@ -1,19 +1,20 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import { useCalendar } from '../context/hooks';
+import { useTheme } from '../hooks/useCalendar';
 
 export type DayNamesProps = {
   dayNames: Array<string>;
 };
 
 const DayNames = ({ dayNames }: DayNamesProps) => {
-  const { theme } = useCalendar();
+  const theme = useTheme('dayNames');
+
   return (
-    <View style={theme?.dayNames?.container}>
+    <View style={theme?.container}>
       {dayNames.map((dayName) => (
-        <View key={dayName} style={theme?.dayNames?.textContainer}>
-          <Text style={theme?.dayNames?.text}>{dayName}</Text>
+        <View key={dayName} style={theme?.textContainer}>
+          <Text style={theme?.text}>{dayName}</Text>
         </View>
       ))}
     </View>

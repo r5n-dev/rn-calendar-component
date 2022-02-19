@@ -1,18 +1,18 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import { useCalendar } from '../context/hooks';
+import { useTheme } from '../hooks/useCalendar';
 
 export type MonthTitleProps = {
   title: string;
 };
 
 const MonthTitle = ({ title }: MonthTitleProps) => {
-  const { theme } = useCalendar();
+  const theme = useTheme('monthTitle');
 
   return (
-    <View pointerEvents="none" style={theme?.monthTitle?.container}>
-      <Text style={theme?.monthTitle?.text}>{title}</Text>
+    <View pointerEvents="none" style={theme?.container}>
+      <Text style={theme?.text}>{title}</Text>
     </View>
   );
 };

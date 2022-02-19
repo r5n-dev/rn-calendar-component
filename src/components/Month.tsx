@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
-import { useCalendar } from '../context/hooks';
 import { chunk, constants } from '../helpers';
-import { useFillDates } from '../helpers/fillDates';
+import { useMonth } from '../hooks/useCalendar';
 
 import DayNames from './DayNames';
 import MonthTitle from './MonthTitle';
@@ -15,11 +14,8 @@ export type MonthProps = {
 };
 
 const Month = ({ index, month }: MonthProps) => {
-  const { horizontal, locale, listWidth } = useCalendar();
-  const monthDates = useFillDates(index);
-
+  const { monthDates, horizontal, locale, listWidth } = useMonth(index);
   const weeks = useMemo(() => chunk(monthDates, constants.weekLength), [monthDates]);
-
   const [year, monthString] = month.split('-');
 
   return (

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { constants } from '../helpers';
-import { Dots as DotsType } from '../types';
+import type { Dots as DotsType } from '../types';
 
 type Props = {
   dots?: DotsType;

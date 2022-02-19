@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { useCalendar } from '../context/hooks';
 import { constants } from '../helpers';
-import { CalendarDate } from '../types';
+import { useTheme } from '../hooks/useCalendar';
+import type { CalendarDate } from '../types';
 
 import Day from './Day';
 
@@ -12,10 +12,10 @@ export type WeekProps = {
 };
 
 const Week = ({ week }: WeekProps) => {
-  const { theme } = useCalendar();
+  const theme = useTheme('week');
 
   return (
-    <View style={theme?.week?.container}>
+    <View style={theme?.container}>
       {week.map((item, index) => (
         <Day
           key={item.dayString ? item.dayString : `${index}`}

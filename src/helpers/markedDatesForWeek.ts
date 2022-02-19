@@ -1,10 +1,10 @@
-import { CalendarDate, MarkedDate } from '../types';
+import type { CalendarDate, MarkedDate } from '../types';
 
 const withSeriesInfo = ({
   week,
   markedDates,
 }: {
-  week: Array<CalendarDate>;
+  week: CalendarDate[];
   markedDates: Record<string, MarkedDate>;
 }): Record<string, MarkedDate> | null => {
   const markedDays = Object.keys(markedDates);
@@ -13,7 +13,7 @@ const withSeriesInfo = ({
   }
 
   const indexes = markedDays
-    .map((a) => week.findIndex(({ dayString }: CalendarDate) => a === dayString))
+    .map((a) => week?.findIndex?.(({ dayString }: CalendarDate) => a === dayString))
     .filter((i) => i >= 0)
     .sort();
 
@@ -76,7 +76,7 @@ const withSeriesInfo = ({
 };
 
 const markedDatesForWeek = (
-  week: Array<CalendarDate>,
+  week: CalendarDate[],
   markedDates?: Record<string, MarkedDate>,
 ): Record<string, MarkedDate> | null => {
   if (!markedDates) {

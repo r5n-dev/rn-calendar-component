@@ -1,4 +1,4 @@
-import { CalendarDate } from '../types';
+import type { CalendarDate } from '../types';
 
 const monthsData = (dates: Array<CalendarDate>) => {
   const parsedDates = dates.reduce(

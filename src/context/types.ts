@@ -1,5 +1,5 @@
 import { constants } from '../helpers';
-import { CalendarDate, CalendarTheme, LibraryProps, Locale } from '../types';
+import type { CalendarDate, CalendarTheme, LibraryProps, Locale } from '../types';
 
 const theme: CalendarTheme = {
   day: {

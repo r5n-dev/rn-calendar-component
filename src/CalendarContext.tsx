@@ -4,7 +4,7 @@ import Calendar from './Calendar';
 import { CalendarProvider } from './context/Provider';
 import { constants, generateDates, monthsData } from './helpers';
 import Locales from './Locales';
-import { CalendarRef, LibraryProps, Locale } from './types';
+import type { CalendarRef, LibraryProps, Locale } from './types';
 
 const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
   (
@@ -78,7 +78,20 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
           theme,
         }}
       >
-        <Calendar {...rest} {...{ calendarHeight, currentDay, viewabilityConfig, ref }} />
+        {months.length > 0 && (
+          <Calendar
+            {...rest}
+            {...{
+              horizontal,
+              firstDay,
+              calendarHeight,
+              months,
+              currentDay,
+              viewabilityConfig,
+              ref,
+            }}
+          />
+        )}
       </CalendarProvider>
     );
   },

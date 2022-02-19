@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import { useCalendar } from '../context/hooks';
 import { constants } from '../helpers';
+import { useArrow } from '../hooks/useCalendar';
 
 // @ts-expect-error
 import arrow from './assets/arrow.png';
@@ -22,7 +22,7 @@ const Arrows = ({
   rightArrowDisabled,
   scrollToIndex,
 }: ArrowsProps) => {
-  const { onArrowPress, listWidth, months } = useCalendar();
+  const { onArrowPress, listWidth, months } = useArrow();
   const handleArrowPress = useCallback(
     (direction: 'left' | 'right') => {
       onArrowPress?.({

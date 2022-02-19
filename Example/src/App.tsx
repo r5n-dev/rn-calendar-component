@@ -1,9 +1,3 @@
-// @ts-nocheck
-import {
-  ActionSheetProvider,
-  connectActionSheet,
-  useActionSheet,
-} from '@expo/react-native-action-sheet';
 import React, { useState } from 'react';
 import {
   SafeAreaView,
@@ -14,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+// @ts-expect-error
 import { Calendar, Locales } from 'rn-calendar-component';
 
 Locales.en = Locales.default;
@@ -97,8 +92,6 @@ const options = {
 };
 
 const App = () => {
-  const { showActionSheetWithOptions } = useActionSheet();
-
   const [markedDates, setMarkedDates] = useState(singleDay);
   const [loaded, setLoaded] = useState<boolean>(true);
   const [firstDay, setFirstDay] = useState<0 | 1>(0);
@@ -156,29 +149,6 @@ const App = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() =>
-              showActionSheetWithOptions(
-                {
-                  title: 'Marked Dates',
-                  options: [...Object.keys(options), 'Done'],
-                  cancelButtonIndex: Object.keys(options).length,
-                },
-                (optionIndex: number) => {
-                  const optionsKeys = Object.keys(options);
-                  const key = optionsKeys[optionIndex];
-                  if (key) {
-                    // @ts-ignore
-                    setMarkedDates(options[key]);
-                  }
-                }
-              )
-            }
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Change markedDates</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
             onPress={() => setHideExtraDays((hideExtraDays) => !hideExtraDays)}
             style={styles.button}
           >
@@ -208,13 +178,7 @@ const App = () => {
   );
 };
 
-const ConnectedApp = connectActionSheet(App);
-
-export default () => (
-  <ActionSheetProvider>
-    <ConnectedApp />
-  </ActionSheetProvider>
-);
+export default App;
 
 const styles = StyleSheet.create({
   button: {

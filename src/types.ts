@@ -1,11 +1,11 @@
-import { NamedExoticComponent } from 'react';
-import { FlatListProps, TextStyle, ViewabilityConfig, ViewStyle } from 'react-native';
+import type { NamedExoticComponent } from 'react';
+import type { FlatListProps, TextStyle, ViewabilityConfig, ViewStyle } from 'react-native';
 
-import { ArrowsProps } from './components/Arrows';
-import { DayProps } from './components/Day';
-import { DayNamesProps } from './components/DayNames';
-import { MonthTitleProps } from './components/MonthTitle';
-import { WeekProps } from './components/Week';
+import type { ArrowsProps } from './components/Arrows';
+import type { DayProps } from './components/Day';
+import type { DayNamesProps } from './components/DayNames';
+import type { MonthTitleProps } from './components/MonthTitle';
+import type { WeekProps } from './components/Week';
 
 export type CalendarDate = {
   dayString: string;
