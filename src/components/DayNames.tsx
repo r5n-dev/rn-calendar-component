@@ -1,14 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
-import { DayNamesComponentProps } from '../componentTypes';
+import { useCalendar } from '../context/hooks';
 
-const DayNames = ({ dayNames, theme }: DayNamesComponentProps) => {
+export type DayNamesProps = {
+  dayNames: Array<string>;
+};
+
+const DayNames = ({ dayNames }: DayNamesProps) => {
+  const { theme } = useCalendar();
   return (
-    <View style={[styles.container, theme?.container]}>
+    <View style={theme?.dayNames?.container}>
       {dayNames.map((dayName) => (
-        <View key={dayName} style={styles.dayNameContainer}>
-          <Text style={theme?.text}>{dayName}</Text>
+        <View key={dayName} style={theme?.dayNames?.textContainer}>
+          <Text style={theme?.dayNames?.text}>{dayName}</Text>
         </View>
       ))}
     </View>
@@ -16,15 +21,3 @@ const DayNames = ({ dayNames, theme }: DayNamesComponentProps) => {
 };
 
 export default React.memo(DayNames);
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 10,
-  },
-  dayNameContainer: {
-    alignItems: 'center',
-    flex: 1,
-  },
-});

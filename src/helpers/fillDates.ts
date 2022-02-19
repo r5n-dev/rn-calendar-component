@@ -1,22 +1,23 @@
+import { useMemo } from 'react';
+
+import { useCalendar } from '../context/hooks';
 import { CalendarDate } from '../types';
 
 type FillDatesParams = {
-  calendarKey: string;
   dates: Array<CalendarDate>;
   firstDay: number;
-  hideExtraDays: boolean;
+  showExtraDays?: boolean;
   monthIndex: number;
   months: Array<[string, Array<CalendarDate>]>;
 };
 
-const cachedMonths: { [key: string]: Array<CalendarDate> } = {};
 const maxDayIndex = 6;
 
 const fillDates = ({
   dates,
   firstDay,
-  hideExtraDays,
   monthIndex,
+  showExtraDays,
   months,
 }: FillDatesParams): Array<CalendarDate> => {
   const [, previousMonthDates] = months[monthIndex - 1] || [];
@@ -29,13 +30,7 @@ const fillDates = ({
   const lastDate = dates[dates.length - 1];
   const endDayCap = maxDayIndex - lastDate.dayOfWeek + firstDay;
 
-  if (hideExtraDays) {
-    return [
-      ...Array(fillCap).fill({}),
-      ...dates,
-      ...Array(maxDayIndex - lastDate.dayOfWeek + 1).fill({}),
-    ];
-  } else {
+  if (showExtraDays) {
     const startFillCap =
       startDayCap >= 0
         ? previousMonthDates?.length - startDayCap
@@ -51,31 +46,27 @@ const fillDates = ({
     }));
 
     return [...startFillDates, ...dates, ...endFillDates];
+  } else {
+    return [
+      ...Array(fillCap).fill({}),
+      ...dates,
+      ...Array(maxDayIndex - lastDate.dayOfWeek + 1).fill({}),
+    ];
   }
 };
 
-export default ({
-  calendarKey,
-  dates,
-  firstDay,
-  hideExtraDays,
-  monthIndex,
-  months,
-}: FillDatesParams) => {
-  const cachedMonth = cachedMonths[`${calendarKey}-${monthIndex}-${firstDay}-${hideExtraDays}`];
+export const useFillDates = (monthIndex: number) => {
+  const { showExtraDays, dates, firstDay, months } = useCalendar();
 
-  if (cachedMonth) {
-    return cachedMonth;
-  } else {
-    const monthDates = fillDates({
-      calendarKey,
-      dates,
-      firstDay,
-      hideExtraDays,
-      monthIndex,
-      months,
-    });
-    cachedMonths[`${calendarKey}-${monthIndex}-${firstDay}-${hideExtraDays}`] = monthDates;
-    return monthDates;
-  }
+  return useMemo(
+    () =>
+      fillDates({
+        dates,
+        showExtraDays,
+        firstDay,
+        monthIndex,
+        months,
+      }),
+    [dates, firstDay, monthIndex, months, showExtraDays],
+  );
 };

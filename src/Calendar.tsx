@@ -8,84 +8,38 @@ import React, {
 } from 'react';
 import {
   FlatList,
+  FlatListProps,
   LayoutChangeEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  StyleProp,
   StyleSheet,
   View,
+  ViewStyle,
 } from 'react-native';
 
-import { Arrows, Day, DayNames, Month, MonthTitle, Week } from './components';
-import { CalendarProps } from './componentTypes';
-import { constants, generateDates, monthsData, monthsHeights } from './helpers';
-import Locales from './Locales';
-import { CalendarDate, CalendarItem, CalendarRef, Locale } from './types';
+import { Arrows, Month } from './components';
+import { useCalendar, useCalendarDispatch } from './context/hooks';
+import { monthsHeights } from './helpers';
+import { CalendarDate, CalendarItem, CalendarRef, PickedFlatListProps } from './types';
 
-const defaultViewabilityConfig = {
-  itemVisiblePercentThreshold: 1,
+type CalendarProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProps> & {
+  calendarHeight: number;
+  currentDay: string;
+  showArrows?: boolean;
+  style?: StyleProp<ViewStyle>;
 };
 
 const keyExtractor = (item: CalendarItem) => item[0];
 
 const Calendar = forwardRef<CalendarRef, CalendarProps>(
   (
-    {
-      ArrowsComponent = Arrows,
-      DayComponent = Day,
-      DayNamesComponent = DayNames,
-      MonthTitleComponent = MonthTitle,
-      WeekComponent = Week,
-
-      calendarHeight = 360,
-      currentDay = constants.todayDate,
-      endISODate,
-      firstDay = 0,
-      hideArrows = true,
-      hideExtraDays = true,
-      horizontal,
-      locale = 'en',
-      markedDates,
-      onArrowPress,
-      onDayPress,
-      onMomentumScrollEnd,
-      scrollEnabled = true,
-      startISODate,
-      style,
-      theme,
-      viewabilityConfig,
-      ...flatListProps
-    },
+    { calendarHeight, currentDay, showArrows, onMomentumScrollEnd, style, ...flatListProps },
     ref,
   ) => {
+    const calendarDispatch = useCalendarDispatch();
+    const { horizontal, firstDay, months, listWidth } = useCalendar();
     const flatListRef = useRef<FlatList<CalendarItem>>(null);
-
-    const locales: Locale = useMemo(() => {
-      let selectedLocale = { ...(Locales[locale] || Locales.defaultLocale) };
-
-      if (firstDay) {
-        const [dayName, ...restDayNames] = selectedLocale.dayNames;
-        const [dayNameShort, ...restDayNamesShort] = selectedLocale.dayNamesShort;
-
-        selectedLocale = {
-          ...selectedLocale,
-          dayNames: [...restDayNames, dayName],
-          dayNamesShort: [...restDayNamesShort, dayNameShort],
-        };
-      }
-
-      return selectedLocale;
-    }, [firstDay, locale]);
-
-    const dates = useMemo(
-      () =>
-        generateDates({
-          startISODate,
-          endISODate,
-        }),
-      [startISODate, endISODate],
-    );
-
-    const months = useMemo(() => monthsData(dates), [dates]);
 
     const initialScrollIndex = useMemo(() => {
       const currentMonth = currentDay.split(/-(?=[^-]+$)/)[0];
@@ -94,7 +48,6 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       return monthIndex > 0 ? monthIndex : 0;
     }, [currentDay, months]);
 
-    const [listWidth, setListWidth] = useState(0);
     const [currentMonthIndex, setCurrentMonthIndex] = useState(initialScrollIndex);
 
     const getItemLayout = useCallback(
@@ -120,12 +73,9 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           ? index * listWidth
           : monthsHeights(months, firstDay)[index]?.offset;
 
-        flatListRef.current?.scrollToOffset({
-          offset,
-          animated: animated || scrollEnabled,
-        });
+        flatListRef.current?.scrollToOffset({ offset, animated });
       },
-      [listWidth, scrollEnabled, horizontal, months, firstDay],
+      [firstDay, horizontal, listWidth, months],
     );
 
     const handleLayoutChange = useCallback(
@@ -135,37 +85,10 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
         },
       }: LayoutChangeEvent) => {
         if (listWidth !== width) {
-          setListWidth(width);
+          calendarDispatch({ type: 'setListWidth', payload: width });
         }
       },
-      [listWidth],
-    );
-
-    const handleArrowPress = useCallback(
-      (direction: 'left' | 'right') => {
-        onArrowPress?.({
-          direction,
-          currentMonthIndex,
-          lastMonthIndex: months.length - 1,
-        });
-
-        if (direction === 'left') {
-          const nextMonthIndex = currentMonthIndex - 1;
-
-          if (nextMonthIndex >= 0) {
-            setCurrentMonthIndex(nextMonthIndex);
-            scrollToIndex(nextMonthIndex);
-          }
-        } else if (direction === 'right') {
-          const nextMonthIndex = currentMonthIndex + 1;
-
-          if (nextMonthIndex < months.length) {
-            setCurrentMonthIndex(nextMonthIndex);
-            scrollToIndex(nextMonthIndex);
-          }
-        }
-      },
-      [months.length, onArrowPress, scrollToIndex, currentMonthIndex],
+      [calendarDispatch, listWidth],
     );
 
     const handleMomentumScrollEnd = useCallback(
@@ -193,35 +116,25 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     useImperativeHandle(ref, () => ({ scrollTo: handleScrollTo }), [handleScrollTo]);
 
     const renderMonth = ({
-      item: [month, dates],
+      item: [month],
       index,
     }: {
       item: [string, Array<CalendarDate>];
       index: number;
-    }) => (
-      <Month
-        Day={DayComponent}
-        DayNames={DayNamesComponent}
-        MonthTitle={MonthTitleComponent}
-        Week={WeekComponent}
-        calendarKey={`${startISODate}-${endISODate}`}
-        dates={dates}
-        firstDay={firstDay}
-        hideExtraDays={hideExtraDays}
-        horizontal={horizontal}
-        index={index}
-        listWidth={listWidth}
-        locales={locales}
-        markedDates={markedDates}
-        month={month}
-        months={months}
-        onDayPress={onDayPress}
-        theme={theme}
-      />
-    );
+    }) => <Month index={index} month={month} />;
 
     return (
       <View onLayout={handleLayoutChange} style={styles.container}>
+        {horizontal && showArrows && (
+          <Arrows
+            currentMonthIndex={currentMonthIndex}
+            leftArrowDisabled={currentMonthIndex === 0}
+            rightArrowDisabled={currentMonthIndex === months.length - 1}
+            scrollToIndex={scrollToIndex}
+            setCurrentMonthIndex={setCurrentMonthIndex}
+          />
+        )}
+
         {!!listWidth && (
           <>
             <FlatList
@@ -235,24 +148,13 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
               pagingEnabled={horizontal}
               ref={flatListRef}
               renderItem={renderMonth}
-              scrollEnabled={scrollEnabled}
               style={[style, { maxHeight: calendarHeight }]}
-              viewabilityConfig={viewabilityConfig || defaultViewabilityConfig}
               windowSize={11}
               {...(horizontal && {
                 onMomentumScrollEnd: handleMomentumScrollEnd,
               })}
               {...flatListProps}
             />
-
-            {horizontal && !hideArrows && (
-              <ArrowsComponent
-                leftArrowDisabled={currentMonthIndex === 0}
-                listWidth={listWidth}
-                onArrowPress={handleArrowPress}
-                rightArrowDisabled={currentMonthIndex === months.length - 1}
-              />
-            )}
           </>
         )}
       </View>

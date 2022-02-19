@@ -1,40 +1,22 @@
 import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
-import { MonthComponentProps } from '../componentTypes';
-import { chunk, constants, fillDates } from '../helpers';
+import { useCalendar } from '../context/hooks';
+import { chunk, constants } from '../helpers';
+import { useFillDates } from '../helpers/fillDates';
 
-const Month = ({
-  Day,
-  DayNames,
-  MonthTitle,
-  Week,
-  calendarKey,
-  dates,
-  firstDay,
-  hideExtraDays,
-  horizontal,
-  index,
-  listWidth,
-  locales,
-  markedDates,
-  month,
-  months,
-  onDayPress,
-  theme,
-}: MonthComponentProps) => {
-  const monthDates = useMemo(
-    () =>
-      fillDates({
-        calendarKey,
-        hideExtraDays,
-        firstDay,
-        dates,
-        monthIndex: index,
-        months,
-      }),
-    [hideExtraDays, calendarKey, firstDay, dates, index, months],
-  );
+import DayNames from './DayNames';
+import MonthTitle from './MonthTitle';
+import Week from './Week';
+
+export type MonthProps = {
+  index: number;
+  month: string;
+};
+
+const Month = ({ index, month }: MonthProps) => {
+  const { horizontal, locale, listWidth } = useCalendar();
+  const monthDates = useFillDates(index);
 
   const weeks = useMemo(() => chunk(monthDates, constants.weekLength), [monthDates]);
 
@@ -42,29 +24,15 @@ const Month = ({
 
   return (
     <View key={month} style={horizontal && { width: listWidth }}>
-      <MonthTitle
-        theme={theme?.monthTitle}
-        title={`${locales.monthNames[Number(monthString) - 1]} ${year}`}
-      />
+      <MonthTitle title={`${locale.monthNames[Number(monthString) - 1]} ${year}`} />
 
-      <DayNames dayNames={locales.dayNamesShort} theme={theme?.dayNames} />
+      <DayNames dayNames={locale.dayNamesShort} />
 
       {weeks.map((week) => {
         const key = week.find(({ dayString }) => dayString)?.dayString;
         if (!key) return null;
 
-        return (
-          <Week
-            Day={Day}
-            dayTheme={theme?.day}
-            key={key}
-            listWidth={listWidth}
-            markedDates={markedDates}
-            onDayPress={onDayPress}
-            theme={theme?.week}
-            week={week}
-          />
-        );
+        return <Week key={key} week={week} />;
       })}
     </View>
   );

@@ -1,21 +1,60 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import arrow from '../assets/arrow.png';
-import { ArrowsComponentProps } from '../componentTypes';
+import { useCalendar } from '../context/hooks';
 import { constants } from '../helpers';
 
+// @ts-expect-error
+import arrow from './assets/arrow.png';
+
+export type ArrowsProps = {
+  leftArrowDisabled: boolean;
+  rightArrowDisabled: boolean;
+  currentMonthIndex: number;
+  scrollToIndex: (index: number) => void;
+  setCurrentMonthIndex: (index: number) => void;
+};
+
 const Arrows = ({
-  onArrowPress,
-  listWidth,
+  currentMonthIndex,
+  setCurrentMonthIndex,
   leftArrowDisabled,
   rightArrowDisabled,
-}: ArrowsComponentProps) => {
+  scrollToIndex,
+}: ArrowsProps) => {
+  const { onArrowPress, listWidth, months } = useCalendar();
+  const handleArrowPress = useCallback(
+    (direction: 'left' | 'right') => {
+      onArrowPress?.({
+        direction,
+        currentMonthIndex,
+        lastMonthIndex: months.length - 1,
+      });
+
+      if (direction === 'left') {
+        const nextMonthIndex = currentMonthIndex - 1;
+
+        if (nextMonthIndex >= 0) {
+          setCurrentMonthIndex(nextMonthIndex);
+          scrollToIndex(nextMonthIndex);
+        }
+      } else if (direction === 'right') {
+        const nextMonthIndex = currentMonthIndex + 1;
+
+        if (nextMonthIndex < months.length) {
+          setCurrentMonthIndex(nextMonthIndex);
+          scrollToIndex(nextMonthIndex);
+        }
+      }
+    },
+    [onArrowPress, currentMonthIndex, months.length, setCurrentMonthIndex, scrollToIndex],
+  );
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
         disabled={leftArrowDisabled}
-        onPress={() => onArrowPress('left')}
+        onPress={() => handleArrowPress('left')}
         style={[styles.leftArrow, leftArrowDisabled && styles.disabledArrow]}
       >
         <Image source={arrow} style={styles.arrowIcon} />
@@ -23,7 +62,7 @@ const Arrows = ({
 
       <TouchableOpacity
         disabled={rightArrowDisabled}
-        onPress={() => onArrowPress('right')}
+        onPress={() => handleArrowPress('right')}
         style={[
           styles.rightArrow,
           { left: listWidth - constants.touchableSize * 1.6 },

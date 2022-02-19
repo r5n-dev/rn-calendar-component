@@ -1,12 +1,12 @@
-import { CalendarDate, MarkedDates } from '../types';
+import { CalendarDate, MarkedDate } from '../types';
 
 const withSeriesInfo = ({
   week,
   markedDates,
 }: {
   week: Array<CalendarDate>;
-  markedDates: MarkedDates;
-}): MarkedDates | null => {
+  markedDates: Record<string, MarkedDate>;
+}): Record<string, MarkedDate> | null => {
   const markedDays = Object.keys(markedDates);
   if (!markedDays.length) {
     return null;
@@ -51,21 +51,24 @@ const withSeriesInfo = ({
   // @ts-ignore
   return series.reduce((acc, selectedSerie) => {
     const days = selectedSerie.map((dayIndex: number) => week[dayIndex]);
-    const reducedDays = days.reduce((acc: MarkedDates, { dayString }, index, serie) => {
-      const markedDateInfo = markedDates[dayString];
-      if (serie.length === 1) {
-        acc[dayString] = markedDateInfo;
-      } else {
-        acc[dayString] = {
-          inSeries: true,
-          ...(index === 0 && { startingDay: true }),
-          ...(index === days.length - 1 && { endingDay: true }),
-          ...markedDateInfo,
-        };
-      }
+    const reducedDays = days.reduce(
+      (acc: Record<string, MarkedDate>, { dayString }, index, serie) => {
+        const markedDateInfo = markedDates[dayString];
+        if (serie.length === 1) {
+          acc[dayString] = markedDateInfo;
+        } else {
+          acc[dayString] = {
+            inSeries: true,
+            ...(index === 0 && { startingDay: true }),
+            ...(index === days.length - 1 && { endingDay: true }),
+            ...markedDateInfo,
+          };
+        }
 
-      return acc;
-    }, {});
+        return acc;
+      },
+      {},
+    );
 
     acc = { ...acc, ...reducedDays };
     return acc;
@@ -74,8 +77,8 @@ const withSeriesInfo = ({
 
 const markedDatesForWeek = (
   week: Array<CalendarDate>,
-  markedDates?: MarkedDates,
-): MarkedDates | null => {
+  markedDates?: Record<string, MarkedDate>,
+): Record<string, MarkedDate> | null => {
   if (!markedDates) {
     return null;
   }

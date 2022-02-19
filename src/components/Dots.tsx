@@ -23,7 +23,7 @@ const Dots = ({ dots, selected }: Props) => {
   );
 };
 
-export default React.memo<Props>(Dots);
+export default React.memo(Dots);
 
 const styles = StyleSheet.create({
   container: {
