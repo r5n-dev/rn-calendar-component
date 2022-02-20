@@ -1,9 +1,10 @@
-import React, { forwardRef, useMemo } from 'react';
+import React, { forwardRef, useEffect, useMemo } from 'react';
 
 import Calendar from './Calendar';
 import { CalendarProvider } from './context/Provider';
 import { constants, generateDates, monthsData } from './helpers';
 import Locales from './Locales';
+import { useMarkedDates } from './store';
 import type { CalendarRef, LibraryProps, Locale } from './types';
 
 const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
@@ -32,6 +33,11 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
     },
     ref,
   ) => {
+    const setMarkDates = useMarkedDates((state) => state.setMarkedDates);
+    useEffect(() => {
+      setMarkDates(markedDates || {});
+    }, [markedDates, setMarkDates]);
+
     const selectedLocale: Locale = useMemo(() => {
       let selectedLocale = { ...(Locales[locale] || Locales.defaultLocale) };
 
@@ -70,7 +76,6 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
           firstDay,
           horizontal,
           locale: selectedLocale,
-          markedDates,
           months,
           onArrowPress,
           onDayPress,

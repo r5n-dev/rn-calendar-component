@@ -1,6 +1,6 @@
 import React, { createContext, memo, ReactNode, useEffect, useReducer } from 'react';
 
-import type { CalendarDate, CalendarTheme, LibraryProps, Locale, MarkedDate } from '../types';
+import type { CalendarDate, CalendarTheme, LibraryProps, Locale } from '../types';
 
 import { calendarReducer } from './reducer';
 import { CalendarActions, CalendarState, initialState } from './types';
@@ -24,7 +24,6 @@ type Props = Pick<
 > & {
   children: ReactNode;
   locale: Locale;
-  markedDates?: Record<string, MarkedDate>;
   months: [string, CalendarDate[]][];
   dates: CalendarDate[];
 };
@@ -55,7 +54,6 @@ export const CalendarProvider = memo(
     children,
     horizontal,
     locale,
-    markedDates,
     dates,
     months,
     onArrowPress,
@@ -74,7 +72,6 @@ export const CalendarProvider = memo(
       horizontal,
       listWidth: initialState.listWidth,
       locale,
-      markedDates,
       months,
       onArrowPress,
       onDayPress,
@@ -96,10 +93,6 @@ export const CalendarProvider = memo(
     useEffect(() => {
       dispatch({ type: 'updateFunctions', payload: { onArrowPress, onDayPress } });
     }, [onArrowPress, onDayPress]);
-
-    useEffect(() => {
-      dispatch({ type: 'setMarkedDates', payload: markedDates });
-    }, [markedDates]);
 
     return (
       <CalendarContext.Provider value={state}>

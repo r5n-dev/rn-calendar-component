@@ -6,8 +6,6 @@ export const calendarReducer = (state = initialState, action: CalendarActions): 
     case 'updateFunctions':
     case 'updateProps':
       return { ...state, ...action.payload };
-    case 'setMarkedDates':
-      return { ...state, markedDates: action.payload };
     case 'setListWidth':
       return { ...state, listWidth: action.payload };
 

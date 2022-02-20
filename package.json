@@ -33,6 +33,9 @@
   "repository": "https://github.com/dsznajder/rn-calendar",
   "author": "Damian Sznajder <damsznajder@gmail.com>",
   "license": "MIT",
+  "dependencies": {
+    "zustand": "3.7.0"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "16.2.1",
     "@release-it/conventional-changelog": "4.1.0",

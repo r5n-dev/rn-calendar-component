@@ -65,7 +65,6 @@ export const initialState = {
   horizontal: undefined as undefined | boolean,
   listWidth: 0 as number,
   locale: {} as Locale,
-  markedDates: undefined as LibraryProps['markedDates'],
   months: [] as [string, CalendarDate[]][],
   onArrowPress: undefined as LibraryProps['onArrowPress'],
   onDayPress: undefined as LibraryProps['onDayPress'],
@@ -76,7 +75,6 @@ export const initialState = {
 export type CalendarState = typeof initialState;
 export type CalendarActions =
   | { type: 'setListWidth'; payload: number }
-  | { type: 'setMarkedDates'; payload: LibraryProps['markedDates'] }
   | {
       type: 'updateProps';
       payload: {

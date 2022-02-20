@@ -2,6 +2,7 @@ import { useContext } from 'react';
 
 import { CalendarContext, CalendarUpdaterContext } from '../context/Provider';
 import { fillDates } from '../helpers/fillDates';
+import { useMarkedDates } from '../store';
 import type { CalendarTheme, MarkedDate } from '../types';
 
 const useCalendar = () => {
@@ -38,7 +39,8 @@ export const useArrow = () => {
 };
 
 export const useDay = (day: string) => {
-  const { markedDates, theme, listWidth, onDayPress } = useCalendar();
+  const markedDates = useMarkedDates((state) => state.markedDates);
+  const { theme, listWidth, onDayPress } = useCalendar();
   const { extraDay, selected, color, inSeries, startingDay, endingDay, dots } =
     markedDates?.[day] || ({} as MarkedDate);
 
