@@ -121,7 +121,11 @@ const App = () => {
         {loaded && (
           <Calendar
             currentDay={todayDate}
-            endISODate="2020-12-31"
+            endISODate={
+              new Date(new Date().setFullYear(new Date().getFullYear() + 1))
+                .toISOString()
+                .split('T')[0]
+            }
             firstDay={firstDay}
             hideArrows={false}
             hideExtraDays={hideExtraDays}
@@ -129,7 +133,7 @@ const App = () => {
             locale={locale}
             markedDates={markedDates}
             onDayPress={handleDayPress}
-            startISODate="2015-01-01"
+            startISODate={new Date(new Date().setDate(0)).toISOString().split('T')[0]}
           />
         )}
 

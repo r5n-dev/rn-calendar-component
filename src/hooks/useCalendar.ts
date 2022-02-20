@@ -39,9 +39,8 @@ export const useArrow = () => {
 
 export const useDay = (day: string) => {
   const { markedDates, theme, listWidth, onDayPress } = useCalendar();
-  const { extraDay, selected, color, inSeries, startingDay, endingDay, dots } = markedDates
-    ? markedDates[day]
-    : ({} as MarkedDate);
+  const { extraDay, selected, color, inSeries, startingDay, endingDay, dots } =
+    markedDates?.[day] || ({} as MarkedDate);
 
   return {
     theme,

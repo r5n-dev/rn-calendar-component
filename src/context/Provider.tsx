@@ -85,7 +85,7 @@ export const CalendarProvider = memo(
     useEffect(() => {
       dispatch({
         type: 'updateProps',
-        payload: { horizontal, dates, locale, showExtraDays, months, theme },
+        payload: { horizontal, dates, locale, showExtraDays, months, theme: mergeTheme(theme) },
       });
     }, [horizontal, locale, showExtraDays, months, theme, dates]);
 
