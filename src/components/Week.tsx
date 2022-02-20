@@ -8,7 +8,7 @@ import type { CalendarDate } from '../types';
 import Day from './Day';
 
 export type WeekProps = {
-  week: Array<CalendarDate>;
+  week: CalendarDate[];
 };
 
 const Week = ({ week }: WeekProps) => {

@@ -8,7 +8,7 @@ export default ({
 }: {
   startISODate: string;
   endISODate: string;
-}): Array<CalendarDate> => {
+}): CalendarDate[] => {
   const startDate = new Date(startISODate);
   const endDate = new Date(endISODate);
 

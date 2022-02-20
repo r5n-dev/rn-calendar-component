@@ -19,7 +19,7 @@ import {
 
 import { Arrows, Month } from './components';
 import { monthsHeights } from './helpers';
-import { useCalendarDispatch } from './hooks/useCalendar';
+import { useCalendarDispatch, useCalendarSettings } from './hooks/useCalendar';
 import type { CalendarDate, CalendarItem, CalendarRef, PickedFlatListProps } from './types';
 
 type CalendarProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProps> & {
@@ -36,26 +36,16 @@ const keyExtractor = (item: CalendarItem) => item[0];
 
 const Calendar = forwardRef<CalendarRef, CalendarProps>(
   (
-    {
-      calendarHeight,
-      months,
-      firstDay,
-      horizontal,
-      currentDay,
-      showArrows,
-      onMomentumScrollEnd,
-      style,
-      ...flatListProps
-    },
+    { calendarHeight, currentDay, showArrows, onMomentumScrollEnd, style, ...flatListProps },
     ref,
   ) => {
-    const listWidth = 100;
+    const { listWidth, months, firstDay, horizontal } = useCalendarSettings();
     const calendarDispatch = useCalendarDispatch();
     const flatListRef = useRef<FlatList<CalendarItem>>(null);
 
     const initialScrollIndex = useMemo(() => {
       const currentMonth = currentDay.split(/-(?=[^-]+$)/)[0];
-      const monthIndex = 0; // months.findIndex(([month]) => month === currentMonth);
+      const monthIndex = months.findIndex(([month]) => month === currentMonth);
 
       return monthIndex > 0 ? monthIndex : 0;
     }, [currentDay, months]);
@@ -105,7 +95,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
 
     const handleScrollTo = useCallback(
       (monthString: string, animated?: boolean) => {
-        const monthIndex = 0; //months.findIndex(([month]) => month === monthString);
+        const monthIndex = months.findIndex(([month]) => month === monthString);
 
         scrollToIndex(monthIndex, animated);
       },

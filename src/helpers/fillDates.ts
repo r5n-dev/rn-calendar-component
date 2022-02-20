@@ -1,11 +1,11 @@
 import type { CalendarDate } from '../types';
 
 type FillDatesParams = {
-  dates: Array<CalendarDate>;
+  dates: CalendarDate[];
   firstDay: number;
   showExtraDays?: boolean;
   monthIndex: number;
-  months: Array<[string, Array<CalendarDate>]>;
+  months: [string, CalendarDate[]][];
 };
 
 const maxDayIndex = 6;
@@ -16,7 +16,7 @@ export const fillDates = ({
   monthIndex,
   showExtraDays,
   months,
-}: FillDatesParams): Array<CalendarDate> => {
+}: FillDatesParams): CalendarDate[] => {
   const [, previousMonthDates] = months[monthIndex - 1] || [];
   const [, nextMonthDates] = months[monthIndex + 1] || [];
 

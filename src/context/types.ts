@@ -60,13 +60,13 @@ export const initialState = {
   DayNames: undefined as LibraryProps['DayNames'],
   MonthTitle: undefined as LibraryProps['MonthTitle'],
   Week: undefined as LibraryProps['Week'],
-  dates: [] as Array<CalendarDate>,
+  dates: [] as CalendarDate[],
   firstDay: 0 as BinaryBoolean,
   horizontal: undefined as undefined | boolean,
   listWidth: 0 as number,
   locale: {} as Locale,
   markedDates: undefined as LibraryProps['markedDates'],
-  months: [] as Array<[string, Array<CalendarDate>]>,
+  months: [] as [string, CalendarDate[]][],
   onArrowPress: undefined as LibraryProps['onArrowPress'],
   onDayPress: undefined as LibraryProps['onDayPress'],
   showExtraDays: undefined as undefined | boolean,
@@ -80,7 +80,7 @@ export type CalendarActions =
   | {
       type: 'updateProps';
       payload: {
-        dates?: Array<CalendarDate>;
+        dates?: CalendarDate[];
         horizontal?: LibraryProps['horizontal'];
         locale?: Locale;
         months: typeof initialState['months'];

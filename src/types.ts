@@ -15,7 +15,7 @@ export type CalendarDate = {
   dayOfWeek: number;
 };
 
-export type CalendarItem = [string, Array<CalendarDate>];
+export type CalendarItem = [string, CalendarDate[]];
 
 export type CalendarRef = {
   /**
@@ -28,10 +28,10 @@ export type CalendarRef = {
 };
 
 export type Locale = {
-  monthNames: Array<string>;
-  monthNamesShort: Array<string>;
-  dayNames: Array<string>;
-  dayNamesShort: Array<string>;
+  monthNames: string[];
+  monthNamesShort: string[];
+  dayNames: string[];
+  dayNamesShort: string[];
 };
 
 export type Dots = {

@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import { useTheme } from '../hooks/useCalendar';
 
 export type DayNamesProps = {
-  dayNames: Array<string>;
+  dayNames: string[];
 };
 
 const DayNames = ({ dayNames }: DayNamesProps) => {
