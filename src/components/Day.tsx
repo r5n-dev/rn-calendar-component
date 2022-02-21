@@ -13,7 +13,7 @@ export type DayProps = CalendarDate & {
 
 const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
   const {
-    theme,
+    dayTheme,
     listWidth,
     onDayPress,
     extraDay,
@@ -26,11 +26,11 @@ const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
   } = useDay(dayString);
 
   const textStyle = [
-    theme?.day?.text,
-    today && theme?.day?.todayText,
-    pastDay && theme?.day?.pastDayText,
-    extraDay && theme?.day?.extraDayText,
-    selected && theme?.day?.selectedText,
+    dayTheme?.text,
+    today && dayTheme?.todayText,
+    pastDay && dayTheme?.pastDayText,
+    extraDay && dayTheme?.extraDayText,
+    selected && dayTheme?.selectedText,
     color ? { color } : undefined,
   ];
 
@@ -43,9 +43,9 @@ const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
 
   if (!day) {
     return (
-      <View style={[theme?.day?.container, { width }]}>
-        <View style={[{ padding, width }, theme?.day?.textContainer]}>
-          <Text style={theme?.day?.text} />
+      <View style={[dayTheme?.container, { width }]}>
+        <View style={[{ padding, width }, dayTheme?.textContainer]}>
+          <Text style={dayTheme?.text} />
         </View>
       </View>
     );
@@ -58,21 +58,21 @@ const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
       accessibilityRole="button"
       activeOpacity={0.6}
       onPress={handleDayPress}
-      style={[theme?.day?.container, { width }]}
+      style={[dayTheme?.container, { width }]}
     >
       <View
         style={[
           { padding },
-          inSeries && theme?.day?.inSeriesContainer,
-          startingDay && theme?.day?.startingDayContainer,
-          endingDay && theme?.day?.endingDayContainer,
+          inSeries && dayTheme?.inSeriesContainer,
+          startingDay && dayTheme?.startingDayContainer,
+          endingDay && dayTheme?.endingDayContainer,
 
-          theme?.day?.textContainer,
+          dayTheme?.textContainer,
 
-          today && theme?.day?.todayContainer,
-          pastDay && theme?.day?.pastDayContainer,
-          selected && theme?.day?.selectedContainer,
-          extraDay && theme?.day?.extraDayContainer,
+          today && dayTheme?.todayContainer,
+          pastDay && dayTheme?.pastDayContainer,
+          selected && dayTheme?.selectedContainer,
+          extraDay && dayTheme?.extraDayContainer,
         ]}
       >
         <Text style={textStyle}>{day}</Text>

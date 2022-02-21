@@ -9,7 +9,6 @@ export type MonthTitleProps = {
 
 const MonthTitle = ({ title }: MonthTitleProps) => {
   const theme = useTheme('monthTitle');
-  console.log(theme);
 
   return (
     <View pointerEvents="none" style={theme?.container}>

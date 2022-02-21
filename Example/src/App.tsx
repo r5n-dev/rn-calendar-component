@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -107,12 +107,12 @@ const App = () => {
     }, 1000);
   };
 
-  const handleDayPress = (day: { dayString: string }) => {
+  const handleDayPress = useCallback((day: { dayString: string }) => {
     setMarkedDates((markedDates) => ({
       ...markedDates,
       [day.dayString]: { selected: true },
     }));
-  };
+  }, []);
 
   return (
     <>

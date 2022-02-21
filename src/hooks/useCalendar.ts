@@ -1,8 +1,8 @@
-import { useContext } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 
 import { CalendarContext, CalendarUpdaterContext } from '../context/Provider';
 import { fillDates } from '../helpers/fillDates';
-import { useMarkedDates } from '../store';
+import { useCalendarConfig, useDates, useMarkedDates, useMonths } from '../store';
 import type { CalendarTheme, MarkedDate } from '../types';
 
 const useCalendar = () => {
@@ -22,52 +22,70 @@ export const useCalendarDispatch = () => {
 };
 
 export const useTheme = <T extends keyof CalendarTheme>(themeKey: T) => {
-  const { theme } = useCalendar();
-  return theme?.[themeKey];
-};
-
-export const useCalendarSettings = () => {
-  const { horizontal, firstDay, months, listWidth } = useCalendar();
-
-  return { horizontal, firstDay, months, listWidth };
+  const theme = useCalendarConfig(useCallback((state) => state.theme?.[themeKey], [themeKey]));
+  return theme;
 };
 
 export const useArrow = () => {
-  const { onArrowPress, listWidth, months } = useCalendar();
+  const { onArrowPress } = useCalendar();
+  const listWidth = useCalendarConfig().listWidth;
 
-  return { onArrowPress, listWidth, months };
+  return { onArrowPress, listWidth };
 };
 
 export const useDay = (day: string) => {
-  const markedDates = useMarkedDates((state) => state.markedDates);
-  const { theme, listWidth, onDayPress } = useCalendar();
+  const markedDate = useMarkedDates(useCallback((state) => state.markedDates[day], [day]));
+  const { dayTheme, listWidth } = useCalendarConfig(
+    useCallback(({ theme, listWidth }) => ({ listWidth, dayTheme: theme?.day }), []),
+  );
+  const { onDayPress } = useCalendar();
   const { extraDay, selected, color, inSeries, startingDay, endingDay, dots } =
-    markedDates?.[day] || ({} as MarkedDate);
+    markedDate || ({} as MarkedDate);
 
-  return {
-    theme,
-    listWidth,
-    onDayPress,
-    extraDay,
-    selected,
-    color,
-    inSeries,
-    startingDay,
-    endingDay,
-    dots,
-  };
+  return useMemo(
+    () => ({
+      dayTheme,
+      listWidth,
+      onDayPress,
+      extraDay,
+      selected,
+      color,
+      inSeries,
+      startingDay,
+      endingDay,
+      dots,
+    }),
+    [
+      dayTheme,
+      listWidth,
+      onDayPress,
+      extraDay,
+      selected,
+      color,
+      inSeries,
+      startingDay,
+      endingDay,
+      dots,
+    ],
+  );
 };
 
 export const useMonth = (monthIndex: number) => {
-  const { showExtraDays, dates, firstDay, months, horizontal, locale, listWidth } = useCalendar();
+  const { showExtraDays, firstDay, horizontal, locale, listWidth } = useCalendarConfig();
+  const months = useMonths((state) => state.months);
+  const dates = useDates((state) => state.dates);
 
-  const monthDates = fillDates({
-    dates,
-    showExtraDays,
-    firstDay,
-    monthIndex,
-    months,
-  });
+  const monthDates = useMemo(
+    () =>
+      fillDates({
+        dates,
+        showExtraDays,
+        firstDay,
+        monthIndex,
+        months,
+      }),
+    [dates, firstDay, monthIndex, months, showExtraDays],
+  );
 
   return { monthDates, horizontal, locale, listWidth };
 };

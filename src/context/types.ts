@@ -1,7 +1,7 @@
 import { constants } from '../helpers';
-import type { CalendarDate, CalendarTheme, LibraryProps, Locale } from '../types';
+import type { CalendarTheme, LibraryProps } from '../types';
 
-const theme: CalendarTheme = {
+export const defaultTheme: CalendarTheme = {
   day: {
     inSeriesContainer: {
       alignItems: 'center',
@@ -60,32 +60,12 @@ export const initialState = {
   DayNames: undefined as LibraryProps['DayNames'],
   MonthTitle: undefined as LibraryProps['MonthTitle'],
   Week: undefined as LibraryProps['Week'],
-  dates: [] as CalendarDate[],
-  firstDay: 0 as BinaryBoolean,
-  horizontal: undefined as undefined | boolean,
-  listWidth: 0 as number,
-  locale: {} as Locale,
-  months: [] as [string, CalendarDate[]][],
   onArrowPress: undefined as LibraryProps['onArrowPress'],
   onDayPress: undefined as LibraryProps['onDayPress'],
-  showExtraDays: undefined as undefined | boolean,
-  theme: theme as LibraryProps['theme'],
 };
 
 export type CalendarState = typeof initialState;
 export type CalendarActions =
-  | { type: 'setListWidth'; payload: number }
-  | {
-      type: 'updateProps';
-      payload: {
-        dates?: CalendarDate[];
-        horizontal?: LibraryProps['horizontal'];
-        locale?: Locale;
-        months: typeof initialState['months'];
-        showExtraDays?: LibraryProps['showExtraDays'];
-        theme?: LibraryProps['theme'];
-      };
-    }
   | {
       type: 'updateFunctions';
       payload: {

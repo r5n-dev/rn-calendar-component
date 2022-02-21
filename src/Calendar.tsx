@@ -19,15 +19,12 @@ import {
 
 import { Arrows, Month } from './components';
 import { monthsHeights } from './helpers';
-import { useCalendarDispatch, useCalendarSettings } from './hooks/useCalendar';
+import { useCalendarConfig, useMonths } from './store';
 import type { CalendarDate, CalendarItem, CalendarRef, PickedFlatListProps } from './types';
 
 type CalendarProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProps> & {
   calendarHeight: number;
   currentDay: string;
-  firstDay: BinaryBoolean;
-  horizontal?: boolean;
-  months: [string, CalendarDate[]][];
   showArrows?: boolean;
   style?: StyleProp<ViewStyle>;
 };
@@ -39,8 +36,15 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     { calendarHeight, currentDay, showArrows, onMomentumScrollEnd, style, ...flatListProps },
     ref,
   ) => {
-    const { listWidth, months, firstDay, horizontal } = useCalendarSettings();
-    const calendarDispatch = useCalendarDispatch();
+    const { firstDay, horizontal, listWidth } = useCalendarConfig(
+      ({ firstDay, horizontal, listWidth }) => ({
+        firstDay,
+        horizontal,
+        listWidth,
+      }),
+    );
+    const setListWidth = useCalendarConfig((state) => state.setListWidth);
+    const months = useMonths((state) => state.months);
     const flatListRef = useRef<FlatList<CalendarItem>>(null);
 
     const initialScrollIndex = useMemo(() => {
@@ -118,7 +122,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
           nativeEvent: {
             layout: { width },
           },
-        }) => calendarDispatch({ type: 'setListWidth', payload: width })}
+        }) => setListWidth(width)}
         style={styles.container}
       >
         {horizontal && showArrows && (

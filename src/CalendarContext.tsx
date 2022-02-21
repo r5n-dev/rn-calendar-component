@@ -2,10 +2,26 @@ import React, { forwardRef, useEffect, useMemo } from 'react';
 
 import Calendar from './Calendar';
 import { CalendarProvider } from './context/Provider';
+import { defaultTheme } from './context/types';
 import { constants, generateDates, monthsData } from './helpers';
 import Locales from './Locales';
-import { useMarkedDates } from './store';
-import type { CalendarRef, LibraryProps, Locale } from './types';
+import { useCalendarConfig, useDates, useMarkedDates, useMonths } from './store';
+import type { CalendarRef, CalendarTheme, LibraryProps, Locale } from './types';
+
+const mergeTheme = (theme?: CalendarTheme) => {
+  const newTheme = { ...defaultTheme };
+
+  if (theme) {
+    Object.entries(theme).forEach(([themeScope, themeScopeValues]) => {
+      Object.keys(themeScopeValues).forEach((themeProperty) => {
+        // @ts-expect-error
+        newTheme[themeScope][themeProperty] = theme[themeScope][themeProperty];
+      });
+    });
+  }
+
+  return newTheme;
+};
 
 const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
   (
@@ -34,6 +50,10 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
     ref,
   ) => {
     const setMarkDates = useMarkedDates((state) => state.setMarkedDates);
+    const setMonths = useMonths((state) => state.setMonths);
+    const setDates = useDates((state) => state.setDates);
+    const setCalendarConfig = useCalendarConfig((state) => state.setCalendarConfig);
+
     useEffect(() => {
       setMarkDates(markedDates || {});
     }, [markedDates, setMarkDates]);
@@ -64,6 +84,22 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
       return [monthsData(dates), dates];
     }, [endISODate, startISODate]);
 
+    useEffect(() => {
+      setMonths(months);
+      setDates(dates);
+    }, [months, setMonths, setDates, dates]);
+
+    useEffect(() => {
+      setCalendarConfig({
+        locale: selectedLocale,
+        horizontal,
+        showExtraDays,
+        firstDay,
+        listWidth: 0,
+        theme: mergeTheme(theme),
+      });
+    }, [firstDay, horizontal, selectedLocale, setCalendarConfig, showExtraDays, theme]);
+
     return (
       <CalendarProvider
         {...{
@@ -72,25 +108,15 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
           DayNames,
           MonthTitle,
           Week,
-          dates,
-          firstDay,
-          horizontal,
-          locale: selectedLocale,
-          months,
           onArrowPress,
           onDayPress,
-          showExtraDays,
-          theme,
         }}
       >
         {months.length > 0 && (
           <Calendar
             {...rest}
             {...{
-              horizontal,
-              firstDay,
               calendarHeight,
-              months,
               currentDay,
               viewabilityConfig,
               ref,

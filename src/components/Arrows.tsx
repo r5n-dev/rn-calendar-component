@@ -3,6 +3,7 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { constants } from '../helpers';
 import { useArrow } from '../hooks/useCalendar';
+import { useMonths } from '../store';
 
 // @ts-expect-error
 import arrow from './assets/arrow.png';
@@ -22,13 +23,14 @@ const Arrows = ({
   rightArrowDisabled,
   scrollToIndex,
 }: ArrowsProps) => {
-  const { onArrowPress, listWidth, months } = useArrow();
+  const { onArrowPress, listWidth } = useArrow();
+  const monthsLength = useMonths((state) => state.months.length);
   const handleArrowPress = useCallback(
     (direction: 'left' | 'right') => {
       onArrowPress?.({
         direction,
         currentMonthIndex,
-        lastMonthIndex: months.length - 1,
+        lastMonthIndex: monthsLength - 1,
       });
 
       if (direction === 'left') {
@@ -41,13 +43,13 @@ const Arrows = ({
       } else if (direction === 'right') {
         const nextMonthIndex = currentMonthIndex + 1;
 
-        if (nextMonthIndex < months.length) {
+        if (nextMonthIndex < monthsLength) {
           setCurrentMonthIndex(nextMonthIndex);
           scrollToIndex(nextMonthIndex);
         }
       }
     },
-    [onArrowPress, currentMonthIndex, months.length, setCurrentMonthIndex, scrollToIndex],
+    [onArrowPress, currentMonthIndex, monthsLength, setCurrentMonthIndex, scrollToIndex],
   );
 
   return (
