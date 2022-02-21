@@ -96,7 +96,7 @@ const App = () => {
   const [loaded, setLoaded] = useState<boolean>(true);
   const [firstDay, setFirstDay] = useState<0 | 1>(0);
   const [locale, setLocale] = useState<'en' | 'pl'>('en');
-  const [hideExtraDays, setHideExtraDays] = useState<boolean>(true);
+  const [showExtraDays, setShowExtraDays] = useState<boolean>(true);
   const [horizontal, setHorizontal] = useState<boolean>(false);
 
   const resetCalendar = () => {
@@ -128,7 +128,7 @@ const App = () => {
             }
             firstDay={firstDay}
             hideArrows={false}
-            hideExtraDays={hideExtraDays}
+            showExtraDays={showExtraDays}
             horizontal={horizontal}
             locale={locale}
             markedDates={markedDates}
@@ -153,7 +153,7 @@ const App = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => setHideExtraDays((hideExtraDays) => !hideExtraDays)}
+            onPress={() => setShowExtraDays((hideExtraDays) => !hideExtraDays)}
             style={styles.button}
           >
             <Text style={styles.buttonText}>Show extra dates</Text>
@@ -174,7 +174,7 @@ const App = () => {
         <ScrollView style={styles.calendarInfoContainer}>
           <Text>firstDay: {firstDay}</Text>
           <Text>locale: {locale}</Text>
-          <Text>hideExtraDays: {`${hideExtraDays}`}</Text>
+          <Text>showExtraDays: {`${showExtraDays}`}</Text>
           <Text>markedDates: {JSON.stringify(markedDates)}</Text>
         </ScrollView>
       </SafeAreaView>

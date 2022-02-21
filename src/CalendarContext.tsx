@@ -5,7 +5,7 @@ import { CalendarProvider } from './context/Provider';
 import { defaultTheme } from './context/types';
 import { constants, generateDates, monthsData } from './helpers';
 import Locales from './Locales';
-import { useCalendarConfig, useDates, useMarkedDates, useMonths } from './store';
+import { useCalendarConfig, useMarkedDates, useMonths } from './store';
 import type { CalendarRef, CalendarTheme, LibraryProps, Locale } from './types';
 
 const mergeTheme = (theme?: CalendarTheme) => {
@@ -51,7 +51,6 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
   ) => {
     const setMarkDates = useMarkedDates((state) => state.setMarkedDates);
     const setMonths = useMonths((state) => state.setMonths);
-    const setDates = useDates((state) => state.setDates);
     const setCalendarConfig = useCalendarConfig((state) => state.setCalendarConfig);
 
     useEffect(() => {
@@ -75,19 +74,18 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
       return selectedLocale;
     }, [firstDay, locale]);
 
-    const [months, dates] = useMemo(() => {
+    const months = useMemo(() => {
       const dates = generateDates({
         startISODate,
         endISODate,
       });
 
-      return [monthsData(dates), dates];
+      return monthsData(dates);
     }, [endISODate, startISODate]);
 
     useEffect(() => {
       setMonths(months);
-      setDates(dates);
-    }, [months, setMonths, setDates, dates]);
+    }, [months, setMonths]);
 
     useEffect(() => {
       setCalendarConfig({

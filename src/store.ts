@@ -15,11 +15,6 @@ type MonthsState = {
   setMonths: (months: [string, CalendarDate[]][]) => void;
 };
 
-type DatesState = {
-  dates: CalendarDate[];
-  setDates: (dates: CalendarDate[]) => void;
-};
-
 type CalendarConfigState = {
   firstDay: BinaryBoolean;
   horizontal: boolean | undefined;
@@ -41,11 +36,6 @@ export const useMarkedDates = create<MarkedDatesState>((set) => ({
 export const useMonths = create<MonthsState>((set) => ({
   months: [],
   setMonths: (months: [string, CalendarDate[]][]) => set({ months }),
-}));
-
-export const useDates = create<DatesState>((set) => ({
-  dates: [],
-  setDates: (dates) => set({ dates }),
 }));
 
 export const useCalendarConfig = create<CalendarConfigState>((set) => ({

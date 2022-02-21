@@ -2,7 +2,7 @@ import { useCallback, useContext, useMemo } from 'react';
 
 import { CalendarContext, CalendarUpdaterContext } from '../context/Provider';
 import { fillDates } from '../helpers/fillDates';
-import { useCalendarConfig, useDates, useMarkedDates, useMonths } from '../store';
+import { useCalendarConfig, useMarkedDates, useMonths } from '../store';
 import type { CalendarTheme, MarkedDate } from '../types';
 
 const useCalendar = () => {
@@ -73,7 +73,7 @@ export const useDay = (day: string) => {
 export const useMonth = (monthIndex: number) => {
   const { showExtraDays, firstDay, horizontal, locale, listWidth } = useCalendarConfig();
   const months = useMonths((state) => state.months);
-  const dates = useDates((state) => state.dates);
+  const dates = useMemo(() => months[monthIndex]?.[1] || [], [months, monthIndex]);
 
   const monthDates = useMemo(
     () =>
