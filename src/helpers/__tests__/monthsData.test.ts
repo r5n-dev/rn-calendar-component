@@ -1,10 +1,81 @@
-// import monthsData from '../monthsData';
-// import generateDates from '../generateDates';
-
-// monthsData(generateDates({ startISODate: '2020-01-01', endISODate: '2020-12-31' }))
-
-// TODO
+import generateDates from '../generateDates';
+import monthsData from '../monthsData';
 
 describe('monthsData', () => {
-  test.todo('should have tests :D');
+  test('should return list of tuples with month key and list of dates', () => {
+    const dates = generateDates({ startISODate: '2020-03-01', endISODate: '2020-04-30' });
+    expect(monthsData(dates)).toEqual([
+      [
+        '2020-03',
+        [
+          { day: '1', dayOfWeek: 0, dayString: '2020-03-01', month: '03', year: '2020' },
+          { day: '2', dayOfWeek: 1, dayString: '2020-03-02', month: '03', year: '2020' },
+          { day: '3', dayOfWeek: 2, dayString: '2020-03-03', month: '03', year: '2020' },
+          { day: '4', dayOfWeek: 3, dayString: '2020-03-04', month: '03', year: '2020' },
+          { day: '5', dayOfWeek: 4, dayString: '2020-03-05', month: '03', year: '2020' },
+          { day: '6', dayOfWeek: 5, dayString: '2020-03-06', month: '03', year: '2020' },
+          { day: '7', dayOfWeek: 6, dayString: '2020-03-07', month: '03', year: '2020' },
+          { day: '8', dayOfWeek: 0, dayString: '2020-03-08', month: '03', year: '2020' },
+          { day: '9', dayOfWeek: 1, dayString: '2020-03-09', month: '03', year: '2020' },
+          { day: '10', dayOfWeek: 2, dayString: '2020-03-10', month: '03', year: '2020' },
+          { day: '11', dayOfWeek: 3, dayString: '2020-03-11', month: '03', year: '2020' },
+          { day: '12', dayOfWeek: 4, dayString: '2020-03-12', month: '03', year: '2020' },
+          { day: '13', dayOfWeek: 5, dayString: '2020-03-13', month: '03', year: '2020' },
+          { day: '14', dayOfWeek: 6, dayString: '2020-03-14', month: '03', year: '2020' },
+          { day: '15', dayOfWeek: 0, dayString: '2020-03-15', month: '03', year: '2020' },
+          { day: '16', dayOfWeek: 1, dayString: '2020-03-16', month: '03', year: '2020' },
+          { day: '17', dayOfWeek: 2, dayString: '2020-03-17', month: '03', year: '2020' },
+          { day: '18', dayOfWeek: 3, dayString: '2020-03-18', month: '03', year: '2020' },
+          { day: '19', dayOfWeek: 4, dayString: '2020-03-19', month: '03', year: '2020' },
+          { day: '20', dayOfWeek: 5, dayString: '2020-03-20', month: '03', year: '2020' },
+          { day: '21', dayOfWeek: 6, dayString: '2020-03-21', month: '03', year: '2020' },
+          { day: '22', dayOfWeek: 0, dayString: '2020-03-22', month: '03', year: '2020' },
+          { day: '23', dayOfWeek: 1, dayString: '2020-03-23', month: '03', year: '2020' },
+          { day: '24', dayOfWeek: 2, dayString: '2020-03-24', month: '03', year: '2020' },
+          { day: '25', dayOfWeek: 3, dayString: '2020-03-25', month: '03', year: '2020' },
+          { day: '26', dayOfWeek: 4, dayString: '2020-03-26', month: '03', year: '2020' },
+          { day: '27', dayOfWeek: 5, dayString: '2020-03-27', month: '03', year: '2020' },
+          { day: '28', dayOfWeek: 6, dayString: '2020-03-28', month: '03', year: '2020' },
+          { day: '29', dayOfWeek: 0, dayString: '2020-03-29', month: '03', year: '2020' },
+          { day: '30', dayOfWeek: 1, dayString: '2020-03-30', month: '03', year: '2020' },
+          { day: '31', dayOfWeek: 2, dayString: '2020-03-31', month: '03', year: '2020' },
+        ],
+      ],
+      [
+        '2020-04',
+        [
+          { day: '1', dayOfWeek: 3, dayString: '2020-04-01', month: '04', year: '2020' },
+          { day: '2', dayOfWeek: 4, dayString: '2020-04-02', month: '04', year: '2020' },
+          { day: '3', dayOfWeek: 5, dayString: '2020-04-03', month: '04', year: '2020' },
+          { day: '4', dayOfWeek: 6, dayString: '2020-04-04', month: '04', year: '2020' },
+          { day: '5', dayOfWeek: 0, dayString: '2020-04-05', month: '04', year: '2020' },
+          { day: '6', dayOfWeek: 1, dayString: '2020-04-06', month: '04', year: '2020' },
+          { day: '7', dayOfWeek: 2, dayString: '2020-04-07', month: '04', year: '2020' },
+          { day: '8', dayOfWeek: 3, dayString: '2020-04-08', month: '04', year: '2020' },
+          { day: '9', dayOfWeek: 4, dayString: '2020-04-09', month: '04', year: '2020' },
+          { day: '10', dayOfWeek: 5, dayString: '2020-04-10', month: '04', year: '2020' },
+          { day: '11', dayOfWeek: 6, dayString: '2020-04-11', month: '04', year: '2020' },
+          { day: '12', dayOfWeek: 0, dayString: '2020-04-12', month: '04', year: '2020' },
+          { day: '13', dayOfWeek: 1, dayString: '2020-04-13', month: '04', year: '2020' },
+          { day: '14', dayOfWeek: 2, dayString: '2020-04-14', month: '04', year: '2020' },
+          { day: '15', dayOfWeek: 3, dayString: '2020-04-15', month: '04', year: '2020' },
+          { day: '16', dayOfWeek: 4, dayString: '2020-04-16', month: '04', year: '2020' },
+          { day: '17', dayOfWeek: 5, dayString: '2020-04-17', month: '04', year: '2020' },
+          { day: '18', dayOfWeek: 6, dayString: '2020-04-18', month: '04', year: '2020' },
+          { day: '19', dayOfWeek: 0, dayString: '2020-04-19', month: '04', year: '2020' },
+          { day: '20', dayOfWeek: 1, dayString: '2020-04-20', month: '04', year: '2020' },
+          { day: '21', dayOfWeek: 2, dayString: '2020-04-21', month: '04', year: '2020' },
+          { day: '22', dayOfWeek: 3, dayString: '2020-04-22', month: '04', year: '2020' },
+          { day: '23', dayOfWeek: 4, dayString: '2020-04-23', month: '04', year: '2020' },
+          { day: '24', dayOfWeek: 5, dayString: '2020-04-24', month: '04', year: '2020' },
+          { day: '25', dayOfWeek: 6, dayString: '2020-04-25', month: '04', year: '2020' },
+          { day: '26', dayOfWeek: 0, dayString: '2020-04-26', month: '04', year: '2020' },
+          { day: '27', dayOfWeek: 1, dayString: '2020-04-27', month: '04', year: '2020' },
+          { day: '28', dayOfWeek: 2, dayString: '2020-04-28', month: '04', year: '2020' },
+          { day: '29', dayOfWeek: 3, dayString: '2020-04-29', month: '04', year: '2020' },
+          { day: '30', dayOfWeek: 4, dayString: '2020-04-30', month: '04', year: '2020' },
+        ],
+      ],
+    ]);
+  });
 });
