@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { View } from 'react-native';
 
 import { chunk, constants } from '../helpers';
-import { useMonth } from '../hooks/useCalendar';
+import { useMonth } from '../hooks';
 import { useCustomComponents } from '../store';
 
 import DayNames from './DayNames';

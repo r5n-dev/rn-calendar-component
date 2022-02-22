@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { constants } from '../helpers';
-import { useTheme } from '../hooks/useCalendar';
+import { useTheme } from '../hooks';
 import { useCustomComponents } from '../store';
 import type { CalendarDate } from '../types';
 

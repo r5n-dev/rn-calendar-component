@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-import { useDay } from '../hooks/useCalendar';
+import { useDay } from '../hooks';
 import type { CalendarDate } from '../types';
 
 import Dots from './Dots';

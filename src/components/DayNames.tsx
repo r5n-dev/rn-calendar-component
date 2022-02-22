@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-import { useTheme } from '../hooks/useCalendar';
+import { useTheme } from '../hooks';
 
 export type DayNamesProps = {
   dayNames: string[];

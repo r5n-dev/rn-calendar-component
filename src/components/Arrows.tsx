@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { constants } from '../helpers';
-import { useArrow } from '../hooks/useCalendar';
+import { useArrow } from '../hooks';
 import { useMonths } from '../store';
 
 // @ts-expect-error
