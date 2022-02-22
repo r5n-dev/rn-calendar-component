@@ -1,4 +1,4 @@
-const chunk = (array: Array<NotWorthIt>, chunkLength: number) => {
+const chunk = (array: NotWorthIt[], chunkLength: number) => {
   const chunks = [];
 
   for (let index = 0; index < array.length; index += chunkLength) {

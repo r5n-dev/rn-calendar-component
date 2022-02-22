@@ -1,8 +1,8 @@
 version: 2
 updates:
-  # Ignore Example:
+  # Ignore example:
   - package-ecosystem: "npm"
-    directory: "/Example"
+    directory: "/example"
     schedule:
       interval: "daily"
     ignore:

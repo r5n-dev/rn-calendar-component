@@ -1,24 +1,22 @@
-import { CalendarDate } from '../types';
+import type { CalendarDate } from '../types';
 
 type FillDatesParams = {
-  calendarKey: string;
-  dates: Array<CalendarDate>;
+  dates: CalendarDate[];
   firstDay: number;
-  hideExtraDays: boolean;
+  showExtraDays?: boolean;
   monthIndex: number;
-  months: Array<[string, Array<CalendarDate>]>;
+  months: [string, CalendarDate[]][];
 };
 
-const cachedMonths: { [key: string]: Array<CalendarDate> } = {};
 const maxDayIndex = 6;
 
-const fillDates = ({
+export const fillDates = ({
   dates,
   firstDay,
-  hideExtraDays,
   monthIndex,
+  showExtraDays,
   months,
-}: FillDatesParams): Array<CalendarDate> => {
+}: FillDatesParams): CalendarDate[] => {
   const [, previousMonthDates] = months[monthIndex - 1] || [];
   const [, nextMonthDates] = months[monthIndex + 1] || [];
 
@@ -29,13 +27,7 @@ const fillDates = ({
   const lastDate = dates[dates.length - 1];
   const endDayCap = maxDayIndex - lastDate.dayOfWeek + firstDay;
 
-  if (hideExtraDays) {
-    return [
-      ...Array(fillCap).fill({}),
-      ...dates,
-      ...Array(maxDayIndex - lastDate.dayOfWeek + 1).fill({}),
-    ];
-  } else {
+  if (showExtraDays) {
     const startFillCap =
       startDayCap >= 0
         ? previousMonthDates?.length - startDayCap
@@ -51,31 +43,11 @@ const fillDates = ({
     }));
 
     return [...startFillDates, ...dates, ...endFillDates];
-  }
-};
-
-export default ({
-  calendarKey,
-  dates,
-  firstDay,
-  hideExtraDays,
-  monthIndex,
-  months,
-}: FillDatesParams) => {
-  const cachedMonth = cachedMonths[`${calendarKey}-${monthIndex}-${firstDay}-${hideExtraDays}`];
-
-  if (cachedMonth) {
-    return cachedMonth;
   } else {
-    const monthDates = fillDates({
-      calendarKey,
-      dates,
-      firstDay,
-      hideExtraDays,
-      monthIndex,
-      months,
-    });
-    cachedMonths[`${calendarKey}-${monthIndex}-${firstDay}-${hideExtraDays}`] = monthDates;
-    return monthDates;
+    return [
+      ...Array(fillCap).fill({}),
+      ...dates,
+      ...Array(maxDayIndex - lastDate.dayOfWeek + 1).fill({}),
+    ];
   }
 };

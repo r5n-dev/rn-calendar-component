@@ -1,24 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
-import { MonthTitleComponentProps } from '../componentTypes';
+import { useTheme } from '../hooks';
 
-const MonthTitle = ({ title, theme }: MonthTitleComponentProps) => {
+export type MonthTitleProps = {
+  title: string;
+};
+
+const MonthTitle = ({ title }: MonthTitleProps) => {
+  const theme = useTheme('monthTitle');
+
   return (
-    <View pointerEvents="none" style={[styles.container, theme?.container]}>
-      <Text style={[styles.title, theme?.text]}>{title}</Text>
+    <View pointerEvents="none" style={theme?.container}>
+      <Text style={theme?.text}>{title}</Text>
     </View>
   );
 };
 
 export default React.memo(MonthTitle);
-
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 10,
-  },
-  title: {
-    alignSelf: 'center',
-    fontSize: 16,
-  },
-});

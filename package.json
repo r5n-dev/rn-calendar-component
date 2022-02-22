@@ -9,21 +9,19 @@
   "files": [
     "src",
     "lib",
-    "!**/__tests__",
-    "!**/__fixtures__",
-    "!**/__mocks__",
-    "!lib/typescript/example"
+    "!**/__tests__"
   ],
   "scripts": {
-    "bootstrap": "yarn example && yarn && husky install",
-    "example": "yarn --cwd Example",
-    "lint": "eslint --ext .js,.ts,.tsx .",
+    "test": "jest",
+    "test:ci": "jest --runInBand --coverage",
+    "typescript": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "prepare": "bob build",
     "release": "release-it",
-    "test": "jest --coverage --runInBand && yarn coverage",
-    "coverage": "jest-coverage-badges ./coverage/coverage-summary.json --output ./badges",
-    "test:watch": "jest --watch",
-    "typescript": "tsc --noEmit"
+    "example": "yarn --cwd example",
+    "pods": "cd example && pod-install --quiet",
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "limit": "yarn size-limit"
   },
   "keywords": [
     "react-native",
@@ -35,32 +33,32 @@
   "repository": "https://github.com/dsznajder/rn-calendar",
   "author": "Damian Sznajder <damsznajder@gmail.com>",
   "license": "MIT",
+  "dependencies": {
+    "zustand": "3.7.0"
+  },
   "devDependencies": {
-    "@babel/core": "7.15.8",
-    "@babel/preset-typescript": "7.15.0",
-    "@commitlint/config-conventional": "13.2.0",
-    "@release-it/conventional-changelog": "3.3.0",
-    "@types/jest": "27.0.2",
-    "@types/react": "17.0.27",
-    "@types/react-native": "0.65.5",
-    "babel-jest": "27.2.5",
-    "commitlint": "13.2.1",
-    "eslint": "7.32.0",
-    "eslint-config-satya164": "3.1.10",
-    "eslint-plugin-simple-import-sort": "7.0.0",
-    "husky": "7.0.2",
-    "jest": "27.2.5",
+    "@commitlint/config-conventional": "16.2.1",
+    "@release-it/conventional-changelog": "4.1.0",
+    "@types/jest": "27.4.0",
+    "@types/react": "17.0.39",
+    "@types/react-native": "0.66.16",
+    "babel-jest": "27.5.1",
+    "commitlint": "16.2.1",
+    "eslint": "8.9.0",
+    "eslint-config-dsznajder": "0.1.14",
+    "husky": "7.0.4",
+    "jest": "27.5.1",
     "jest-coverage-badges": "1.1.2",
-    "prettier": "2.4.1",
+    "prettier": "2.5.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-native": "0.66.0",
+    "react-native": "0.67.2",
     "react-native-builder-bob": "0.18.2",
     "react-native-testing-library": "6.0.0",
-    "react-native-web": "0.17.5",
+    "react-native-web": "0.17.6",
     "react-test-renderer": "17.0.2",
-    "release-it": "14.11.6",
-    "typescript": "4.4.3"
+    "release-it": "14.12.4",
+    "typescript": "4.5.5"
   },
   "peerDependencies": {
     "react": "*",
@@ -69,11 +67,11 @@
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
-      "<rootDir>/Example/node_modules",
+      "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|@react-native|@react-native-community|expo(nent)?|@expo(nent)?/.*|@react-navigation/.*|@unimodules|unimodules|@sentry/.*|@react-native-mapbox-gl/*)"
+      "node_modules/(?!(jest-)?react-native|@react-native|@react-native-community|expo(nent)?|@react-navigation/.*)"
     ],
     "testPathIgnorePatterns": [
       "node_modules"
@@ -109,12 +107,18 @@
     "targets": [
       "commonjs",
       "module",
-      [
-        "typescript",
-        {
-          "project": "tsconfig.build.json"
-        }
-      ]
+      "typescript"
     ]
-  }
+  },
+  "size-limit": [
+    {
+      "path": "src/index.ts"
+    },
+    {
+      "path": "lib/commonjs/index.js"
+    },
+    {
+      "path": "lib/module/index.js"
+    }
+  ]
 }

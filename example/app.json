@@ -1,0 +1,21 @@
+{
+  "name": "rn-calendar-component-example",
+  "displayName": "Calendar example",
+  "expo": {
+    "name": "rn-calendar-component-example",
+    "slug": "rn-calendar-component-example",
+    "description": "Example app for rn-calendar-component",
+    "privacy": "public",
+    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
+    "ios": {
+      "supportsTablet": false,
+      "userInterfaceStyle": "automatic"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "userInterfaceStyle": "automatic"
+    }
+  }
+}

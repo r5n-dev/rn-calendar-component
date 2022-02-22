@@ -1,13 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
-import { DayNamesComponentProps } from '../componentTypes';
+import { useTheme } from '../hooks';
 
-const DayNames = ({ dayNames, theme }: DayNamesComponentProps) => {
+export type DayNamesProps = {
+  dayNames: string[];
+};
+
+const DayNames = ({ dayNames }: DayNamesProps) => {
+  const theme = useTheme('dayNames');
+
   return (
-    <View style={[styles.container, theme?.container]}>
+    <View style={theme?.container}>
       {dayNames.map((dayName) => (
-        <View key={dayName} style={styles.dayNameContainer}>
+        <View key={dayName} style={theme?.textContainer}>
           <Text style={theme?.text}>{dayName}</Text>
         </View>
       ))}
@@ -16,15 +22,3 @@ const DayNames = ({ dayNames, theme }: DayNamesComponentProps) => {
 };
 
 export default React.memo(DayNames);
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 10,
-  },
-  dayNameContainer: {
-    alignItems: 'center',
-    flex: 1,
-  },
-});

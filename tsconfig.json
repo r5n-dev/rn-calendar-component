@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "rn-calendar-component": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "esModuleInterop": true,
+    "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "lib": ["esnext"],
     "module": "esnext",
     "moduleResolution": "node",
-    "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noImplicitUseStrict": false,
@@ -24,9 +24,5 @@
     "strict": true,
     "target": "esnext"
   },
-  "exclude": [
-    "src/components/__tests__/*",
-    "src/helpers/__tests__/*",
-    "node_modules/**/*"
-  ]
+  "exclude": ["example", "lib"],
 }

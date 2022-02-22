@@ -1,4 +1,4 @@
-import { CalendarDate } from '../types';
+import type { CalendarDate } from '../types';
 
 import constants from './constants';
 
@@ -8,7 +8,7 @@ export default ({
 }: {
   startISODate: string;
   endISODate: string;
-}): Array<CalendarDate> => {
+}): CalendarDate[] => {
   const startDate = new Date(startISODate);
   const endDate = new Date(endISODate);
 
@@ -25,6 +25,7 @@ export default ({
 
     dates[index] = {
       // get rid of `0` prefix
+      dayIndex: index,
       day: parseInt(day).toString(),
       dayString,
       year,

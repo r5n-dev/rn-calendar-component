@@ -1,19 +1,16 @@
-import { CalendarDate } from '../types';
+import type { CalendarDate } from '../types';
 
 import constants from './constants';
 
 let cachedMonths: {
-  data: Array<{ height: number; offset: number }>;
+  data: { height: number; offset: number }[];
   firstDay: BinaryBoolean;
 } = {
   data: [],
   firstDay: 0,
 };
 
-const monthsHeights = (
-  monthsData: Array<[string, Array<CalendarDate>]>,
-  firstDay: BinaryBoolean,
-) => {
+const monthsHeights = (monthsData: [string, CalendarDate[]][], firstDay: BinaryBoolean) => {
   if (cachedMonths.firstDay === firstDay && monthsData.length === cachedMonths.data.length) {
     return cachedMonths.data;
   }
@@ -31,7 +28,7 @@ const monthsHeights = (
     acc.push({ height, offset });
 
     return acc;
-  }, [] as Array<{ height: number; offset: number }>);
+  }, [] as { height: number; offset: number }[]);
 
   cachedMonths = { data, firstDay };
   return data;
