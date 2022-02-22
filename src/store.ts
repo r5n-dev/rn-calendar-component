@@ -37,6 +37,12 @@ type CustomComponentsState = {
   setCustomComponents: (components: Omit<CustomComponentsState, 'setCustomComponents'>) => void;
 };
 
+type CallbacksState = {
+  onArrowPress: LibraryProps['onArrowPress'];
+  onDayPress: LibraryProps['onDayPress'];
+  setCallbacks: (callbacks: Omit<CallbacksState, 'setCallbacks'>) => void;
+};
+
 export const useMarkedDates = create<MarkedDatesState>((set) => ({
   markedDates: {} as MarkedDates,
   setMarkedDates: (markedDates) => set({ markedDates }),
@@ -65,4 +71,10 @@ export const useCustomComponents = create<CustomComponentsState>((set) => ({
   MonthTitle: undefined,
   Week: undefined,
   setCustomComponents: (components) => set((state) => ({ ...state, ...components })),
+}));
+
+export const useCallbacksState = create<CallbacksState>((set) => ({
+  onArrowPress: undefined,
+  onDayPress: undefined,
+  setCallbacks: (callbacks) => set((state) => ({ ...state, ...callbacks })),
 }));

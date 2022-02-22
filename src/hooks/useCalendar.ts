@@ -1,17 +1,9 @@
 import { useCallback, useContext, useMemo } from 'react';
 
-import { CalendarContext, CalendarUpdaterContext } from '../context/Provider';
+import { CalendarUpdaterContext } from '../context/Provider';
 import { fillDates } from '../helpers/fillDates';
-import { useCalendarConfig, useMarkedDates, useMonths } from '../store';
+import { useCalendarConfig, useCallbacksState, useMarkedDates, useMonths } from '../store';
 import type { CalendarTheme, MarkedDate } from '../types';
-
-const useCalendar = () => {
-  const CalendarState = useContext(CalendarContext);
-  if (typeof CalendarState === 'undefined') {
-    throw new Error('useCalendar must be used within a CalendarProvider');
-  }
-  return CalendarState;
-};
 
 export const useCalendarDispatch = () => {
   const CalendarUpdaterDispatch = useContext(CalendarUpdaterContext);
@@ -27,7 +19,7 @@ export const useTheme = <T extends keyof CalendarTheme>(themeKey: T) => {
 };
 
 export const useArrow = () => {
-  const { onArrowPress } = useCalendar();
+  const onArrowPress = useCallbacksState((state) => state.onArrowPress);
   const listWidth = useCalendarConfig().listWidth;
 
   return { onArrowPress, listWidth };
@@ -38,7 +30,7 @@ export const useDay = (day: string) => {
   const { dayTheme, listWidth } = useCalendarConfig(
     useCallback(({ theme, listWidth }) => ({ listWidth, dayTheme: theme?.day }), []),
   );
-  const { onDayPress } = useCalendar();
+  const onDayPress = useCallbacksState((state) => state.onDayPress);
   const { extraDay, selected, color, inSeries, startingDay, endingDay, dots } =
     markedDate || ({} as MarkedDate);
 

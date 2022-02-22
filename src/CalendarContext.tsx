@@ -5,7 +5,13 @@ import { CalendarProvider } from './context/Provider';
 import { defaultTheme } from './context/types';
 import { constants, generateDates, monthsData } from './helpers';
 import Locales from './Locales';
-import { useCalendarConfig, useCustomComponents, useMarkedDates, useMonths } from './store';
+import {
+  useCalendarConfig,
+  useCallbacksState,
+  useCustomComponents,
+  useMarkedDates,
+  useMonths,
+} from './store';
 import type { CalendarRef, CalendarTheme, LibraryProps, Locale } from './types';
 
 const mergeTheme = (theme?: CalendarTheme) => {
@@ -53,6 +59,7 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
     const setMonths = useMonths((state) => state.setMonths);
     const setCalendarConfig = useCalendarConfig((state) => state.setCalendarConfig);
     const setCustomComponents = useCustomComponents((state) => state.setCustomComponents);
+    const setCallbacks = useCallbacksState((state) => state.setCallbacks);
 
     useEffect(() => {
       setMarkDates(markedDates || {});
@@ -102,6 +109,10 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
     useEffect(() => {
       setCustomComponents({ Day, Arrows, DayNames, MonthTitle, Week });
     }, [Arrows, Day, DayNames, MonthTitle, Week, setCustomComponents]);
+
+    useEffect(() => {
+      setCallbacks({ onArrowPress, onDayPress });
+    }, [onArrowPress, onDayPress, setCallbacks]);
 
     return (
       <CalendarProvider
