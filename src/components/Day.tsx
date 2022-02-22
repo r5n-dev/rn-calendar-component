@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 import { useDay } from '../hooks';
 import type { CalendarDate } from '../types';
@@ -11,7 +11,7 @@ export type DayProps = CalendarDate & {
   today: boolean;
 };
 
-const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
+const Day = ({ day, dayString, dayIndex, month, today, pastDay, year }: DayProps) => {
   const {
     dayTheme,
     listWidth,
@@ -23,16 +23,19 @@ const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
     startingDay,
     endingDay,
     dots,
-  } = useDay(dayString);
+  } = useDay(dayString, dayIndex);
 
-  const textStyle = [
-    dayTheme?.text,
-    today && dayTheme?.todayText,
-    pastDay && dayTheme?.pastDayText,
-    extraDay && dayTheme?.extraDayText,
-    selected && dayTheme?.selectedText,
-    color ? { color } : undefined,
-  ];
+  const textStyle = useMemo(
+    () => [
+      dayTheme?.text,
+      today && dayTheme?.todayText,
+      pastDay && dayTheme?.pastDayText,
+      extraDay && dayTheme?.extraDayText,
+      selected && dayTheme?.selectedText,
+      color ? { color } : undefined,
+    ],
+    [color, dayTheme, extraDay, pastDay, selected, today],
+  );
 
   const handleDayPress = useCallback(() => {
     onDayPress?.({ day, month, year, dayString });
@@ -40,6 +43,7 @@ const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
 
   const width = useMemo(() => listWidth / 7, [listWidth]);
   const padding = useMemo(() => Math.min(listWidth / 40, 15), [listWidth]);
+  const hasDots = useMemo(() => dots && Object.keys(dots).length > 0, [dots]);
 
   if (!day) {
     return (
@@ -52,22 +56,21 @@ const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
   }
 
   return (
-    <TouchableOpacity
+    <Pressable
       accessible
       accessibilityLabel={day}
       accessibilityRole="button"
-      activeOpacity={0.6}
       onPress={handleDayPress}
-      style={[dayTheme?.container, { width }]}
+      style={({ pressed }) => [dayTheme?.container, { width, opacity: pressed ? 0.6 : 1 }]}
     >
       <View
         style={[
           { padding },
+          dayTheme?.textContainer,
+
           inSeries && dayTheme?.inSeriesContainer,
           startingDay && dayTheme?.startingDayContainer,
           endingDay && dayTheme?.endingDayContainer,
-
-          dayTheme?.textContainer,
 
           today && dayTheme?.todayContainer,
           pastDay && dayTheme?.pastDayContainer,
@@ -77,9 +80,9 @@ const Day = ({ day, dayString, month, today, pastDay, year }: DayProps) => {
       >
         <Text style={textStyle}>{day}</Text>
 
-        <Dots dots={dots} selected={selected} />
+        {hasDots && <Dots dots={dots} selected={selected} />}
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

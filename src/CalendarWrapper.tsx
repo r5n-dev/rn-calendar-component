@@ -6,10 +6,10 @@ import Locales from './Locales';
 import {
   defaultTheme,
   useCalendarConfig,
+  useCalendarData,
   useCallbacksState,
   useCustomComponents,
   useMarkedDates,
-  useMonths,
 } from './store';
 import type { CalendarRef, CalendarTheme, LibraryProps, Locale } from './types';
 
@@ -32,11 +32,6 @@ const CalendarWrapper = forwardRef<CalendarRef, LibraryProps>(
   (
     {
       Arrows,
-      Day,
-      DayNames,
-      MonthTitle,
-      Week,
-
       calendarHeight = 360,
       currentDay = constants.todayDate,
       endISODate,
@@ -48,18 +43,19 @@ const CalendarWrapper = forwardRef<CalendarRef, LibraryProps>(
       onDayPress,
       startISODate,
       theme,
-      viewabilityConfig = { itemVisiblePercentThreshold: 1 },
       showExtraDays,
       showArrows,
       ...rest
     },
     ref,
   ) => {
-    const setMarkDates = useMarkedDates((state) => state.setMarkedDates);
-    const setMonths = useMonths((state) => state.setMonths);
-    const setCalendarConfig = useCalendarConfig((state) => state.setCalendarConfig);
-    const setCustomComponents = useCustomComponents((state) => state.setCustomComponents);
-    const setCallbacks = useCallbacksState((state) => state.setCallbacks);
+    const setMarkDates = useMarkedDates(({ setMarkedDates }) => setMarkedDates);
+    const setCalendarData = useCalendarData(({ setCalendarData }) => setCalendarData);
+    const setCalendarConfig = useCalendarConfig(({ setCalendarConfig }) => setCalendarConfig);
+    const setCustomComponents = useCustomComponents(
+      ({ setCustomComponents }) => setCustomComponents,
+    );
+    const setCallbacks = useCallbacksState(({ setCallbacks }) => setCallbacks);
 
     useEffect(() => {
       setMarkDates(markedDates || {});
@@ -82,18 +78,18 @@ const CalendarWrapper = forwardRef<CalendarRef, LibraryProps>(
       return selectedLocale;
     }, [firstDay, locale]);
 
-    const months = useMemo(() => {
+    const [months, dates] = useMemo(() => {
       const dates = generateDates({
         startISODate,
         endISODate,
       });
 
-      return monthsData(dates);
+      return [monthsData(dates), dates];
     }, [endISODate, startISODate]);
 
     useEffect(() => {
-      setMonths(months);
-    }, [months, setMonths]);
+      setCalendarData({ months, dates });
+    }, [dates, months, setCalendarData]);
 
     useEffect(() => {
       setCalendarConfig({
@@ -108,28 +104,16 @@ const CalendarWrapper = forwardRef<CalendarRef, LibraryProps>(
     }, [firstDay, horizontal, selectedLocale, setCalendarConfig, showExtraDays, theme, showArrows]);
 
     useEffect(() => {
-      setCustomComponents({ Day, Arrows, DayNames, MonthTitle, Week });
-    }, [Arrows, Day, DayNames, MonthTitle, Week, setCustomComponents]);
+      setCustomComponents({ Arrows });
+    }, [Arrows, setCustomComponents]);
 
     useEffect(() => {
       setCallbacks({ onArrowPress, onDayPress });
     }, [onArrowPress, onDayPress, setCallbacks]);
 
-    return (
-      <>
-        {months.length > 0 && (
-          <Calendar
-            {...rest}
-            {...{
-              calendarHeight,
-              currentDay,
-              viewabilityConfig,
-              ref,
-            }}
-          />
-        )}
-      </>
-    );
+    return months.length > 0 ? (
+      <Calendar {...rest} {...{ calendarHeight, currentDay, ref }} />
+    ) : null;
   },
 );
 

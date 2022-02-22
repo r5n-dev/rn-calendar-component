@@ -25,6 +25,7 @@ export default ({
 
     dates[index] = {
       // get rid of `0` prefix
+      dayIndex: index,
       day: parseInt(day).toString(),
       dayString,
       year,

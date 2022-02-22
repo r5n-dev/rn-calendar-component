@@ -46,49 +46,8 @@ Locales.pl = {
 };
 
 const todayDate = new Date().toISOString().split('T')[0];
-const currentMonth = todayDate.split(/-(?=[^-]+$)/)[0];
 const singleDay = {
   [todayDate]: { selected: true },
-};
-const singleDayWithDifferentColors = {
-  [todayDate]: { selected: true, backgroundColor: 'red', color: 'white' },
-};
-
-const singleDayWithDot = {
-  [todayDate]: { dots: { someKey: { color: 'red' } } },
-};
-
-const singleSelectedDayWithDot = {
-  [todayDate]: {
-    selected: true,
-    dots: { someKey: { selectedColor: 'black' } },
-  },
-};
-
-const singleSelectedDayWithMultipleDots = {
-  [todayDate]: {
-    selected: true,
-    dots: { someKey: { color: 'red' }, anotherKey: { color: 'green' } },
-  },
-};
-
-const week = {
-  [`${currentMonth}-01`]: { selected: true },
-  [`${currentMonth}-02`]: { selected: true },
-  [`${currentMonth}-03`]: { selected: true },
-  [`${currentMonth}-04`]: { selected: true },
-  [`${currentMonth}-05`]: { selected: true },
-  [`${currentMonth}-06`]: { selected: true },
-  [`${currentMonth}-07`]: { selected: true },
-};
-
-const options = {
-  singleDay,
-  singleDayWithDifferentColors,
-  singleDayWithDot,
-  singleSelectedDayWithDot,
-  singleSelectedDayWithMultipleDots,
-  week,
 };
 
 const App = () => {
@@ -110,9 +69,23 @@ const App = () => {
   const handleDayPress = useCallback((day: { dayString: string }) => {
     setMarkedDates((markedDates) => ({
       ...markedDates,
-      [day.dayString]: { selected: true },
+      [day.dayString]: markedDates[day.dayString] ? undefined : { selected: true, inSeries: true },
     }));
   }, []);
+
+  const handleToggleFirstDay = useCallback(() => setFirstDay((firstDay) => (firstDay ? 0 : 1)), []);
+
+  const handleToggleLocale = useCallback(
+    () => setLocale((locale) => (locale === 'en' ? 'pl' : 'en')),
+    [],
+  );
+
+  const handleToggleShowExtraDays = useCallback(
+    () => setShowExtraDays((showExtraDays) => !showExtraDays),
+    [],
+  );
+
+  const handleToggleHorizontal = useCallback(() => setHorizontal((horizontal) => !horizontal), []);
 
   return (
     <>
@@ -138,31 +111,19 @@ const App = () => {
         )}
 
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity
-            onPress={() => setFirstDay((firstDay) => (firstDay ? 0 : 1))}
-            style={styles.button}
-          >
+          <TouchableOpacity onPress={handleToggleFirstDay} style={styles.button}>
             <Text style={styles.buttonText}>Switch first day</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => setLocale((locale) => (locale === 'en' ? 'pl' : 'en'))}
-            style={styles.button}
-          >
+          <TouchableOpacity onPress={handleToggleLocale} style={styles.button}>
             <Text style={styles.buttonText}>Change locale</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => setShowExtraDays((hideExtraDays) => !hideExtraDays)}
-            style={styles.button}
-          >
+          <TouchableOpacity onPress={handleToggleShowExtraDays} style={styles.button}>
             <Text style={styles.buttonText}>Show extra dates</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => setHorizontal((horizontal) => !horizontal)}
-            style={styles.button}
-          >
+          <TouchableOpacity onPress={handleToggleHorizontal} style={styles.button}>
             <Text style={styles.buttonText}>Toggle direction</Text>
           </TouchableOpacity>
         </View>
@@ -171,12 +132,14 @@ const App = () => {
           <Text style={styles.buttonText}>Reset calendar</Text>
         </TouchableOpacity>
 
-        <ScrollView style={styles.calendarInfoContainer}>
-          <Text>firstDay: {firstDay}</Text>
-          <Text>locale: {locale}</Text>
-          <Text>showExtraDays: {`${showExtraDays}`}</Text>
-          <Text>markedDates: {JSON.stringify(markedDates)}</Text>
-        </ScrollView>
+        {/*
+          <ScrollView style={styles.calendarInfoContainer}>
+            <Text>firstDay: {firstDay}</Text>
+            <Text>locale: {locale}</Text>
+            <Text>showExtraDays: {`${showExtraDays}`}</Text>
+            <Text>markedDates: {JSON.stringify(markedDates)}</Text>
+          </ScrollView>
+        */}
       </SafeAreaView>
     </>
   );

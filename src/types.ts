@@ -1,13 +1,10 @@
 import type { NamedExoticComponent } from 'react';
-import type { FlatListProps, TextStyle, ViewabilityConfig, ViewStyle } from 'react-native';
+import type { FlatListProps, TextStyle, ViewStyle } from 'react-native';
 
 import type { ArrowsProps } from './components/Arrows';
-import type { DayProps } from './components/Day';
-import type { DayNamesProps } from './components/DayNames';
-import type { MonthTitleProps } from './components/MonthTitle';
-import type { WeekProps } from './components/Week';
 
 export type CalendarDate = {
+  dayIndex: number;
   dayString: string;
   year: string;
   month: string;
@@ -77,22 +74,23 @@ export type CalendarTheme = {
 export type PickedFlatListProps =
   | 'initialNumToRender'
   | 'maxToRenderPerBatch'
-  | 'removeClippedSubviews'
-  | 'updateCellsBatchingPeriod'
-  | 'windowSize'
-  | 'showsHorizontalScrollIndicator'
-  | 'showsVerticalScrollIndicator'
-  | 'snapToAlignment'
-  | 'snapToInterval'
-  | 'snapToOffsets'
-  | 'snapToStart'
-  | 'snapToEnd'
-  | 'scrollEnabled'
+  | 'onMomentumScrollBegin'
+  | 'onMomentumScrollEnd'
   | 'onScroll'
   | 'onScrollBeginDrag'
   | 'onScrollEndDrag'
-  | 'onMomentumScrollEnd'
-  | 'onMomentumScrollBegin';
+  | 'removeClippedSubviews'
+  | 'scrollEnabled'
+  | 'showsHorizontalScrollIndicator'
+  | 'showsVerticalScrollIndicator'
+  | 'snapToAlignment'
+  | 'snapToEnd'
+  | 'snapToInterval'
+  | 'snapToOffsets'
+  | 'snapToStart'
+  | 'updateCellsBatchingPeriod'
+  | 'viewabilityConfig'
+  | 'windowSize';
 
 export type LibraryProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProps> & {
   /**
@@ -149,7 +147,7 @@ export type LibraryProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProp
    * @param {number} date.year Year.
    * @param {number} date.dayString Date. (YYYY-MM-DD).
    */
-  onDayPress?: (date: Omit<CalendarDate, 'dayOfWeek'>) => void;
+  onDayPress?: (date: Omit<CalendarDate, 'dayIndex' | 'dayOfWeek'>) => void;
 
   /**
    * Gets called when the user clicks on the button
@@ -170,27 +168,13 @@ export type LibraryProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProp
   style?: FixMe;
 
   /**
-   * ViewabilityConfig passed to FlatList.
-   * See React-Native docs of VirtualizedList for reference.
-   */
-  viewabilityConfig?: ViewabilityConfig;
-
-  /**
    * TODO
-   *
-   * @ignore
    */
   markedDates?: Record<string, MarkedDate>;
   /**
    * TODO
-   *
-   * @ignore
    */
   theme?: CalendarTheme;
 
   Arrows?: NamedExoticComponent<ArrowsProps>;
-  Day?: NamedExoticComponent<DayProps>;
-  DayNames?: NamedExoticComponent<DayNamesProps>;
-  MonthTitle?: NamedExoticComponent<MonthTitleProps>;
-  Week?: NamedExoticComponent<WeekProps>;
 };

@@ -1,41 +1,63 @@
 import { useCallback, useMemo } from 'react';
 
-import { useCalendarConfig, useCallbacksState, useMarkedDates } from '../store';
-import type { MarkedDate } from '../types';
+import {
+  CalendarDataState,
+  MarkedDatesState,
+  useCalendarConfig,
+  useCalendarData,
+  useCallbacksState,
+  useMarkedDates,
+} from '../store';
 
-const useDay = (day: string) => {
-  const markedDate = useMarkedDates(useCallback((state) => state.markedDates[day], [day]));
+const isInSeries =
+  (prevDayString?: string) =>
+  ({ markedDates }: MarkedDatesState) =>
+    prevDayString ? markedDates[prevDayString]?.inSeries : false;
+
+const selectDayString =
+  (dayIndex: number) =>
+  ({ dates }: CalendarDataState) =>
+    dates[dayIndex]?.dayString;
+
+const useDay = (dayString: string, dayIndex: number) => {
+  const onDayPress = useCallbacksState((state) => state.onDayPress);
+
+  const prevDayString = useCalendarData(selectDayString(dayIndex - 1));
+  const nextDayString = useCalendarData(selectDayString(dayIndex + 1));
+  const prevInSeries = useMarkedDates(isInSeries(prevDayString));
+  const nextInSeries = useMarkedDates(isInSeries(nextDayString));
+
+  const today = useMarkedDates(
+    useCallback(({ markedDates }) => markedDates[dayString], [dayString]),
+  );
+
   const { dayTheme, listWidth } = useCalendarConfig(
     useCallback(({ theme, listWidth }) => ({ listWidth, dayTheme: theme?.day }), []),
   );
-  const onDayPress = useCallbacksState((state) => state.onDayPress);
-  const { extraDay, selected, color, inSeries, startingDay, endingDay, dots } =
-    markedDate || ({} as MarkedDate);
+
+  const { startingDay, endingDay, inSeries } = today || {};
+  const dayInSeries = inSeries && (prevInSeries || nextInSeries);
 
   return useMemo(
     () => ({
+      ...(today && today),
       dayTheme,
+      endingDay: dayInSeries && (!nextInSeries || endingDay),
+      inSeries: dayInSeries,
       listWidth,
       onDayPress,
-      extraDay,
-      selected,
-      color,
-      inSeries,
-      startingDay,
-      endingDay,
-      dots,
+      startingDay: dayInSeries && (!prevInSeries || startingDay),
     }),
     [
+      dayInSeries,
       dayTheme,
-      listWidth,
-      onDayPress,
-      extraDay,
-      selected,
-      color,
-      inSeries,
-      startingDay,
       endingDay,
-      dots,
+      listWidth,
+      nextInSeries,
+      onDayPress,
+      prevInSeries,
+      startingDay,
+      today,
     ],
   );
 };

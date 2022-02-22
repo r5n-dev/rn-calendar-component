@@ -5,14 +5,21 @@ import type { CalendarDate, CalendarTheme, LibraryProps, Locale, MarkedDate } fr
 
 export type MarkedDates = Record<string, MarkedDate>;
 
-type MarkedDatesState = {
+export type MarkedDatesState = {
   markedDates: MarkedDates;
   setMarkedDates: (markedDates: MarkedDates) => void;
 };
 
-type MonthsState = {
+export type CalendarDataState = {
+  dates: CalendarDate[];
   months: [string, CalendarDate[]][];
-  setMonths: (months: [string, CalendarDate[]][]) => void;
+  setCalendarData: ({
+    dates,
+    months,
+  }: {
+    dates: CalendarDate[];
+    months: [string, CalendarDate[]][];
+  }) => void;
 };
 
 type CalendarConfigState = {
@@ -31,10 +38,6 @@ type CalendarConfigState = {
 
 type CustomComponentsState = {
   Arrows: LibraryProps['Arrows'];
-  Day: LibraryProps['Day'];
-  DayNames: LibraryProps['DayNames'];
-  MonthTitle: LibraryProps['MonthTitle'];
-  Week: LibraryProps['Week'];
   setCustomComponents: (components: Omit<CustomComponentsState, 'setCustomComponents'>) => void;
 };
 
@@ -45,13 +48,14 @@ type CallbacksState = {
 };
 
 export const useMarkedDates = create<MarkedDatesState>((set) => ({
-  markedDates: {} as MarkedDates,
+  markedDates: {},
   setMarkedDates: (markedDates) => set({ markedDates }),
 }));
 
-export const useMonths = create<MonthsState>((set) => ({
+export const useCalendarData = create<CalendarDataState>((set) => ({
+  dates: [],
   months: [],
-  setMonths: (months: [string, CalendarDate[]][]) => set({ months }),
+  setCalendarData: ({ dates, months }) => set({ months, dates }),
 }));
 
 export const useCalendarConfig = create<CalendarConfigState>((set) => ({
@@ -117,7 +121,8 @@ export const defaultTheme: CalendarTheme = {
       height: constants.touchableSize,
       justifyContent: 'center',
     },
-    selectedContainer: { backgroundColor: 'turquoise' },
+    selectedText: { color: 'white' },
+    selectedContainer: { backgroundColor: 'indigo' },
     text: { fontSize: 16, minWidth: 20, textAlign: 'center' },
     extraDayText: { color: 'lightgrey' },
     pastDayText: { color: 'lightgrey' },

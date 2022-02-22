@@ -5,6 +5,7 @@ describe('generateDates', () => {
     test('should return date range between 2 dates', () => {
       const firstExpectedDates = [
         {
+          dayIndex: 0,
           day: '1',
           dayOfWeek: 2,
           dayString: '2019-01-01',
@@ -12,6 +13,7 @@ describe('generateDates', () => {
           year: '2019',
         },
         {
+          dayIndex: 1,
           day: '2',
           dayOfWeek: 3,
           dayString: '2019-01-02',
@@ -19,6 +21,7 @@ describe('generateDates', () => {
           year: '2019',
         },
         {
+          dayIndex: 2,
           day: '3',
           dayOfWeek: 4,
           dayString: '2019-01-03',
@@ -33,6 +36,7 @@ describe('generateDates', () => {
 
       const secondExpectedDates = [
         {
+          dayIndex: 0,
           dayOfWeek: 5,
           dayString: '2019-03-29',
           year: '2019',
@@ -40,6 +44,7 @@ describe('generateDates', () => {
           day: '29',
         },
         {
+          dayIndex: 1,
           dayOfWeek: 6,
           dayString: '2019-03-30',
           year: '2019',
@@ -47,6 +52,7 @@ describe('generateDates', () => {
           day: '30',
         },
         {
+          dayIndex: 2,
           dayOfWeek: 0,
           dayString: '2019-03-31',
           year: '2019',
@@ -54,6 +60,7 @@ describe('generateDates', () => {
           day: '31',
         },
         {
+          dayIndex: 3,
           dayOfWeek: 1,
           dayString: '2019-04-01',
           year: '2019',
@@ -61,6 +68,7 @@ describe('generateDates', () => {
           day: '1',
         },
         {
+          dayIndex: 4,
           dayOfWeek: 2,
           dayString: '2019-04-02',
           year: '2019',
@@ -68,6 +76,7 @@ describe('generateDates', () => {
           day: '2',
         },
         {
+          dayIndex: 5,
           dayOfWeek: 3,
           dayString: '2019-04-03',
           year: '2019',

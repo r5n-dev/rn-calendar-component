@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
 import { fillDates } from '../helpers/fillDates';
-import { useCalendarConfig, useMonths } from '../store';
+import { useCalendarConfig, useCalendarData } from '../store';
 
 const useMonth = (monthIndex: number) => {
   const { showExtraDays, firstDay, horizontal, locale, listWidth } = useCalendarConfig();
-  const months = useMonths((state) => state.months);
+  const months = useCalendarData(({ months }) => months);
   const dates = useMemo(() => months[monthIndex]?.[1] || [], [months, monthIndex]);
 
   const monthDates = useMemo(

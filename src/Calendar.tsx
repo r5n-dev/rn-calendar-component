@@ -19,7 +19,7 @@ import {
 
 import { Arrows, Month } from './components';
 import { monthsHeights } from './helpers';
-import { useCalendarConfig, useMonths } from './store';
+import { useCalendarConfig, useCalendarData } from './store';
 import type { CalendarDate, CalendarItem, CalendarRef, PickedFlatListProps } from './types';
 
 type CalendarProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProps> & {
@@ -29,6 +29,7 @@ type CalendarProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProps> & {
 };
 
 const keyExtractor = (item: CalendarItem) => item[0];
+const viewabilityConfig = { itemVisiblePercentThreshold: 1 };
 
 const Calendar = forwardRef<CalendarRef, CalendarProps>(
   ({ calendarHeight, currentDay, onMomentumScrollEnd, style, ...flatListProps }, ref) => {
@@ -41,7 +42,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
     );
     const setListWidth = useCalendarConfig((state) => state.setListWidth);
     const showArrows = useCalendarConfig((state) => state.showArrows);
-    const months = useMonths((state) => state.months);
+    const months = useCalendarData((state) => state.months);
     const flatListRef = useRef<FlatList<CalendarItem>>(null);
 
     const initialScrollIndex = useMemo(() => {
@@ -146,6 +147,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
               ref={flatListRef}
               renderItem={renderMonth}
               style={[style, { maxHeight: calendarHeight }]}
+              viewabilityConfig={viewabilityConfig}
               windowSize={11}
               {...(horizontal && {
                 onMomentumScrollEnd: handleMomentumScrollEnd,
