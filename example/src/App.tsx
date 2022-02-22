@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -127,7 +127,7 @@ const App = () => {
                 .split('T')[0]
             }
             firstDay={firstDay}
-            hideArrows={false}
+            showArrows={true}
             showExtraDays={showExtraDays}
             horizontal={horizontal}
             locale={locale}

@@ -19,6 +19,7 @@ type CalendarConfigState = {
   firstDay: BinaryBoolean;
   horizontal: boolean | undefined;
   showExtraDays: boolean | undefined;
+  showArrows: boolean | undefined;
   locale: Locale;
   theme: CalendarTheme;
   listWidth: number;
@@ -57,6 +58,7 @@ export const useCalendarConfig = create<CalendarConfigState>((set) => ({
   firstDay: 0,
   horizontal: undefined,
   showExtraDays: undefined,
+  showArrows: undefined,
   locale: {} as Locale,
   theme: defaultTheme,
   listWidth: 0,

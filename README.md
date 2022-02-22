@@ -1,6 +1,5 @@
 # rn-calendar
 
-
 ## Docs
 
 TODO:
@@ -12,12 +11,13 @@ yarn add rn-calendar-component
 ```
 
 ## Usage
+
 ```js
-import { Calendar } from 'rn-calendar-component'
+import { Calendar } from 'rn-calendar-component';
 
 export default () => {
-  return <Calendar startISODate="2020-01-01" endISODate="2020-12-31" />
-}
+  return <Calendar startISODate="2020-01-01" endISODate="2020-12-31" />;
+};
 ```
 
 ## Contributing
@@ -28,7 +28,7 @@ export default () => {
 yarn bootstrap
 ```
 
-### Use [Example](./Example) app to test your changes. You can run it with those commands:
+### Use [Example](./example) app to test your changes. You can run it with those commands:
 
 ```
 yarn example run-ios
@@ -44,12 +44,12 @@ yarn lint && yarn test
 ## Publishing
 
 ### Change `GITHUB_TOKEN` in .npmrc to valid one with `packages:write` scope.
+
 After that just use:
+
 - `yarn release <major | minor | patch | $version>`
-with proper version i.e.
+  with proper version i.e.
 
 ```
 yarn release 1.0.0
 ```
-
-

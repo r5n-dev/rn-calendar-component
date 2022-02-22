@@ -50,6 +50,7 @@ const CalendarWrapper = forwardRef<CalendarRef, LibraryProps>(
       theme,
       viewabilityConfig = { itemVisiblePercentThreshold: 1 },
       showExtraDays,
+      showArrows,
       ...rest
     },
     ref,
@@ -99,11 +100,12 @@ const CalendarWrapper = forwardRef<CalendarRef, LibraryProps>(
         locale: selectedLocale,
         horizontal,
         showExtraDays,
+        showArrows,
         firstDay,
         listWidth: 0,
         theme: mergeTheme(theme),
       });
-    }, [firstDay, horizontal, selectedLocale, setCalendarConfig, showExtraDays, theme]);
+    }, [firstDay, horizontal, selectedLocale, setCalendarConfig, showExtraDays, theme, showArrows]);
 
     useEffect(() => {
       setCustomComponents({ Day, Arrows, DayNames, MonthTitle, Week });

@@ -25,17 +25,13 @@ import type { CalendarDate, CalendarItem, CalendarRef, PickedFlatListProps } fro
 type CalendarProps = Pick<FlatListProps<Inexpressible>, PickedFlatListProps> & {
   calendarHeight: number;
   currentDay: string;
-  showArrows?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
 const keyExtractor = (item: CalendarItem) => item[0];
 
 const Calendar = forwardRef<CalendarRef, CalendarProps>(
-  (
-    { calendarHeight, currentDay, showArrows, onMomentumScrollEnd, style, ...flatListProps },
-    ref,
-  ) => {
+  ({ calendarHeight, currentDay, onMomentumScrollEnd, style, ...flatListProps }, ref) => {
     const { firstDay, horizontal, listWidth } = useCalendarConfig(
       ({ firstDay, horizontal, listWidth }) => ({
         firstDay,
@@ -44,6 +40,7 @@ const Calendar = forwardRef<CalendarRef, CalendarProps>(
       }),
     );
     const setListWidth = useCalendarConfig((state) => state.setListWidth);
+    const showArrows = useCalendarConfig((state) => state.showArrows);
     const months = useMonths((state) => state.months);
     const flatListRef = useRef<FlatList<CalendarItem>>(null);
 
