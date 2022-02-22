@@ -55,31 +55,15 @@ export const defaultTheme: CalendarTheme = {
 };
 
 export const initialState = {
-  Arrows: undefined as LibraryProps['Arrows'],
-  Day: undefined as LibraryProps['Day'],
-  DayNames: undefined as LibraryProps['DayNames'],
-  MonthTitle: undefined as LibraryProps['MonthTitle'],
-  Week: undefined as LibraryProps['Week'],
   onArrowPress: undefined as LibraryProps['onArrowPress'],
   onDayPress: undefined as LibraryProps['onDayPress'],
 };
 
 export type CalendarState = typeof initialState;
-export type CalendarActions =
-  | {
-      type: 'updateFunctions';
-      payload: {
-        onArrowPress?: LibraryProps['onArrowPress'];
-        onDayPress?: LibraryProps['onDayPress'];
-      };
-    }
-  | {
-      type: 'updateComponents';
-      payload: {
-        Arrows?: LibraryProps['Arrows'];
-        Day?: LibraryProps['Day'];
-        MonthTitle?: LibraryProps['MonthTitle'];
-        DayNames?: LibraryProps['DayNames'];
-        Week?: LibraryProps['Week'];
-      };
-    };
+export type CalendarActions = {
+  type: 'updateFunctions';
+  payload: {
+    onArrowPress?: LibraryProps['onArrowPress'];
+    onDayPress?: LibraryProps['onDayPress'];
+  };
+};

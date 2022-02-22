@@ -5,7 +5,7 @@ import { CalendarProvider } from './context/Provider';
 import { defaultTheme } from './context/types';
 import { constants, generateDates, monthsData } from './helpers';
 import Locales from './Locales';
-import { useCalendarConfig, useMarkedDates, useMonths } from './store';
+import { useCalendarConfig, useCustomComponents, useMarkedDates, useMonths } from './store';
 import type { CalendarRef, CalendarTheme, LibraryProps, Locale } from './types';
 
 const mergeTheme = (theme?: CalendarTheme) => {
@@ -52,6 +52,7 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
     const setMarkDates = useMarkedDates((state) => state.setMarkedDates);
     const setMonths = useMonths((state) => state.setMonths);
     const setCalendarConfig = useCalendarConfig((state) => state.setCalendarConfig);
+    const setCustomComponents = useCustomComponents((state) => state.setCustomComponents);
 
     useEffect(() => {
       setMarkDates(markedDates || {});
@@ -98,14 +99,13 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
       });
     }, [firstDay, horizontal, selectedLocale, setCalendarConfig, showExtraDays, theme]);
 
+    useEffect(() => {
+      setCustomComponents({ Day, Arrows, DayNames, MonthTitle, Week });
+    }, [Arrows, Day, DayNames, MonthTitle, Week, setCustomComponents]);
+
     return (
       <CalendarProvider
         {...{
-          Arrows,
-          Day,
-          DayNames,
-          MonthTitle,
-          Week,
           onArrowPress,
           onDayPress,
         }}

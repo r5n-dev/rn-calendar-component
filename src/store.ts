@@ -1,7 +1,7 @@
 import create from 'zustand';
 
 import { defaultTheme } from './context/types';
-import type { CalendarDate, CalendarTheme, Locale, MarkedDate } from './types';
+import type { CalendarDate, CalendarTheme, LibraryProps, Locale, MarkedDate } from './types';
 
 export type MarkedDates = Record<string, MarkedDate>;
 
@@ -28,6 +28,15 @@ type CalendarConfigState = {
   setListWidth: (listWidth: number) => void;
 };
 
+type CustomComponentsState = {
+  Arrows: LibraryProps['Arrows'];
+  Day: LibraryProps['Day'];
+  DayNames: LibraryProps['DayNames'];
+  MonthTitle: LibraryProps['MonthTitle'];
+  Week: LibraryProps['Week'];
+  setCustomComponents: (components: Omit<CustomComponentsState, 'setCustomComponents'>) => void;
+};
+
 export const useMarkedDates = create<MarkedDatesState>((set) => ({
   markedDates: {} as MarkedDates,
   setMarkedDates: (markedDates) => set({ markedDates }),
@@ -47,4 +56,13 @@ export const useCalendarConfig = create<CalendarConfigState>((set) => ({
   listWidth: 0,
   setCalendarConfig: (config) => set(config),
   setListWidth: (listWidth) => set((state) => ({ ...state, listWidth })),
+}));
+
+export const useCustomComponents = create<CustomComponentsState>((set) => ({
+  Arrows: undefined,
+  Day: undefined,
+  DayNames: undefined,
+  MonthTitle: undefined,
+  Week: undefined,
+  setCustomComponents: (components) => set((state) => ({ ...state, ...components })),
 }));
