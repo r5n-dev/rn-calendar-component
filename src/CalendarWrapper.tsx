@@ -1,11 +1,10 @@
 import React, { forwardRef, useEffect, useMemo } from 'react';
 
 import Calendar from './Calendar';
-import { CalendarProvider } from './context/Provider';
-import { defaultTheme } from './context/types';
 import { constants, generateDates, monthsData } from './helpers';
 import Locales from './Locales';
 import {
+  defaultTheme,
   useCalendarConfig,
   useCallbacksState,
   useCustomComponents,
@@ -29,7 +28,7 @@ const mergeTheme = (theme?: CalendarTheme) => {
   return newTheme;
 };
 
-const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
+const CalendarWrapper = forwardRef<CalendarRef, LibraryProps>(
   (
     {
       Arrows,
@@ -115,12 +114,7 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
     }, [onArrowPress, onDayPress, setCallbacks]);
 
     return (
-      <CalendarProvider
-        {...{
-          onArrowPress,
-          onDayPress,
-        }}
-      >
+      <>
         {months.length > 0 && (
           <Calendar
             {...rest}
@@ -132,9 +126,9 @@ const CalendarContext = forwardRef<CalendarRef, LibraryProps>(
             }}
           />
         )}
-      </CalendarProvider>
+      </>
     );
   },
 );
 
-export default CalendarContext;
+export default CalendarWrapper;
